@@ -19,7 +19,7 @@ class App extends Component {
 
     state = {
         openMenu: false,
-        question: null,
+        question: 0,
     };
 
     handleOpenMenu = () => {
@@ -30,8 +30,11 @@ class App extends Component {
         this.setState({ openMenu: false });
     };
 
-    handleClickQuestion = () => {
-        this.setState({ openMenu: false });
+    handleClickQuestion = (i) => {
+        this.setState({
+            openMenu: false,
+            question: i
+        });
     };
 
     handleMenuStateChange = (state) => {
@@ -43,39 +46,34 @@ class App extends Component {
     };
 
     renderContent = () => {
-        console.log()
-        switch (this.state.question) {
-            case 0:
-                return (<div></div>);
-            default:
-                return (
-                    <div className='d-flex align-items-center justify-content-center flex-column'>
-                        <Typist className='title-font'>
-                            Learn how to script in JavaScript from Python!
-                        </Typist>
-                        <div className='d-flex align-items-center justify-content-center flex-column' style={{ marginTop: '25px' }}>
-                            <AceEditor
-                                readOnly={false}
-                                wrapEnabled
-                                height='50vh'
-                                width='70vw'
-                                mode="javascript"
-                                theme="monokai"
-                                onChange={this.onChange}
-                                name="info-section"
-                                tabSize={0}
-                                editorProps={{
-                                    $blockScrolling: true,
-                                }}
-                                value={questions.intro}
-                            />
-                        </div>
-                        <Button variant="outlined" className='button-start ml-auto' size='large'>
-                            START
-                        </Button>
-                    </div>
-                );
-        }
+
+        return (
+            <div className='d-flex align-items-center justify-content-center flex-column'>
+                <Typist className='title-font'>
+                    Learn how to script in JavaScript from Python!
+                </Typist>
+                <div className='d-flex align-items-center justify-content-center flex-column' style={{ marginTop: '25px' }}>
+                    <AceEditor
+                        readOnly={false}
+                        wrapEnabled
+                        height='50vh'
+                        width='70vw'
+                        mode="javascript"
+                        theme="monokai"
+                        onChange={this.onChange}
+                        name="info-section"
+                        tabSize={0}
+                        editorProps={{
+                            $blockScrolling: true,
+                        }}
+                        value={questions[this.state.question]}
+                    />
+                </div>
+                <Button variant="outlined" className='button-start ml-auto' size='large'>
+                    START
+                </Button>
+            </div>
+        );
     };
 
     render() {
@@ -83,7 +81,7 @@ class App extends Component {
             <div className="App">
                 <SliderMenu open={this.state.openMenu} handleCloseMenu={this.handleCloseMenu}
                     handleMenuStateChange={this.handleMenuStateChange}
-                    handleClickQuesion={this.handleClickQuestion} />
+                    handleClickQuestion={this.handleClickQuestion} />
                 <Container fluid className='container-main d-flex align-items-center justify-content-center'
                     id='page-wrap'>
                     <NavBar handleOpenMenu={this.handleOpenMenu} />
