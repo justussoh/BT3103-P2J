@@ -23,24 +23,22 @@ class App extends Component {
         returnedData: null
     };
 
-    handleMenu = (isOpen) => {
+    handleMenu = (isOpen: boolean) => {
         this.setState({ openMenu: isOpen })
     }
 
 
-    handleClickQuestion = (i) => {
+    handleClickQuestion = (i: number) => {
         this.setState({
             openMenu: false,
             question: i
         });
     };
 
-    handleMenuStateChange = (state) => {
+    handleMenuStateChange = (state: any) => {
         this.setState({ openMenu: state.isOpen })
     };
 
-    onChange = (newValue) => {
-    };
 
     doCrazyShit = () => {
         const gatewayURL = "https://cl8r4dbpqe.execute-api.us-east-1.amazonaws.com/Prod/"
@@ -85,7 +83,6 @@ class App extends Component {
                         width='70vw'
                         mode="javascript"
                         theme="monokai"
-                        onChange={this.onChange}
                         name="info-section"
                         tabSize={0}
                         editorProps={{
