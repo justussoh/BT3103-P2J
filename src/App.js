@@ -20,6 +20,7 @@ class App extends Component {
     state = {
         openMenu: false,
         question: 0,
+        returnedData: null
     };
 
     handleMenu = (isOpen) => {
@@ -41,10 +42,38 @@ class App extends Component {
     onChange = (newValue) => {
     };
 
+    doCrazyShit = () => {
+        const gatewayURL = "https://cl8r4dbpqe.execute-api.us-east-1.amazonaws.com/Prod/"
+        fetch(gatewayURL, {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify({
+                userToken: "abcde",
+                shown: {
+                    0: ""
+                },
+                editable: {
+                    0: ""
+                },
+                hidden: {
+                    0: ""
+                }
+            })
+        }).then(response => {
+            return response.json()
+        }).then(data => {
+            console.log(data)
+            this.setState({ returnedData: data });
+        })
+    };
+
     renderContent = () => {
 
         return (
             <div className='d-flex align-items-center justify-content-center flex-column'>
+                {JSON.stringify(this.state.returnedData)}
                 <Typist className='title-font'>
                     Learn how to script in JavaScript from Python!
                 </Typist>
@@ -65,7 +94,7 @@ class App extends Component {
                         value={questions[this.state.question]}
                     />
                 </div>
-                <Button variant="outlined" className='button-start ml-auto' size='large'>
+                <Button variant="outlined" className='button-start ml-auto' size='large' onClick={this.doCrazyShit}>
                     START
                 </Button>
             </div>
