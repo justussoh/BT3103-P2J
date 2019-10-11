@@ -1,13 +1,19 @@
-import { push as Menu } from 'react-burger-menu';
-import React, { Component } from 'react';
-import CloseIcon from '@material-ui/icons/Close'
-import IconButton from "@material-ui/core/IconButton";
 import Grid from "@material-ui/core/Grid";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from '@material-ui/icons/Close';
+import React from 'react';
+import { push as Menu, State } from "react-burger-menu";
+import './SliderMenu.css';
 
 
-import './SliderMenu.css'
 
-class SliderMenu extends Component {
+type MyProps = {
+    open: boolean,
+    handleMenu: (arg0: boolean) => void,
+    handleClickQuestion: (arg0: number) => void,
+    handleMenuStateChange: (arg0: State) => void,
+};
+class SliderMenu extends React.Component<MyProps, {}> {
 
     render() {
         const questions = [
