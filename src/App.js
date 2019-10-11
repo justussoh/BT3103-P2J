@@ -42,7 +42,6 @@ class App extends Component {
     };
 
     onChange = (newValue) => {
-        console.log('change', newValue);
     };
 
     renderContent = () => {
