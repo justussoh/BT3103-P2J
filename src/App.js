@@ -22,13 +22,10 @@ class App extends Component {
         question: 0,
     };
 
-    handleOpenMenu = () => {
-        this.setState({ openMenu: true });
-    };
+    handleMenu = (isOpen) => {
+        this.setState({ openMenu: isOpen })
+    }
 
-    handleCloseMenu = () => {
-        this.setState({ openMenu: false });
-    };
 
     handleClickQuestion = (i) => {
         this.setState({
@@ -78,12 +75,12 @@ class App extends Component {
     render() {
         return (
             <div className="App">
-                <SliderMenu open={this.state.openMenu} handleCloseMenu={this.handleCloseMenu}
+                <SliderMenu open={this.state.openMenu} handleMenu={this.handleMenu}
                     handleMenuStateChange={this.handleMenuStateChange}
                     handleClickQuestion={this.handleClickQuestion} />
                 <Container fluid className='container-main d-flex align-items-center justify-content-center'
                     id='page-wrap'>
-                    <NavBar handleOpenMenu={this.handleOpenMenu} />
+                    <NavBar handleMenu={this.handleMenu} />
                     <Row className='d-flex align-items-center justify-content-center' style={{ width: '80vw' }}>
                         <Col xs={10}>
                             {this.renderContent()}

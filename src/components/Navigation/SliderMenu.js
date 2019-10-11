@@ -31,7 +31,7 @@ class SliderMenu extends Component {
                 <Grid container spacing={3}
                 >
                     <Grid item xs={12} className='d-flex align-items-center'>
-                        <IconButton className='closeButtonMenu ml-auto' onClick={this.props.handleCloseMenu}>
+                        <IconButton className='closeButtonMenu ml-auto' onClick={() => this.props.handleMenu(false)}>
                             <CloseIcon className='closeIconMenu' />
                         </IconButton>
                     </Grid>
