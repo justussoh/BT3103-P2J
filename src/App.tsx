@@ -25,18 +25,35 @@ class App extends Component {
         returnedData: null,
         questions: [
             {
-                questionName: "Question 0",
+                questionName: "",
+                questionTitle: "",
+                questionTutorial: "",
                 questionText: "/*\n Welcome to From Python to JS. \n\n This quick and easy online module will teach you JavaScript, the popular programming language used for the Web. \n\n JavaScript is a scripting or programming language that allows you to implement complex things on web pages — every time a web page does more than just sit there and display static information for you to look at — displaying timely content updates, interactive maps, animated 2D/3D graphics, scrolling video jukeboxes, etc. — you can bet that JavaScript is probably involved. It is the third layer of the layer cake of standard web technologies, along with HTML and CSS .\n*/",
+                answer: "",
+                answerPlaceholder: "",
+                completed: false,
+            },
+            {
+                questionName: "Task 1",
+                questionTitle: "Comments",
+                questionTutorial: "In JavaScipt, commenting can be done by using: \n // For single line code \n /* For multiline code */",
+                questionText: "Please convert the following to JavaScript syntax!",
+                answer: "",
+                answerPlaceholder: "# a one line comment\n" +
+                    "\n" +
+                    "'''\n" +
+                    "this is a longer,\n" +
+                    "multi-line comment\n" +
+                    "'''",
                 completed: false,
             },
             {
                 questionName: "Question 1",
-                questionText: "question 1",
-                completed: false,
-            },
-            {
-                questionName: "Question 2",
+                questionTitle: "Basic Syntax",
+                questionTutorial: "In JavaScipt, commenting can be done by using: \n // For single line code \n /* For multiline code */",
                 questionText: "question 3",
+                answer: "",
+                answerPlaceholder: "",
                 completed: false,
             },
 
@@ -62,6 +79,13 @@ class App extends Component {
 
     handleStart = () => {
         this.setState({question: 1, openMenu: false,})
+    };
+
+    handleNextQuestion = () => {
+        this.setState({question: this.state.question + 1})
+    };
+    handlePrevQuestion = () => {
+        this.setState({question: this.state.question - 1})
     };
 
 
@@ -126,7 +150,9 @@ class App extends Component {
                 );
             default:
                 return (
-                    <Question question={this.state.questions[this.state.question]} />
+                    <Question question={this.state.questions[this.state.question]}
+                              nextQuestion={this.handleNextQuestion}
+                              prevQuestion={this.handlePrevQuestion}/>
                 );
 
         }

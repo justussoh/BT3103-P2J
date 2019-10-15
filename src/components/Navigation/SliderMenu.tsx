@@ -10,7 +10,15 @@ import Button from "@material-ui/core/Button";
 type MyProps = {
     open: boolean,
     question: number,
-    questions: { questionName: string,questionText: string, completed: boolean }[],
+    questions: {
+        questionName: string,
+        questionTitle: string,
+        questionTutorial: string,
+        questionText: string,
+        answer:string,
+        answerPlaceholder:string,
+        completed: boolean
+    }[],
     handleMenu: (arg0: boolean) => void,
     handleClickQuestion: (arg0: number) => void,
     handleMenuStateChange: (arg0: State) => void,
