@@ -5,6 +5,9 @@ import React from 'react';
 import {push as Menu, State} from "react-burger-menu";
 import './SliderMenu.css';
 import Button from "@material-ui/core/Button";
+import Divider from '@material-ui/core/Divider';
+import CircleIcon from '@material-ui/icons/Lens';
+import CircleOutlineIcon from '@material-ui/icons/LensOutlined';
 
 
 type MyProps = {
@@ -15,8 +18,8 @@ type MyProps = {
         questionTitle: string,
         questionTutorial: string,
         questionText: string,
-        answer:string,
-        answerPlaceholder:string,
+        answer: string,
+        answerPlaceholder: string,
         completed: boolean
     }[],
     handleMenu: (arg0: boolean) => void,
@@ -34,8 +37,11 @@ class SliderMenu extends React.Component<MyProps, {}> {
                 return ''
             } else {
                 return (
-                    <Grid item xs={12} onClick={() => this.props.handleClickQuestion(index)} key={index}>
-                        {question.questionName}
+                    <Grid item xs={12} onClick={() => this.props.handleClickQuestion(index)} key={index} className='d-flex align-items-center'>
+                        {question.completed ? <CircleIcon style={{color:'green'}}/> : <CircleOutlineIcon style={{color:'red'}}/>}
+                        <span style={{marginLeft:10}}>
+                            {question.questionName}
+                        </span>
                     </Grid>);
             }
         });
@@ -54,16 +60,26 @@ class SliderMenu extends React.Component<MyProps, {}> {
                         </IconButton>
                     </Grid>
                     {this.props.question === 0 ?
-                        <Grid item xs={12}>
-                            <Button variant="outlined" className='button-start' size='large'
-                                    onClick={this.props.handleStart}>
-                                START
-                            </Button>
+                        <Grid container spacing={3}>
+                            <Grid item xs={12} className='d-flex align-items-center justify-content-center'>
+                                <Button variant="outlined" className='button-start' size='large'
+                                        onClick={this.props.handleStart}>
+                                    START
+                                </Button>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Divider variant='middle' style={{backgroundColor: '#fff'}}/>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <span style={{color: 'white'}}>
+                                From Python to JS is a quick and easy online module will teach you JavaScript, the popular programming language used for the Web.
+                                </span>
+                            </Grid>
                         </Grid>
                         :
-                        <div>
+                        <Grid container spacing={3}>
                             {listQuestions}
-                        </div>
+                        </Grid>
                     }
                 </Grid>
             </Menu>

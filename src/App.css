@@ -8,6 +8,7 @@ body, html {
   font-family: Apercu,"Source Sans Pro",system,system-ui,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
   line-height: 1.5;
   width: 100%;
+  color:white;
 }
 
 .container-main {
@@ -29,4 +30,9 @@ body, html {
   border-radius: 0!important;
   border-color: white !important;
   color: white!important;
+}
+
+.button-start:disabled{
+  border-color: grey !important;
+  color: grey!important;
 }

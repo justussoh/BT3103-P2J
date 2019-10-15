@@ -48,12 +48,19 @@ class App extends Component {
                 completed: false,
             },
             {
-                questionName: "Question 1",
-                questionTitle: "Basic Syntax",
-                questionTutorial: "In JavaScipt, commenting can be done by using: \n // For single line code \n /* For multiline code */",
-                questionText: "question 3",
+                questionName: "Task 2",
+                questionTitle: "Declarations",
+                questionTutorial: "In JavaScipt, There are three kinds of variable declarations in JS.\n" +
+                    "var: Declares a variable, optionally initializing it to a value\n" +
+                    "let: Declares a block-scoped, local variable, optionally initializing it to a value\n" +
+                    "const: Declares a block-scoped, read-only named constant.\n",
+                questionText: "Please convert the following to JavaScript syntax!",
                 answer: "",
-                answerPlaceholder: "",
+                answerPlaceholder: "x = 42\n" +
+                    "y = 13\n" +
+                    "x = \"forty-two\"\n" +
+                    "z = \"The answer is\" + 42\n" +
+                    "coffees = ['French Roast', 'Colombian', 'Kona']",
                 completed: false,
             },
 
@@ -84,8 +91,20 @@ class App extends Component {
     handleNextQuestion = () => {
         this.setState({question: this.state.question + 1})
     };
+
     handlePrevQuestion = () => {
         this.setState({question: this.state.question - 1})
+    };
+
+    handleFinishCourse = () => {
+        this.setState({question: this.state.questions.length - 1})
+    };
+
+    handleCheckAnswer = () => {
+        //Addin fetch nonsense
+        let questions = this.state.questions;
+        questions[this.state.question].completed = true;
+        this.setState({questions: questions})
     };
 
 
@@ -148,11 +167,21 @@ class App extends Component {
                         </Button>
                     </div>
                 );
+            case this.state.questions.length:
+                return (
+                    <div>
+                        <h3>Congratulations on finishing the course</h3>
+                        <p>Please leave us a rating below</p>
+
+                    </div>
+                );
             default:
                 return (
                     <Question question={this.state.questions[this.state.question]}
                               nextQuestion={this.handleNextQuestion}
-                              prevQuestion={this.handlePrevQuestion}/>
+                              prevQuestion={this.handlePrevQuestion}
+                              checkAnswer={this.handleCheckAnswer}
+                              lastQuestion={this.state.question === this.state.questions.length - 1}/>
                 );
 
         }
