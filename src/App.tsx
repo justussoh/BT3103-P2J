@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import Typist from 'react-typist';
 import 'react-typist/dist/Typist.css';
-import { Container, Col, Row } from 'react-bootstrap';
+import {Container, Col, Row} from 'react-bootstrap';
 import NavBar from "./components/Navigation/NavBar";
+import Question from "./components/Form/Question";
 import SliderMenu from "./components/Navigation/SliderMenu";
 import Button from '@material-ui/core/Button';
 import AceEditor from 'react-ace';
@@ -13,19 +14,39 @@ import 'brace/theme/monokai';
 
 import './App.css';
 
-const questions = require('./questions.json')
+
+// const questions = require('./questions.json');
 
 class App extends Component {
 
     state = {
         openMenu: false,
         question: 0,
-        returnedData: null
+        returnedData: null,
+        questions: [
+            {
+                questionName: "Question 0",
+                questionText: "/*\n Welcome to From Python to JS. \n\n This quick and easy online module will teach you JavaScript, the popular programming language used for the Web. \n\n JavaScript is a scripting or programming language that allows you to implement complex things on web pages — every time a web page does more than just sit there and display static information for you to look at — displaying timely content updates, interactive maps, animated 2D/3D graphics, scrolling video jukeboxes, etc. — you can bet that JavaScript is probably involved. It is the third layer of the layer cake of standard web technologies, along with HTML and CSS .\n*/",
+                completed: false,
+            },
+            {
+                questionName: "Question 1",
+                questionText: "question 1",
+                completed: false,
+            },
+            {
+                questionName: "Question 2",
+                questionText: "question 3",
+                completed: false,
+            },
+
+
+        ],
     };
 
     handleMenu = (isOpen: boolean) => {
-        this.setState({ openMenu: isOpen })
-    }
+        this.setState({openMenu: isOpen})
+    };
 
 
     handleClickQuestion = (i: number) => {
@@ -36,7 +57,11 @@ class App extends Component {
     };
 
     handleMenuStateChange = (state: any) => {
-        this.setState({ openMenu: state.isOpen })
+        this.setState({openMenu: state.isOpen})
+    };
+
+    handleStart = () => {
+        this.setState({question: 1, openMenu: false,})
     };
 
 
@@ -62,52 +87,65 @@ class App extends Component {
         }).then(response => {
             return response.json()
         }).then(data => {
-            console.log(data)
-            this.setState({ returnedData: data });
+            console.log(data);
+            this.setState({returnedData: data});
         })
     };
 
     renderContent = () => {
+        switch (this.state.question) {
+            case 0:
+                return (
+                    <div className='d-flex align-items-center justify-content-center flex-column'>
+                        {/*{JSON.stringify(this.state.returnedData)}*/}
+                        <Typist className='title-font'>
+                            Learn how to script in JavaScript from Python!
+                        </Typist>
+                        <div className='d-flex align-items-center justify-content-center flex-column'
+                             style={{marginTop: '25px'}}>
+                            <AceEditor
+                                readOnly={false}
+                                wrapEnabled
+                                height='50vh'
+                                width='70vw'
+                                mode="javascript"
+                                theme="monokai"
+                                name="info-section"
+                                tabSize={0}
+                                editorProps={{
+                                    $blockScrolling: true,
+                                }}
+                                value={this.state.questions[this.state.question].questionText}
+                            />
+                        </div>
+                        <Button variant="outlined" className='button-start ml-auto' size='large'
+                                onClick={this.handleStart}>
+                            START
+                        </Button>
+                    </div>
+                );
+            default:
+                return (
+                    <Question question={this.state.questions[this.state.question]} />
+                );
 
-        return (
-            <div className='d-flex align-items-center justify-content-center flex-column'>
-                {JSON.stringify(this.state.returnedData)}
-                <Typist className='title-font'>
-                    Learn how to script in JavaScript from Python!
-                </Typist>
-                <div className='d-flex align-items-center justify-content-center flex-column' style={{ marginTop: '25px' }}>
-                    <AceEditor
-                        readOnly={false}
-                        wrapEnabled
-                        height='50vh'
-                        width='70vw'
-                        mode="javascript"
-                        theme="monokai"
-                        name="info-section"
-                        tabSize={0}
-                        editorProps={{
-                            $blockScrolling: true,
-                        }}
-                        value={questions[this.state.question]}
-                    />
-                </div>
-                <Button variant="outlined" className='button-start ml-auto' size='large' onClick={this.doCrazyShit}>
-                    START
-                </Button>
-            </div>
-        );
+        }
     };
 
     render() {
         return (
             <div className="App">
                 <SliderMenu open={this.state.openMenu} handleMenu={this.handleMenu}
-                    handleMenuStateChange={this.handleMenuStateChange}
-                    handleClickQuestion={this.handleClickQuestion} />
+                            handleMenuStateChange={this.handleMenuStateChange}
+                            handleClickQuestion={this.handleClickQuestion}
+                            handleStart={this.handleStart}
+                            questions={this.state.questions}
+                            question={this.state.question}
+                />
                 <Container fluid className='container-main d-flex align-items-center justify-content-center'
-                    id='page-wrap'>
-                    <NavBar handleMenu={this.handleMenu} />
-                    <Row className='d-flex align-items-center justify-content-center' style={{ width: '80vw' }}>
+                           id='page-wrap'>
+                    <NavBar handleMenu={this.handleMenu}/>
+                    <Row className='d-flex align-items-center justify-content-center' style={{width: '80vw'}}>
                         <Col xs={10}>
                             {this.renderContent()}
                         </Col>
