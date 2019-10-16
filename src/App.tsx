@@ -50,7 +50,7 @@ class App extends Component {
             {
                 questionName: "Task 2",
                 questionTitle: "Declarations",
-                questionTutorial: "In JavaScipt, There are three kinds of variable declarations in JS.\n" +
+                questionTutorial: "In JavaScipt, there are three kinds of variable declarations in JS.\n" +
                     "var: Declares a variable, optionally initializing it to a value\n" +
                     "let: Declares a block-scoped, local variable, optionally initializing it to a value\n" +
                     "const: Declares a block-scoped, read-only named constant.\n",
@@ -63,8 +63,102 @@ class App extends Component {
                     "coffees = ['French Roast', 'Colombian', 'Kona']",
                 completed: false,
             },
-
-
+            {
+                questionName: "Task 3",
+                questionTitle: "Basic Functions",
+                questionTutorial: "In JavaScipt, we first have to declare functions as functions.\n Also, replace the : with curly braces {}",
+                questionText: "Please convert the following to JavaScript syntax!",
+                answer: "",
+                answerPlaceholder: "def square(num):\n      return num * num",
+                completed: false,
+            },
+            {
+                questionName: "Task 4",
+                questionTitle: "Default Parameters",
+                questionTutorial: "In JavaScipt, default parameters allow us to initialize functions with default values.\n",
+                questionText: "Please convert the following to JavaScript syntax!",
+                answer: "",
+                answerPlaceholder: "def multiply(a, b=5):\n" +
+                    "    b = b if type(b)==int else 1\n" +
+                    "    return a * b",
+                completed: false,
+            },
+            {
+                questionName: "Task 5",
+                questionTitle: "Rest Parameters",
+                questionTutorial: "The rest parameter syntax allows us to represent an indefinite number of arguments as an array.\n",
+                questionText: "Please convert the following to JavaScript syntax!",
+                answer: "",
+                answerPlaceholder: "def multiply(multiplier, *args):\n" +
+                    "    return map(lambda x: multiplier * x, args) \n" +
+                    "\n" +
+                    "var arr = multiply(2, 1, 2, 3);\n" +
+                    "console.log(arr); // [2, 4, 6]",
+                completed: false,
+            },
+            {
+                questionName: "Task 6",
+                questionTitle: "Control Flow",
+                questionTutorial: "Using if-else, define a function odd(x) that returns True when its integer argument is an odd number and False otherwise\n" +
+                    "\n" +
+                    "function odd(x){\n" +
+                    "    return x%2 === 1\n" +
+                    "}\n" +
+                    "Using switch, write a function getPrice that takes in the name of a fruit and logs the price of the fruit. Oranges are $1, apples are $2, and bananas are $3. If the fruit is none of the 3, log an apology. Sample execution below:",
+                questionText: "Please write a switch statement",
+                answer: "",
+                answerPlaceholder: "getPrice('oranges') // logs \"$1\"\n" +
+                    "getPrice('pears') // logs \"Sorry, we are out of pears.\"\n" +
+                    "function getPrice(fruits) {\n" +
+                    "}",
+                completed: false,
+            },
+            {
+                questionName: "Task 7",
+                questionTitle: "Error Handling",
+                questionTutorial: "",
+                questionText: "Please convert the following to JavaScript syntax!",
+                answer: "",
+                answerPlaceholder: "try:\n" +
+                    "    monthName = getMonthName(month) # function could throw exception\n" +
+                    "except Exception as e:\n" +
+                    "    monthName = 'unknown'\n" +
+                    "    logMyErrors(e)",
+                completed: false,
+            },
+            {
+                questionName: "Task 8",
+                questionTitle: "Loops and Iterations",
+                questionTutorial: "The for statement creates a loop that is executed as long as a condition is true.",
+                questionText: "Please convert the following to JavaScript syntax!",
+                answer: "",
+                answerPlaceholder: "for step in range(5):\n" +
+                    "    print(\"i am at step: \" + step)",
+                completed: false,
+            },
+            {
+                questionName: "Task 9",
+                questionTitle: "Working with Objects",
+                questionTutorial: "Objects are similar to Python dictionaries, they hold a key:value pairing. An example of initialising a object is as shown below:\n"+
+                    "var myCar = new Object();\n" +
+                    "myCar.make = 'Ford';\n" +
+                    "myCar.model = 'Mustang';\n" +
+                    "myCar.year = 1969;",
+                questionText: "Using a for..in loop, print all the available properties of",
+                answer: "",
+                answerPlaceholder: "for k in myCar.keys():\n" +
+                    "   print (k, myCar[k]) ",
+                completed: false,
+            },
+            {
+                questionName: "Task 10",
+                questionTitle: "Promises",
+                questionTutorial: "",
+                questionText: "Please convert the following to JavaScript syntax!",
+                answer: "",
+                answerPlaceholder: "Haven complete",
+                completed: false,
+            },
         ],
     };
 
