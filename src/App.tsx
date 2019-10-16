@@ -7,6 +7,7 @@ import Question from "./components/Form/Question";
 import SliderMenu from "./components/Navigation/SliderMenu";
 import Button from '@material-ui/core/Button';
 import AceEditor from 'react-ace';
+import axios from "axios";
 
 import 'brace/mode/javascript';
 import 'brace/theme/monokai';
@@ -139,7 +140,7 @@ class App extends Component {
             {
                 questionName: "Task 9",
                 questionTitle: "Working with Objects",
-                questionTutorial: "Objects are similar to Python dictionaries, they hold a key:value pairing. An example of initialising a object is as shown below:\n"+
+                questionTutorial: "Objects are similar to Python dictionaries, they hold a key:value pairing. An example of initialising a object is as shown below:\n" +
                     "var myCar = new Object();\n" +
                     "myCar.make = 'Ford';\n" +
                     "myCar.model = 'Mustang';\n" +
@@ -194,16 +195,28 @@ class App extends Component {
         this.setState({question: this.state.questions.length - 1})
     };
 
-    handleCheckAnswer = () => {
-        //Addin fetch nonsense
-        let questions = this.state.questions;
-        questions[this.state.question].completed = true;
-        this.setState({questions: questions})
+    handleCheckAnswer = async () => {
+        //Add in fetch nonsense
+        let gatewayURL = "https://cl8r4dbpqe.execute-api.us-east-1.amazonaws.com/Prod/";
+        let questionURL = gatewayURL + `?question=${this.state.question}`;
+        let answer = {};
+        try{
+            const res = await axios.post(questionURL, {answer});
+            const responseBody = JSON.parse(res.data);
+            let questions = this.state.questions;
+            // questions[this.state.question].completed = responseBody.;
+            questions[this.state.question].completed = true;
+            this.setState({questions: questions})
+        }
+        catch (err) {
+            console.log(err);
+        }
+
     };
 
 
     doCrazyShit = () => {
-        const gatewayURL = "https://cl8r4dbpqe.execute-api.us-east-1.amazonaws.com/Prod/"
+        const gatewayURL = "https://cl8r4dbpqe.execute-api.us-east-1.amazonaws.com/Prod/";
         fetch(gatewayURL, {
             method: "POST",
             headers: {
