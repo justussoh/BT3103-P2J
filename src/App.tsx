@@ -324,7 +324,7 @@ class App extends Component {
                                 emptyIcon={<StarBorderIcon fontSize="inherit" style={{color:"white"}}/>}
                             />
                         </Box>
-                        <p>And also help us to complete a feedback form <a href='https://forms.gle/Vs12yPYfJiAgdi2SA' className='feedback-link'>here</a>.</p>
+                        <p>And also help us to complete a feedback form <a href='https://docs.google.com/forms/d/e/1FAIpQLSfM35tbCqA1qp8Z95il-rWhtXZdLI_3orBRK8onNHISGxbYNQ/viewform?usp=sf_link' className='feedback-link'>here</a>.</p>
                     </div>
                 );
             default:
