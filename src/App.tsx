@@ -6,7 +6,10 @@ import NavBar from "./components/Navigation/NavBar";
 import Question from "./components/Form/Question";
 import SliderMenu from "./components/Navigation/SliderMenu";
 import Button from '@material-ui/core/Button';
+import Box from '@material-ui/core/Box';
 import AceEditor from 'react-ace';
+import Rating from '@material-ui/lab/Rating';
+import StarBorderIcon from '@material-ui/icons/StarBorder';
 import axios from "axios";
 
 import 'brace/mode/javascript';
@@ -32,6 +35,7 @@ class App extends Component {
                 questionText: "/*\n Welcome to From Python to JS. \n\n This quick and easy online module will teach you JavaScript, the popular programming language used for the Web. \n\n JavaScript is a scripting or programming language that allows you to implement complex things on web pages — every time a web page does more than just sit there and display static information for you to look at — displaying timely content updates, interactive maps, animated 2D/3D graphics, scrolling video jukeboxes, etc. — you can bet that JavaScript is probably involved. It is the third layer of the layer cake of standard web technologies, along with HTML and CSS .\n*/",
                 answer: "",
                 answerPlaceholder: "",
+                feedbackText:"",
                 completed: false,
             },
             {
@@ -46,6 +50,7 @@ class App extends Component {
                     "this is a longer,\n" +
                     "multi-line comment\n" +
                     "'''",
+                feedbackText:"",
                 completed: false,
             },
             {
@@ -62,6 +67,7 @@ class App extends Component {
                     "x = \"forty-two\"\n" +
                     "z = \"The answer is\" + 42\n" +
                     "coffees = ['French Roast', 'Colombian', 'Kona']",
+                feedbackText:"",
                 completed: false,
             },
             {
@@ -71,6 +77,7 @@ class App extends Component {
                 questionText: "Please convert the following to JavaScript syntax!",
                 answer: "",
                 answerPlaceholder: "def square(num):\n      return num * num",
+                feedbackText:"",
                 completed: false,
             },
             {
@@ -82,6 +89,7 @@ class App extends Component {
                 answerPlaceholder: "def multiply(a, b=5):\n" +
                     "    b = b if type(b)==int else 1\n" +
                     "    return a * b",
+                feedbackText:"",
                 completed: false,
             },
             {
@@ -95,6 +103,7 @@ class App extends Component {
                     "\n" +
                     "var arr = multiply(2, 1, 2, 3);\n" +
                     "console.log(arr); // [2, 4, 6]",
+                feedbackText:"",
                 completed: false,
             },
             {
@@ -112,6 +121,7 @@ class App extends Component {
                     "getPrice('pears') // logs \"Sorry, we are out of pears.\"\n" +
                     "function getPrice(fruits) {\n" +
                     "}",
+                feedbackText:"",
                 completed: false,
             },
             {
@@ -125,6 +135,7 @@ class App extends Component {
                     "except Exception as e:\n" +
                     "    monthName = 'unknown'\n" +
                     "    logMyErrors(e)",
+                feedbackText:"",
                 completed: false,
             },
             {
@@ -135,6 +146,7 @@ class App extends Component {
                 answer: "",
                 answerPlaceholder: "for step in range(5):\n" +
                     "    print(\"i am at step: \" + step)",
+                feedbackText:"",
                 completed: false,
             },
             {
@@ -149,18 +161,21 @@ class App extends Component {
                 answer: "",
                 answerPlaceholder: "for k in myCar.keys():\n" +
                     "   print (k, myCar[k]) ",
+                feedbackText:"",
                 completed: false,
             },
             {
                 questionName: "Task 10",
                 questionTitle: "Promises",
-                questionTutorial: "",
+                questionTutorial: "Testing",
                 questionText: "Please convert the following to JavaScript syntax!",
                 answer: "",
                 answerPlaceholder: "Haven complete",
+                feedbackText:"",
                 completed: false,
             },
         ],
+        feedbackRating:0,
     };
 
     handleMenu = (isOpen: boolean) => {
@@ -199,13 +214,29 @@ class App extends Component {
         //Add in fetch nonsense
         let gatewayURL = "https://cl8r4dbpqe.execute-api.us-east-1.amazonaws.com/Prod/";
         let questionURL = gatewayURL + `?question=${this.state.question}`;
-        let answer = {};
+        let answer = {
+            "userToken": "ABCDE",
+            "shown": {
+                "0": ""
+            },
+            "editable": {
+                "0": this.state.questions[this.state.question].answer
+            },
+            "hidden": {
+                "0": ""
+            }
+        };
         try{
-            const res = await axios.post(questionURL, {answer});
+            const res = await axios.post(questionURL, {...answer}, {
+                headers: {
+                    Accept: 'application/json',
+                }
+            });
             const responseBody = JSON.parse(res.data);
             let questions = this.state.questions;
-            // questions[this.state.question].completed = responseBody.;
-            questions[this.state.question].completed = true;
+            questions[this.state.question].completed = responseBody.isComplete;
+            questions[this.state.question].feedbackText = responseBody.feedbackText;
+            // questions[this.state.question].completed = true;
             this.setState({questions: questions})
         }
         catch (err) {
@@ -276,10 +307,23 @@ class App extends Component {
                 );
             case this.state.questions.length:
                 return (
-                    <div>
-                        <h3>Congratulations on finishing the course</h3>
-                        <p>Please leave us a rating below</p>
-
+                    <div className='d-flex flex-column align-items-center justify-content-center'>
+                        <Typist className='title-font'>
+                            Congratulations on finishing the course
+                        </Typist>
+                        <p style={{marginBottom:0}}>Please leave us a rating below</p>
+                        <Box component="fieldset" mb={3} borderColor="transparent">
+                            <Rating
+                                name="simple-controlled"
+                                value={this.state.feedbackRating}
+                                onChange={(event, newValue) => {
+                                    this.setState({feedbackRating:newValue})
+                                }}
+                                size="large"
+                                emptyIcon={<StarBorderIcon fontSize="inherit" style={{color:"white"}}/>}
+                            />
+                        </Box>
+                        <p>And also help us to complete a feedback form here.</p>
                     </div>
                 );
             default:

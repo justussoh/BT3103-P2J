@@ -9,7 +9,6 @@ import Divider from '@material-ui/core/Divider';
 import CircleIcon from '@material-ui/icons/Lens';
 import CircleOutlineIcon from '@material-ui/icons/LensOutlined';
 
-
 type MyProps = {
     open: boolean,
     question: number,
@@ -20,6 +19,7 @@ type MyProps = {
         questionText: string,
         answer: string,
         answerPlaceholder: string,
+        feedbackText:string,
         completed: boolean
     }[],
     handleMenu: (arg0: boolean) => void,
@@ -59,7 +59,7 @@ class SliderMenu extends React.Component<MyProps, {}> {
                             <CloseIcon className='closeIconMenu'/>
                         </IconButton>
                     </Grid>
-                    {this.props.question === 0 ?
+                    {this.props.question === 0 || this.props.question === (this.props.questions.length) ?
                         <Grid container spacing={3}>
                             <Grid item xs={12} className='d-flex align-items-center justify-content-center'>
                                 <Button variant="outlined" className='button-start' size='large'

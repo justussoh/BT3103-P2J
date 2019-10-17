@@ -16,6 +16,7 @@ type MyProps = {
         questionText: string,
         answer: string,
         answerPlaceholder: string,
+        feedbackText: string,
         completed: boolean
     },
     nextQuestion: () => void,
@@ -36,15 +37,22 @@ class Question extends React.Component<MyProps, {}> {
                 <Row>
                     <h3 className='question-title'>{this.props.question.questionName}: {this.props.question.questionTitle}</h3>
                 </Row>
-                <Row>
-                    <Col className='d-flex align-items-center justify-content-center'>
-                        <p>{this.props.question.questionTutorial.split('\n').map(function (item, key) {
-                            return (
-                                <span key={key} className='question-font'>
+                <Row className='w-100'>
+                    <Col>
+                        <Container fluid>
+                            <Row>
+                                <p>{this.props.question.questionTutorial.split('\n').map(function (item, key) {
+                                    return (
+                                        <span key={key} className='question-font'>
                             {item}
-                                    <br/>
+                                            <br/>
                         </span>)
-                        })}</p>
+                                })}</p>
+                            </Row>
+                            <Row>
+                                <p>{this.props.question.feedbackText}</p>
+                            </Row>
+                        </Container>
                     </Col>
                     <Col>
                         <p className='question-font'><strong>{this.props.question.questionText}</strong></p>
@@ -75,7 +83,8 @@ class Question extends React.Component<MyProps, {}> {
                     </Button>
                     <Button variant="outlined" className='button-start' size='large'
                             onClick={this.props.nextQuestion} style={{marginLeft: 10}}
-                            disabled={!this.props.question.completed}>
+                            disabled={!this.props.question.completed}
+                    >
                         {this.props.lastQuestion ? "SUBMIT" : 'NEXT'}
                     </Button>
                 </Row>
