@@ -36,3 +36,8 @@ body, html {
   border-color: grey !important;
   color: grey!important;
 }
+
+.feedback-link{
+  text-decoration: none !important;
+  color:#007bff;
+}
