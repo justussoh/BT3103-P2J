@@ -39,18 +39,24 @@ class Question extends React.Component<MyProps, {}> {
                 </Row>
                 <Row className='w-100'>
                     <Col>
-                        <Container fluid>
-                            <Row>
-                                <p>{this.props.question.questionTutorial.split('\n').map(function (item, key) {
-                                    return (
-                                        <span key={key} className='question-font'>
-                            {item}
-                                            <br/>
-                        </span>)
-                                })}</p>
+                        <Container fluid className='h-100'>
+                            <Row className='h-50'>
+                                <div>
+                                    <h6>Instructions:</h6>
+                                    <p>{this.props.question.questionTutorial.split('\n').map(function (item, key) {
+                                        return (
+                                            <span key={key} className='question-font'>
+                                                {item}
+                                                <br/>
+                                            </span>)
+                                    })}</p>
+                                </div>
                             </Row>
-                            <Row>
-                                <p>{this.props.question.feedbackText}</p>
+                            <Row className='d-flex flex-column h-50'>
+                                <h6>Output:</h6>
+                                <div className='output-box'>
+                                    <p className='feedback-text-font'>{this.props.question.feedbackText}</p>
+                                </div>
                             </Row>
                         </Container>
                     </Col>

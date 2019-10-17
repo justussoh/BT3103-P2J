@@ -50,7 +50,7 @@ class App extends Component {
                     "this is a longer,\n" +
                     "multi-line comment\n" +
                     "'''",
-                feedbackText:"",
+                feedbackText:"Please replace # with // and ''' with /*",
                 completed: false,
             },
             {
@@ -297,6 +297,7 @@ class App extends Component {
                                     $blockScrolling: true,
                                 }}
                                 value={this.state.questions[this.state.question].questionText}
+                                style={{maxWidth:570}}
                             />
                         </div>
                         <Button variant="outlined" className='button-start ml-auto' size='large'

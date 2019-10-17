@@ -37,7 +37,12 @@ class SliderMenu extends React.Component<MyProps, {}> {
                 return ''
             } else {
                 return (
-                    <Grid item xs={12} onClick={() => this.props.handleClickQuestion(index)} key={index} className='d-flex align-items-center'>
+                    <Grid item xs={12} onClick={() => {
+                        if (question.completed){
+                            this.props.handleClickQuestion(index)
+                        }
+                    }} key={index} className={`d-flex align-items-center ${question.completed? "hover-pointer":"hover-cancel"}`}
+                    >
                         {question.completed ? <CircleIcon style={{color:'green'}}/> : <CircleOutlineIcon style={{color:'red'}}/>}
                         <span style={{marginLeft:10}}>
                             {question.questionName}
