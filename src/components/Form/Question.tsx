@@ -4,21 +4,22 @@ import AceEditor from "react-ace";
 import 'brace/mode/javascript';
 import 'brace/theme/monokai';
 import Button from "@material-ui/core/Button";
-import {Container, Col, Row} from 'react-bootstrap';
+import { Container, Col, Row } from 'react-bootstrap';
 
+export interface QuestionType {
+    questionName: string,
+    questionTitle: string,
+    questionTutorial: string,
+    questionText: string,
+    answer: string,
+    answerPlaceholder: string,
+    feedbackText: string,
+    completed: boolean
+}
 
 type MyProps = {
     lastQuestion: boolean,
-    question: {
-        questionName: string,
-        questionTitle: string,
-        questionTutorial: string,
-        questionText: string,
-        answer: string,
-        answerPlaceholder: string,
-        feedbackText: string,
-        completed: boolean
-    },
+    question: QuestionType,
     nextQuestion: () => void,
     prevQuestion: () => void,
     checkAnswer: () => void,
@@ -47,7 +48,7 @@ class Question extends React.Component<MyProps, {}> {
                                         return (
                                             <span key={key} className='question-font'>
                                                 {item}
-                                                <br/>
+                                                <br />
                                             </span>)
                                     })}</p>
                                 </div>
@@ -80,16 +81,16 @@ class Question extends React.Component<MyProps, {}> {
                 </Row>
                 <Row className='d-flex w-100'>
                     <Button variant="outlined" className='button-start' size='large'
-                            onClick={this.props.prevQuestion}>
+                        onClick={this.props.prevQuestion}>
                         PREVIOUS
                     </Button>
                     <Button variant="outlined" className='button-start ml-auto' size='large'
-                            onClick={this.props.checkAnswer}>
+                        onClick={this.props.checkAnswer}>
                         RUN
                     </Button>
                     <Button variant="outlined" className='button-start' size='large'
-                            onClick={this.props.nextQuestion} style={{marginLeft: 10}}
-                            disabled={!this.props.question.completed}
+                        onClick={this.props.nextQuestion} style={{ marginLeft: 10 }}
+                        disabled={!this.props.question.completed}
                     >
                         {this.props.lastQuestion ? "SUBMIT" : 'NEXT'}
                     </Button>
