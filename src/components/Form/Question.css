@@ -1,27 +1,33 @@
-.question-title{
+.question-title {
     color: white;
     font-weight: bold;
     font-size: 35px;
 }
 
-.question-font{
+.question-font {
+    color: white;
+    font-size: 12px;
+}
+
+.question-instruction {
     color: white;
 }
 
-.output-box{
+.output-box {
     border-radius: 10px;
     background-color: #272822;
     height: 80%;
-    padding:10px;
+    padding: 10px;
     border: 1px white solid;
 }
-.feedback-text-font{
+
+.feedback-text-font {
     font-family: "Lucida Console", Monaco, monospace;
     font-size: 12px;
 }
 
-.loading-color{
-    color:white!important;
+.loading-color {
+    color: white !important;
     margin-top: 25px;
     margin-right: 20px;
 }

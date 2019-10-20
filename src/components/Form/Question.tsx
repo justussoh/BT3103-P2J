@@ -4,14 +4,16 @@ import AceEditor from "react-ace";
 import 'brace/mode/javascript';
 import 'brace/theme/monokai';
 import Button from "@material-ui/core/Button";
-import { Container, Col, Row } from 'react-bootstrap';
+import {Container, Col, Row, OverlayTrigger, Tooltip} from 'react-bootstrap';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import HelpIcon from '@material-ui/icons/HelpOutline';
 
 export interface QuestionType {
     questionName: string,
     questionTitle: string,
     questionTutorial: string,
     questionText: string,
+    hint:string,
     answer: string,
     feedbackText: string,
     completed: boolean
@@ -43,15 +45,15 @@ class Question extends React.Component<MyProps, {}> {
                     <Col>
                         <Container fluid className='h-100'>
                             <Row className='h-50'>
-                                <div>
+                                <div style={{lineHeight:1}}>
                                     <h6>Instructions:</h6>
-                                    <p>{this.props.question.questionTutorial.split('\n').map(function (item, key) {
+                                    {this.props.question.questionTutorial.split('\n').map(function (item, key) {
                                         return (
                                             <span key={key} className='question-font'>
                                                 {item}
                                                 <br />
                                             </span>)
-                                    })}</p>
+                                    })}
                                 </div>
                             </Row>
                             <Row className='d-flex flex-column h-50'>
@@ -63,7 +65,21 @@ class Question extends React.Component<MyProps, {}> {
                         </Container>
                     </Col>
                     <Col>
-                        <p className='question-font'><strong>{this.props.question.questionText}</strong></p>
+                        <div className='d-flex align-items-center '>
+                            <p className='question-instruction'><strong>{this.props.question.questionText}</strong></p>
+
+                            <OverlayTrigger
+                                key='bottom'
+                                placement='bottom'
+                                overlay={
+                                    <Tooltip id='hint'>
+                                        {this.props.question.hint}
+                                    </Tooltip>
+                                }
+                            >
+                                <HelpIcon/>
+                            </OverlayTrigger>
+                        </div>
                         <AceEditor
                             wrapEnabled
                             height='40vh'
@@ -82,18 +98,18 @@ class Question extends React.Component<MyProps, {}> {
                 </Row>
                 <Row className='d-flex w-100'>
                     <Button variant="outlined" className='button-start' size='large'
-                        onClick={this.props.prevQuestion}>
+                            onClick={this.props.prevQuestion}>
                         PREVIOUS
                     </Button>
-                    {this.props.isLoading?
-                        <CircularProgress className='loading-color ml-auto' />
-                        :<Button variant="outlined" className='button-start ml-auto' size='large'
-                        onClick={this.props.checkAnswer}>
-                        RUN
-                    </Button>}
+                    {this.props.isLoading ?
+                        <CircularProgress className='loading-color ml-auto'/>
+                        : <Button variant="outlined" className='button-start ml-auto' size='large'
+                                  onClick={this.props.checkAnswer}>
+                            RUN
+                        </Button>}
                     <Button variant="outlined" className='button-start' size='large'
-                        onClick={this.props.nextQuestion} style={{ marginLeft: 10 }}
-                        disabled={!this.props.question.completed}
+                            onClick={this.props.nextQuestion} style={{marginLeft: 10}}
+                            disabled={!this.props.question.completed}
                     >
                         {this.props.lastQuestion ? "SUBMIT" : 'NEXT'}
                     </Button>

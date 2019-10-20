@@ -8,6 +8,7 @@ export const questions: QuestionType[] =
             questionTutorial: "",
             questionText: "/*\n Welcome to From Python to JS. \n\n This quick and easy online module will teach you JavaScript, the popular programming language used for the Web. \n\n JavaScript is a scripting or programming language that allows you to implement complex things on web pages — every time a web page does more than just sit there and display static information for you to look at — displaying timely content updates, interactive maps, animated 2D/3D graphics, scrolling video jukeboxes, etc. — you can bet that JavaScript is probably involved. It is the third layer of the layer cake of standard web technologies, along with HTML and CSS .\n*/",
             answer: "",
+            hint:"",
             feedbackText: "",
             completed: false,
         },
@@ -16,13 +17,14 @@ export const questions: QuestionType[] =
             questionTitle: "Comments",
             questionTutorial: "In JavaScipt, commenting can be done by using: \n // For single line code \n /* For multiline code */",
             questionText: "Please convert the following to JavaScript syntax!",
+            hint:"Replace # with // and ''' with /*",
             answer: "# a one line comment\n" +
                 "\n" +
                 "'''\n" +
                 "this is a longer,\n" +
                 "multi-line comment\n" +
                 "'''",
-            feedbackText: "Please replace # with // and ''' with /*",
+            feedbackText: "",
             completed: false,
         },
         {
@@ -33,6 +35,7 @@ export const questions: QuestionType[] =
                 "let: Declares a block-scoped, local variable, optionally initializing it to a value\n" +
                 "const: Declares a block-scoped, read-only named constant.\n",
             questionText: "Please convert the following to JavaScript syntax!",
+            hint:"",
             answer: "x = 42\n" +
                 "y = 13\n" +
                 "x = \"forty-two\"\n" +
@@ -46,6 +49,7 @@ export const questions: QuestionType[] =
             questionTitle: "Basic Functions",
             questionTutorial: "In JavaScipt, we first have to declare functions as functions.\n Also, replace the : with curly braces {}",
             questionText: "Please convert the following to JavaScript syntax!",
+            hint:"",
             answer: "def square(num):\n      return num * num",
             feedbackText: "",
             completed: false,
@@ -55,6 +59,7 @@ export const questions: QuestionType[] =
             questionTitle: "Default Parameters",
             questionTutorial: "In JavaScipt, default parameters allow us to initialize functions with default values.\n",
             questionText: "Please convert the following to JavaScript syntax!",
+            hint:"",
             answer: "def multiply(a, b=5):\n" +
                 "    b = b if type(b)==int else 1\n" +
                 "    return a * b",
@@ -66,6 +71,7 @@ export const questions: QuestionType[] =
             questionTitle: "Rest Parameters",
             questionTutorial: "The rest parameter syntax allows us to represent an indefinite number of arguments as an array.\n",
             questionText: "Please convert the following to JavaScript syntax!",
+            hint:"",
             answer: "def multiply(multiplier, *args):\n" +
                 "    return map(lambda x: multiplier * x, args) \n" +
                 "\n" +
@@ -84,6 +90,7 @@ export const questions: QuestionType[] =
                 "}\n" +
                 "Using switch, write a function getPrice that takes in the name of a fruit and logs the price of the fruit. Oranges are $1, apples are $2, and bananas are $3. If the fruit is none of the 3, log an apology. Sample execution below:",
             questionText: "Please write a switch statement",
+            hint:"",
             answer: "getPrice('oranges') // logs \"$1\"\n" +
                 "getPrice('pears') // logs \"Sorry, we are out of pears.\"\n" +
                 "function getPrice(fruits) {\n" +
@@ -96,6 +103,7 @@ export const questions: QuestionType[] =
             questionTitle: "Error Handling",
             questionTutorial: "",
             questionText: "Please convert the following to JavaScript syntax!",
+            hint:"",
             answer: "try:\n" +
                 "    monthName = getMonthName(month) # function could throw exception\n" +
                 "except Exception as e:\n" +
@@ -109,6 +117,7 @@ export const questions: QuestionType[] =
             questionTitle: "Loops and Iterations",
             questionTutorial: "The for statement creates a loop that is executed as long as a condition is true.",
             questionText: "Please convert the following to JavaScript syntax!",
+            hint:"",
             answer: "for step in range(5):\n" +
                 "    print(\"i am at step: \" + step)",
             feedbackText: "",
@@ -123,6 +132,7 @@ export const questions: QuestionType[] =
                 "myCar.model = 'Mustang';\n" +
                 "myCar.year = 1969;",
             questionText: "Using a for..in loop, print all the available properties of",
+            hint:"",
             answer: "for k in myCar.keys():\n" +
                 "   print (k, myCar[k]) ",
             feedbackText: "",
@@ -133,6 +143,7 @@ export const questions: QuestionType[] =
             questionTitle: "Promises",
             questionTutorial: "Testing",
             questionText: "Please convert the following to JavaScript syntax!",
+            hint:"",
             answer: "Haven complete",
             feedbackText: "",
             completed: false,
