@@ -72,6 +72,10 @@ class App extends Component {
         this.setState({showAlert: false})
     };
 
+    handleStartOver =()=>{
+        this.setState({question:0})
+    };
+
     handleCheckAnswer = async () => {
         //Add in fetch nonsense
         this.setState({isLoading: true});
@@ -162,6 +166,10 @@ class App extends Component {
                         <p>And also help us to complete a feedback form <a
                             href='https://docs.google.com/forms/d/e/1FAIpQLSfM35tbCqA1qp8Z95il-rWhtXZdLI_3orBRK8onNHISGxbYNQ/viewform?usp=sf_link'
                             className='feedback-link'>here</a>.</p>
+                        <Button variant="outlined" className='button-start' size='large'
+                                onClick={this.handleStartOver}>
+                            START OVER
+                        </Button>
                     </div>
                 );
             default:
