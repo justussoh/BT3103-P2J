@@ -13,6 +13,11 @@
     color: white;
 }
 
+.progress-bar-container{
+    margin-top: 25px;
+    margin-left: auto;
+}
+
 .output-box {
     border-radius: 10px;
     background-color: #272822;

@@ -167,6 +167,7 @@ class App extends Component {
             default:
                 return (
                     <Question question={this.state.questions[this.state.question]}
+                              index={this.state.question}
                               nextQuestion={this.handleNextQuestion}
                               prevQuestion={this.handlePrevQuestion}
                               checkAnswer={this.handleCheckAnswer}
