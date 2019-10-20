@@ -19,3 +19,9 @@
     font-family: "Lucida Console", Monaco, monospace;
     font-size: 12px;
 }
+
+.loading-color{
+    color:white!important;
+    margin-top: 25px;
+    margin-right: 20px;
+}

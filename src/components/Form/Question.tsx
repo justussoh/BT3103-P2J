@@ -5,6 +5,7 @@ import 'brace/mode/javascript';
 import 'brace/theme/monokai';
 import Button from "@material-ui/core/Button";
 import { Container, Col, Row } from 'react-bootstrap';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 export interface QuestionType {
     questionName: string,
@@ -12,13 +13,13 @@ export interface QuestionType {
     questionTutorial: string,
     questionText: string,
     answer: string,
-    answerPlaceholder: string,
     feedbackText: string,
     completed: boolean
 }
 
 type MyProps = {
     lastQuestion: boolean,
+    isLoading: boolean,
     question: QuestionType,
     nextQuestion: () => void,
     prevQuestion: () => void,
@@ -75,7 +76,7 @@ class Question extends React.Component<MyProps, {}> {
                             editorProps={{
                                 $blockScrolling: true,
                             }}
-                            value={this.props.question.answerPlaceholder}
+                            value={this.props.question.answer}
                         />
                     </Col>
                 </Row>
@@ -84,10 +85,12 @@ class Question extends React.Component<MyProps, {}> {
                         onClick={this.props.prevQuestion}>
                         PREVIOUS
                     </Button>
-                    <Button variant="outlined" className='button-start ml-auto' size='large'
+                    {this.props.isLoading?
+                        <CircularProgress className='loading-color ml-auto' />
+                        :<Button variant="outlined" className='button-start ml-auto' size='large'
                         onClick={this.props.checkAnswer}>
                         RUN
-                    </Button>
+                    </Button>}
                     <Button variant="outlined" className='button-start' size='large'
                         onClick={this.props.nextQuestion} style={{ marginLeft: 10 }}
                         disabled={!this.props.question.completed}

@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import Typist from 'react-typist';
 import 'react-typist/dist/Typist.css';
-import { Container, Col, Row } from 'react-bootstrap';
+import {Container, Col, Row} from 'react-bootstrap';
 import NavBar from "./components/Navigation/NavBar";
 import Question from "./components/Form/Question";
 import SliderMenu from "./components/Navigation/SliderMenu";
@@ -17,13 +17,15 @@ import 'brace/theme/monokai';
 
 
 import './App.css';
-import { questions } from "./QuestionList";
+import {questions} from "./QuestionList";
 
 export interface BackendResponse {
-    htmlFeedback: string;
-    isComplete: boolean;
-    jsonFeedback: any;
-    textFeedback: string;
+    data: {
+        htmlFeedback: string;
+        isComplete: boolean;
+        jsonFeedback: any;
+        textFeedback: string;
+    }
 };
 
 class App extends Component {
@@ -34,10 +36,11 @@ class App extends Component {
         returnedData: null,
         questions: questions,
         feedbackRating: 0,
+        isLoading: false,
     };
 
     handleMenu = (isOpen: boolean) => {
-        this.setState({ openMenu: isOpen })
+        this.setState({openMenu: isOpen})
     };
 
 
@@ -49,27 +52,24 @@ class App extends Component {
     };
 
     handleMenuStateChange = (state: any) => {
-        this.setState({ openMenu: state.isOpen })
+        this.setState({openMenu: state.isOpen})
     };
 
     handleStart = () => {
-        this.setState({ question: 1, openMenu: false, })
+        this.setState({question: 1, openMenu: false,})
     };
 
     handleNextQuestion = () => {
-        this.setState({ question: this.state.question + 1 })
+        this.setState({question: this.state.question + 1})
     };
 
     handlePrevQuestion = () => {
-        this.setState({ question: this.state.question - 1 })
-    };
-
-    handleFinishCourse = () => {
-        this.setState({ question: this.state.questions.length - 1 })
+        this.setState({question: this.state.question - 1})
     };
 
     handleCheckAnswer = async () => {
         //Add in fetch nonsense
+        this.setState({isLoading: true});
         let gatewayURL = "https://cl8r4dbpqe.execute-api.us-east-1.amazonaws.com/Prod/";
         let questionURL = gatewayURL + `?question=${this.state.question}`;
         let answer = {
@@ -85,20 +85,21 @@ class App extends Component {
             }
         };
         try {
-            const res: BackendResponse = await axios.post(questionURL, { ...answer }, {
+            const res: BackendResponse = await axios.post(questionURL, {...answer}, {
                 headers: {
                     Accept: 'application/json',
                 }
             });
             console.log(res);
             let questions = this.state.questions;
-            questions[this.state.question].completed = res.isComplete;
-            questions[this.state.question].feedbackText = res.textFeedback;
+            questions[this.state.question].completed = res.data.isComplete;
+            questions[this.state.question].feedbackText = res.data.textFeedback;
             // questions[this.state.question].completed = true;
-            this.setState({ questions: questions })
-        }
-        catch (err) {
+            this.setState({questions: questions})
+        } catch (err) {
             console.log(err);
+        } finally {
+            this.setState({isLoading: false});
         }
 
     };
@@ -112,7 +113,7 @@ class App extends Component {
                             Learn how to script in JavaScript from Python!
                         </Typist>
                         <div className='d-flex align-items-center justify-content-center flex-column'
-                            style={{ marginTop: '25px' }}>
+                             style={{marginTop: '25px'}}>
                             <AceEditor
                                 readOnly={false}
                                 wrapEnabled
@@ -126,11 +127,11 @@ class App extends Component {
                                     $blockScrolling: true,
                                 }}
                                 value={this.state.questions[this.state.question].questionText}
-                                style={{ maxWidth: 570 }}
+                                style={{maxWidth: 570}}
                             />
                         </div>
                         <Button variant="outlined" className='button-start ml-auto' size='large'
-                            onClick={this.handleStart}>
+                                onClick={this.handleStart}>
                             START
                         </Button>
                     </div>
@@ -141,28 +142,32 @@ class App extends Component {
                         <Typist className='title-font'>
                             Congratulations on finishing the course
                         </Typist>
-                        <p style={{ marginBottom: 0 }}>Please leave us a rating below</p>
+                        <p style={{marginBottom: 0}}>Please leave us a rating below</p>
                         <Box component="fieldset" mb={3} borderColor="transparent">
                             <Rating
                                 name="simple-controlled"
                                 value={this.state.feedbackRating}
                                 onChange={(event, newValue) => {
-                                    this.setState({ feedbackRating: newValue })
+                                    this.setState({feedbackRating: newValue})
                                 }}
                                 size="large"
-                                emptyIcon={<StarBorderIcon fontSize="inherit" style={{ color: "white" }} />}
+                                emptyIcon={<StarBorderIcon fontSize="inherit" style={{color: "white"}}/>}
                             />
                         </Box>
-                        <p>And also help us to complete a feedback form <a href='https://docs.google.com/forms/d/e/1FAIpQLSfM35tbCqA1qp8Z95il-rWhtXZdLI_3orBRK8onNHISGxbYNQ/viewform?usp=sf_link' className='feedback-link'>here</a>.</p>
+                        <p>And also help us to complete a feedback form <a
+                            href='https://docs.google.com/forms/d/e/1FAIpQLSfM35tbCqA1qp8Z95il-rWhtXZdLI_3orBRK8onNHISGxbYNQ/viewform?usp=sf_link'
+                            className='feedback-link'>here</a>.</p>
                     </div>
                 );
             default:
                 return (
                     <Question question={this.state.questions[this.state.question]}
-                        nextQuestion={this.handleNextQuestion}
-                        prevQuestion={this.handlePrevQuestion}
-                        checkAnswer={this.handleCheckAnswer}
-                        lastQuestion={this.state.question === this.state.questions.length - 1} />
+                              nextQuestion={this.handleNextQuestion}
+                              prevQuestion={this.handlePrevQuestion}
+                              checkAnswer={this.handleCheckAnswer}
+                              lastQuestion={this.state.question === this.state.questions.length - 1}
+                              isLoading={this.state.isLoading}/>
+
                 );
 
         }
@@ -172,16 +177,16 @@ class App extends Component {
         return (
             <div className="App">
                 <SliderMenu open={this.state.openMenu} handleMenu={this.handleMenu}
-                    handleMenuStateChange={this.handleMenuStateChange}
-                    handleClickQuestion={this.handleClickQuestion}
-                    handleStart={this.handleStart}
-                    questions={this.state.questions}
-                    question={this.state.question}
+                            handleMenuStateChange={this.handleMenuStateChange}
+                            handleClickQuestion={this.handleClickQuestion}
+                            handleStart={this.handleStart}
+                            questions={this.state.questions}
+                            question={this.state.question}
                 />
                 <Container fluid className='container-main d-flex align-items-center justify-content-center'
-                    id='page-wrap'>
-                    <NavBar handleMenu={this.handleMenu} />
-                    <Row className='d-flex align-items-center justify-content-center' style={{ width: '80vw' }}>
+                           id='page-wrap'>
+                    <NavBar handleMenu={this.handleMenu}/>
+                    <Row className='d-flex align-items-center justify-content-center' style={{width: '80vw'}}>
                         <Col xs={10}>
                             {this.renderContent()}
                         </Col>
