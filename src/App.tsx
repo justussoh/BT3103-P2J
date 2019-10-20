@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Typist from 'react-typist';
 import 'react-typist/dist/Typist.css';
-import {Container, Col, Row} from 'react-bootstrap';
+import {Container, Col, Row, Alert} from 'react-bootstrap';
 import NavBar from "./components/Navigation/NavBar";
 import Question from "./components/Form/Question";
 import SliderMenu from "./components/Navigation/SliderMenu";
@@ -37,6 +37,7 @@ class App extends Component {
         questions: questions,
         feedbackRating: 0,
         isLoading: false,
+        showAlert: false,
     };
 
     handleMenu = (isOpen: boolean) => {
@@ -47,7 +48,8 @@ class App extends Component {
     handleClickQuestion = (i: number) => {
         this.setState({
             openMenu: false,
-            question: i
+            question: i,
+            showAlert:false,
         });
     };
 
@@ -60,11 +62,14 @@ class App extends Component {
     };
 
     handleNextQuestion = () => {
-        this.setState({question: this.state.question + 1})
+        this.setState({question: this.state.question + 1, showAlert:false})
     };
 
     handlePrevQuestion = () => {
-        this.setState({question: this.state.question - 1})
+        this.setState({question: this.state.question - 1, showAlert:false})
+    };
+    handleAlertClose = () => {
+        this.setState({showAlert: false})
     };
 
     handleCheckAnswer = async () => {
@@ -99,7 +104,7 @@ class App extends Component {
         } catch (err) {
             console.log(err);
         } finally {
-            this.setState({isLoading: false});
+            this.setState({isLoading: false, showAlert: true});
         }
 
     };
@@ -183,9 +188,24 @@ class App extends Component {
                             questions={this.state.questions}
                             question={this.state.question}
                 />
-                <Container fluid className='container-main d-flex align-items-center justify-content-center'
+                <Container fluid className='container-main d-flex align-items-center justify-content-center flex-column'
                            id='page-wrap'>
                     <NavBar handleMenu={this.handleMenu}/>
+                    {this.state.showAlert ?
+                        <Row className='d-flex align-items-center justify-content-center' style={{width: '80vw'}}>
+                            <Col xs={10}>
+                                {this.state.questions[this.state.question].completed ?
+                                    <Alert variant='success' onClose={this.handleAlertClose} dismissible>
+                                        You answered the question correctly! Please move on to the next question.
+                                    </Alert> :
+                                    <Alert variant='danger' onClose={this.handleAlertClose} dismissible>
+                                        Please try again! You can use the hints if you need more help.
+                                    </Alert>
+                                }
+                            </Col>
+                        </Row> : ''
+
+                    }
                     <Row className='d-flex align-items-center justify-content-center' style={{width: '80vw'}}>
                         <Col xs={10}>
                             {this.renderContent()}

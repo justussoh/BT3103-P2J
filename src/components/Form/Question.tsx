@@ -66,7 +66,7 @@ class Question extends React.Component<MyProps, {}> {
                         <p className='question-font'><strong>{this.props.question.questionText}</strong></p>
                         <AceEditor
                             wrapEnabled
-                            height='50vh'
+                            height='40vh'
                             width='100%'
                             mode="javascript"
                             theme="monokai"
