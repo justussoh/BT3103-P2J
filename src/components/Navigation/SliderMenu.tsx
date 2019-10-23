@@ -75,7 +75,7 @@ class SliderMenu extends React.Component<MyProps, {}> {
                             </Grid>
                         </Grid>
                         :
-                        <Grid container spacing={3}>
+                        <Grid container spacing={2}>
                             {listQuestions}
                             <Button variant="outlined" className='button-start'
                                 onClick={this.props.toggleAdmin}>
