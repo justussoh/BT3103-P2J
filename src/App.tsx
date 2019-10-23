@@ -32,10 +32,10 @@ class App extends Component {
 
     state = {
         openMenu: false,
-        question: 0,
+        question: 0, // idx of current question that user is on
         returnedData: null,
         questions: questions,
-        feedbackRating: 0,
+        feedbackRating: 0, // feedback rating out of 5
         isLoading: false,
         showAlert: false,
     };
@@ -73,6 +73,7 @@ class App extends Component {
     };
 
     handleStartOver = () => {
+        // TODO clear progress of app
         this.setState({ question: 0 })
     };
 
@@ -125,7 +126,9 @@ class App extends Component {
     };
 
     renderContent = () => {
-        switch (this.state.question) {
+        const questions = this.state.questions;
+        const currQ = this.state.question;
+        switch (currQ) {
             case 0:
                 return (
                     <div className='d-flex align-items-center justify-content-center flex-column'>
@@ -146,7 +149,7 @@ class App extends Component {
                                 editorProps={{
                                     $blockScrolling: true,
                                 }}
-                                value={this.state.questions[this.state.question].questionText}
+                                value={questions[currQ].questionText}
                                 style={{ maxWidth: 570 }}
                             />
                         </div>
@@ -156,7 +159,7 @@ class App extends Component {
                         </Button>
                     </div>
                 );
-            case this.state.questions.length:
+            case questions.length:
                 return (
                     <div className='d-flex flex-column align-items-center justify-content-center'>
                         <Typist className='title-font'>
@@ -185,12 +188,12 @@ class App extends Component {
                 );
             default:
                 return (
-                    <Question question={this.state.questions[this.state.question]}
-                        index={this.state.question}
+                    <Question question={questions[currQ]}
+                        index={currQ}
                         nextQuestion={this.handleNextQuestion}
                         prevQuestion={this.handlePrevQuestion}
                         checkAnswer={this.handleCheckAnswer}
-                        lastQuestion={this.state.question === this.state.questions.length - 1}
+                        lastQuestion={currQ === questions.length - 1}
                         isLoading={this.state.isLoading} />
 
                 );
@@ -199,6 +202,7 @@ class App extends Component {
     };
 
     render() {
+        const currQ = this.state.question;
         return (
             <div className="App">
                 <SliderMenu open={this.state.openMenu} handleMenu={this.handleMenu}
@@ -206,7 +210,7 @@ class App extends Component {
                     handleClickQuestion={this.handleClickQuestion}
                     handleStart={this.handleStart}
                     questions={this.state.questions}
-                    question={this.state.question}
+                    question={currQ}
                     toggleAdmin={this.toggleAdmin}
                 />
                 <Container fluid className='container-main d-flex align-items-center justify-content-center flex-column'
@@ -215,7 +219,7 @@ class App extends Component {
                     {this.state.showAlert ?
                         <Row className='d-flex align-items-center justify-content-center' style={{ width: '80vw' }}>
                             <Col xs={10}>
-                                {this.state.questions[this.state.question].completed ?
+                                {this.state.questions[currQ].completed ?
                                     <Alert variant='success' onClose={this.handleAlertClose} dismissible>
                                         You answered the question correctly! Please move on to the next question.
                                     </Alert> :
