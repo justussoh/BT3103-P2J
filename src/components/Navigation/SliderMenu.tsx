@@ -18,6 +18,7 @@ type MyProps = {
     handleClickQuestion: (arg0: number) => void,
     handleMenuStateChange: (arg0: State) => void,
     handleStart: () => void,
+    toggleAdmin: () => void,
 };
 
 class SliderMenu extends React.Component<MyProps, {}> {
@@ -45,9 +46,9 @@ class SliderMenu extends React.Component<MyProps, {}> {
 
         return (
             <Menu pageWrapId={"page-wrap"} outerContainerId={"root"}
-                customBurgerIcon={false} isOpen={this.props.open}
+                isOpen={this.props.open}
                 onStateChange={(state) => this.props.handleMenuStateChange(state)}
-                customCrossIcon={false} className='menu-width'
+                className='menu-width'
             >
                 <Grid container spacing={3}
                 >
@@ -76,6 +77,9 @@ class SliderMenu extends React.Component<MyProps, {}> {
                         :
                         <Grid container spacing={3}>
                             {listQuestions}
+                            <Button variant="outlined" className='button-start'
+                                onClick={this.props.toggleAdmin}>
+                                Admin mode</Button>
                         </Grid>
                     }
                 </Grid>
