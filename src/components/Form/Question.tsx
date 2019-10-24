@@ -4,16 +4,16 @@ import AceEditor from "react-ace";
 import 'brace/mode/javascript';
 import 'brace/theme/monokai';
 import Button from "@material-ui/core/Button";
-import {Container, Col, Row, OverlayTrigger, Tooltip, ProgressBar} from 'react-bootstrap';
+import { Container, Col, Row, OverlayTrigger, Tooltip, ProgressBar } from 'react-bootstrap';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import HelpIcon from '@material-ui/icons/HelpOutline';
 
-export interface QuestionType {
+export interface QuestionIface {
     questionName: string,
     questionTitle: string,
     questionTutorial: string,
     questionText: string,
-    hint:string,
+    hint: string,
     answer: string,
     feedbackText: string,
     completed: boolean
@@ -23,7 +23,7 @@ type MyProps = {
     lastQuestion: boolean,
     isLoading: boolean,
     index: number,
-    question: QuestionType,
+    question: QuestionIface,
     nextQuestion: () => void,
     prevQuestion: () => void,
     checkAnswer: () => void,
@@ -46,7 +46,7 @@ class Question extends React.Component<MyProps, {}> {
                     <Col>
                         <Container fluid className='h-100'>
                             <Row className='h-50'>
-                                <div style={{lineHeight:1}}>
+                                <div style={{ lineHeight: 1 }}>
                                     <h6>Instructions:</h6>
                                     {this.props.question.questionTutorial.split('\n').map(function (item, key) {
                                         return (
@@ -78,7 +78,7 @@ class Question extends React.Component<MyProps, {}> {
                                     </Tooltip>
                                 }
                             >
-                                <HelpIcon/>
+                                <HelpIcon />
                             </OverlayTrigger>
                         </div>
                         <AceEditor
@@ -99,22 +99,22 @@ class Question extends React.Component<MyProps, {}> {
                 </Row>
                 <Row className='d-flex w-100'>
                     <Button variant="outlined" className='button-start' size='large'
-                            onClick={this.props.prevQuestion}>
+                        onClick={this.props.prevQuestion}>
                         PREVIOUS
                     </Button>
                     <div className='d-flex align-items-center justify-content-center progress-bar-container'>
-                        <ProgressBar variant="success" now={this.props.index*10} style={{width:150}}/>
-                        <span className='question-instruction' style={{marginLeft:20}}>{this.props.index}/10 Questions</span>
+                        <ProgressBar variant="success" now={this.props.index * 10} style={{ width: 150 }} />
+                        <span className='question-instruction' style={{ marginLeft: 20 }}>{this.props.index}/10 Questions</span>
                     </div>
                     {this.props.isLoading ?
-                        <CircularProgress className='loading-color ml-auto'/>
+                        <CircularProgress className='loading-color ml-auto' />
                         : <Button variant="outlined" className='button-start ml-auto' size='large'
-                                  onClick={this.props.checkAnswer}>
+                            onClick={this.props.checkAnswer}>
                             RUN
                         </Button>}
                     <Button variant="outlined" className='button-start' size='large'
-                            onClick={this.props.nextQuestion} style={{marginLeft: 10}}
-                            disabled={!this.props.question.completed}
+                        onClick={this.props.nextQuestion} style={{ marginLeft: 10 }}
+                        disabled={!this.props.question.completed}
                     >
                         {this.props.lastQuestion ? "SUBMIT" : 'NEXT'}
                     </Button>

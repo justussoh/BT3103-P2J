@@ -8,12 +8,12 @@ import Button from "@material-ui/core/Button";
 import Divider from '@material-ui/core/Divider';
 import CircleIcon from '@material-ui/icons/Lens';
 import CircleOutlineIcon from '@material-ui/icons/LensOutlined';
-import { QuestionType } from "../Form/Question";
+import { QuestionIface } from "../Form/Question";
 
 type MyProps = {
     open: boolean,
     question: number,
-    questions: QuestionType[],
+    questions: QuestionIface[],
     handleMenu: (arg0: boolean) => void,
     handleClickQuestion: (arg0: number) => void,
     handleMenuStateChange: (arg0: State) => void,
