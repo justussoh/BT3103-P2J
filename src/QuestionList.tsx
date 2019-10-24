@@ -1,4 +1,4 @@
-import { QuestionIface } from "./components/Form/Question";
+import { QuestionIface, QuestionType } from "./components/Form/Question";
 
 export const questions: QuestionIface[] =
     [
@@ -11,6 +11,7 @@ export const questions: QuestionIface[] =
             hint: "",
             feedbackText: "",
             completed: false,
+            type: QuestionType.EditableCode
         },
         {
             questionName: "Task 1",
@@ -26,6 +27,7 @@ export const questions: QuestionIface[] =
                 "'''",
             feedbackText: "",
             completed: false,
+            type: QuestionType.EditableCode
         },
         {
             questionName: "Task 2",
@@ -43,6 +45,7 @@ export const questions: QuestionIface[] =
                 "coffees = ['French Roast', 'Colombian', 'Kona']",
             feedbackText: "",
             completed: false,
+            type: QuestionType.EditableCode
         },
         {
             questionName: "Task 3",
@@ -53,6 +56,7 @@ export const questions: QuestionIface[] =
             answer: "def square(num):\n      return num * num",
             feedbackText: "",
             completed: false,
+            type: QuestionType.EditableCode
         },
         {
             questionName: "Task 4",
@@ -65,6 +69,7 @@ export const questions: QuestionIface[] =
                 "    return a * b",
             feedbackText: "",
             completed: false,
+            type: QuestionType.EditableCode
         },
         {
             questionName: "Task 5",
@@ -79,6 +84,7 @@ export const questions: QuestionIface[] =
                 "console.log(arr); // [2, 4, 6]",
             feedbackText: "",
             completed: false,
+            type: QuestionType.EditableCode
         },
         {
             questionName: "Task 6",
@@ -97,6 +103,7 @@ export const questions: QuestionIface[] =
                 "}",
             feedbackText: "",
             completed: false,
+            type: QuestionType.EditableCode
         },
         {
             questionName: "Task 7",
@@ -111,6 +118,7 @@ export const questions: QuestionIface[] =
                 "    logMyErrors(e)",
             feedbackText: "",
             completed: false,
+            type: QuestionType.EditableCode
         },
         {
             questionName: "Task 8",
@@ -122,6 +130,7 @@ export const questions: QuestionIface[] =
                 "    print(\"i am at step: \" + step)",
             feedbackText: "",
             completed: false,
+            type: QuestionType.EditableCode
         },
         {
             questionName: "Task 9",
@@ -137,6 +146,7 @@ export const questions: QuestionIface[] =
                 "   print (k, myCar[k]) ",
             feedbackText: "",
             completed: false,
+            type: QuestionType.EditableCode
         },
         {
             questionName: "Task 10",
@@ -147,5 +157,17 @@ export const questions: QuestionIface[] =
             answer: "Haven complete",
             feedbackText: "",
             completed: false,
+            type: QuestionType.EditableCode
+        },
+        {
+            questionName: "sample mcq question",
+            questionTitle: "sample mcq question",
+            questionTutorial: "answer the following sample mcq question",
+            questionText: [`what is the capital of china?`, `hong kong`, `taipei`, `beijing`],
+            answer: 3,
+            hint: "",
+            feedbackText: "",
+            completed: false,
+            type: QuestionType.MultipleChoice
         },
     ]
