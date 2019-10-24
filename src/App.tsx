@@ -125,6 +125,12 @@ class App extends Component {
         }
     };
 
+    toggleComplete = (isComplete: boolean) => {
+        let questions = this.state.questions;
+        questions[this.state.question].completed = isComplete;
+        this.setState({ questions: questions })
+    }
+
     renderContent = () => {
         const questions = this.state.questions;
         const currQ = this.state.question;
@@ -149,7 +155,7 @@ class App extends Component {
                                 editorProps={{
                                     $blockScrolling: true,
                                 }}
-                                value={questions[currQ].questionText}
+                                value={questions[currQ].questionText as string}
                                 style={{ maxWidth: 570 }}
                             />
                         </div>
@@ -194,6 +200,7 @@ class App extends Component {
                         prevQuestion={this.handlePrevQuestion}
                         checkAnswer={this.handleCheckAnswer}
                         lastQuestion={currQ === questions.length - 1}
+                        toggleComplete={this.toggleComplete}
                         isLoading={this.state.isLoading} />
 
                 );
