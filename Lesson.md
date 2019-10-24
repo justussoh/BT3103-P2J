@@ -197,7 +197,38 @@ Do...while
 
 
 ## Promises
-- Guarantees, Chaining, Error Prop, Composition, Timing
+- What is the output of the following code?
+    ```javascript
+    // Promise
+    const willIGetNewPhone = new Promise((resolve, reject) => {
+        if (isHappyMom) {
+            const phone = {
+                brand: 'Samsung',
+                color: 'black'
+            };
+            resolve(phone); // fulfilled
+        } else {
+            reject(new Error('mom is not happy')); // reject
+        }
+    });
+
+    const askMom = () => {
+        willIGetNewPhone
+            .then((fulfilled) => {
+                // yay, you got a new phone
+                console.log(fulfilled);
+            })
+            .catch((err) => {
+                // oops, mom don't buy it
+                console.log(err.message);
+            });
+    };
+
+    let isHappyMom = false;
+    askMom();
+    isHappyMom = true;
+    askMom(); 
+    ```
 
 ## Putting it all together [not in Prototype 1!]
 
