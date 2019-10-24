@@ -7,7 +7,6 @@ import './SliderMenu.css';
 import Button from "@material-ui/core/Button";
 import Divider from '@material-ui/core/Divider';
 import CircleIcon from '@material-ui/icons/Lens';
-import CircleOutlineIcon from '@material-ui/icons/LensOutlined';
 import { QuestionIface } from "../Form/Question";
 
 type MyProps = {
@@ -26,8 +25,8 @@ class SliderMenu extends React.Component<MyProps, {}> {
     render() {
 
         const listQuestions = this.props.questions.map((question, index) => {
-            if (index === 0 || index === 11) {
-                return ''
+            if (index === 0) {
+                return null;
             } else {
                 return (
                     <Grid item xs={12} onClick={() => {
@@ -36,7 +35,7 @@ class SliderMenu extends React.Component<MyProps, {}> {
                         }
                     }} key={index} className={`d-flex align-items-center ${question.completed ? "hover-pointer" : "hover-cancel"}`}
                     >
-                        {question.completed ? <CircleIcon style={{ color: 'green' }} /> : <CircleOutlineIcon style={{ color: 'red' }} />}
+                        <CircleIcon style={{ color: question.completed ? 'green' : 'red' }} />
                         <span style={{ marginLeft: 10 }}>
                             {question.questionName}
                         </span>
