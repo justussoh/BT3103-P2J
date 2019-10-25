@@ -58,7 +58,7 @@ class App extends Component {
     };
 
     handleStart = () => {
-        this.setState({ question: 1, openMenu: false, })
+        this.setState({ question: 1 })
     };
 
     handleNextQuestion = () => {
