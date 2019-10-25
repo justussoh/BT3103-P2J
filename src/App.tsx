@@ -4,6 +4,7 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import NavBar from "./components/Navigation/NavBar";
 import SliderMenu from "./components/Navigation/SliderMenu";
 import axios from "axios";
+import {firebaseApp} from './util/firebase';
 
 import QuestionInterface from './components/Question/QuestionInterface'
 
@@ -49,9 +50,7 @@ class App extends Component {
     };
 
     handleStart = () => {
-
         this.setState({question: 1, openMenu: false,})
-
     };
 
     handleNextQuestion = () => {
@@ -107,6 +106,26 @@ class App extends Component {
 
     };
 
+    handleSaveState = (name:string) =>{
+        let data = {
+            question:this.state.questions,
+            userId:name,
+            feedBack: this.state.feedbackRating,
+        };
+        // const newPollKey = firebaseApp.database().ref().child('userdata').push().key;
+        firebaseApp.database().ref(`/userdata/${name}`).update(data)
+    };
+
+    handleLoadState = (name:string) =>{
+        let db = firebaseApp.database().ref(`/userdata/${name}`);
+        db.once('value').then ((snapshot) => {
+            const data = snapshot.val();
+            this.setState({...data})
+        }).catch(err=>{
+            console.log(err);
+        });
+    };
+
     toggleAdmin = () => {
         const pw = prompt('Please enter password');
         if (pw === "richu") {
@@ -135,6 +154,8 @@ class App extends Component {
                             questions={this.state.questions}
                             question={currQ}
                             toggleAdmin={this.toggleAdmin}
+                            handleSaveState={this.handleSaveState}
+                            handleLoadState={this.handleLoadState}
                 />
                 <Container fluid className='container-main d-flex align-items-center justify-content-center flex-column'
                            id='page-wrap'>
@@ -153,6 +174,7 @@ class App extends Component {
                                                                          toggleComplete={this.toggleComplete}
                                                                          isLoading={this.state.isLoading}
                                                                          handleAlertClose={this.handleAlertClose}
+                                                                         handleClickQuestion={this.handleClickQuestion}
 
                                    />}/>
                         </Switch>

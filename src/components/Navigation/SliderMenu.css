@@ -42,10 +42,3 @@ Note: Beware of modifying this element as it can break the animations - you shou
 .closeIconMenu{
     color:white;
 }
-
-.hover-cancel:hover{
-    cursor: not-allowed;
-}
-.hover-pointer:hover{
-    cursor: pointer;
-}

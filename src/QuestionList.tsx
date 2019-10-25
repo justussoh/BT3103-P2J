@@ -159,15 +159,15 @@ export const questions: QuestionIface[] =
             completed: false,
             type: QuestionType.EditableCode
         },
-        {
-            questionName: "sample mcq question",
-            questionTitle: "sample mcq question",
-            questionTutorial: "answer the following sample mcq question",
-            questionText: [`what is the capital of china?`, `hong kong`, `taipei`, `beijing`],
-            answer: 3,
-            hint: "",
-            feedbackText: "",
-            completed: false,
-            type: QuestionType.MultipleChoice
-        },
+        // {
+        //     questionName: "sample mcq question",
+        //     questionTitle: "sample mcq question",
+        //     questionTutorial: "answer the following sample mcq question",
+        //     questionText: [`what is the capital of china?`, `hong kong`, `taipei`, `beijing`],
+        //     answer: 3,
+        //     hint: "",
+        //     feedbackText: "",
+        //     completed: false,
+        //     type: QuestionType.MultipleChoice
+        // },
     ]

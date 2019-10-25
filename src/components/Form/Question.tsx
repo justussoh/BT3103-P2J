@@ -157,10 +157,10 @@ class Question extends React.Component<MyProps, {}> {
                         onClick={this.props.prevQuestion}>
                         PREVIOUS
                     </Button>
-                    <div className='d-flex align-items-center justify-content-center progress-bar-container'>
-                        <ProgressBar variant="success" now={this.props.index * 10} style={{ width: 150 }} />
-                        <span className='question-instruction' style={{ marginLeft: 20 }}>{this.props.index}/?? Questions</span>
-                    </div>
+                    {/*<div className='d-flex align-items-center justify-content-center progress-bar-container'>*/}
+                    {/*    <ProgressBar variant="success" now={this.props.index * 10} style={{ width: 150 }} />*/}
+                    {/*    <span className='question-instruction' style={{ marginLeft: 20 }}>{this.props.index}/?? Questions</span>*/}
+                    {/*</div>*/}
                     {this.props.isLoading ?
                         <CircularProgress className='loading-color ml-auto' />
                         : <Button variant="outlined" className='button-start ml-auto' size='large'

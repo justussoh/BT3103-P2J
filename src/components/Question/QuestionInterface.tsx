@@ -13,6 +13,12 @@ import StarBorderIcon from '@material-ui/icons/StarBorder';
 
 import 'brace/mode/javascript';
 import 'brace/theme/monokai';
+import Grid from "@material-ui/core/Grid";
+import CircleIcon from '@material-ui/icons/Lens';
+
+import './QuestionInterface.css'
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 
 
 type MyProps = {
@@ -27,6 +33,7 @@ type MyProps = {
     handlePrevQuestion: () => void,
     handleCheckAnswer: () => void,
     toggleComplete: (arg0: boolean) => void,
+    handleClickQuestion: (arg0: number) => void,
     handleAlertClose: () => void,
 
 };
@@ -111,10 +118,57 @@ class QuestionInterface extends Component<MyProps, {}> {
     };
 
     render() {
+        const questions = this.props.questions;
         const currQ = this.props.question;
+        const listQuestions = this.props.questions.map((question, index) => {
+            if (index === 0) {
+                return null;
+            } else {
+                return (
+                    <Tab key={index}
+                         className={`d-flex align-items-center ${question.completed ? "hover-pointer" : "hover-cancel"}`}
+                         label={
+                             <div className='d-flex align-items-center'>
+                                 {/* <CircleIcon style={{color: question.completed ? 'green' : 'red'}}/>*/}
+                                 {/* <span style={{marginLeft: 10, color: "white"}}>*/}
+                                 {/*{question.questionName}*/}
+                                 {/*</span>*/}
+                                 <div className='question-circle'
+                                      style={{backgroundColor: !question.completed || index < currQ ? 'grey' : 'green'}}>{question.questionName.split(' ')[1]}</div>
+
+                             </div>
+                         }
+                         disabled={index <= currQ}
+                    />);
+            }
+        });
+
         return (
             <Container fluid className='container-main d-flex align-items-center justify-content-center flex-column'
                        id='page-wrap'>
+                {currQ > 0 ?
+                    <Row className='d-flex align-items-center justify-content-center'
+                         style={{width: '80vw', marginBottom: 15}}>
+                        <Tabs
+                            value={currQ - 1}
+                            onChange={(e, v) => {
+                                if (questions[currQ].completed) {
+                                    this.props.handleClickQuestion(v)
+                                }
+                            }}
+                            textColor="primary"
+                            variant='fullWidth'
+                            centered
+                            TabIndicatorProps={
+                                {
+                                    className: 'active-tab',
+                                    style: {display: "none"}
+                                }
+                            }
+                        >
+                            {listQuestions}
+                        </Tabs>
+                    </Row> : ''}
                 {this.props.showAlert ?
                     <Row className='d-flex align-items-center justify-content-center' style={{width: '80vw'}}>
                         <Col xs={10}>

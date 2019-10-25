@@ -1,0 +1,22 @@
+.hover-cancel:hover{
+    cursor: not-allowed;
+}
+.hover-pointer:hover{
+    cursor: pointer;
+}
+
+.question-circle{
+    border-radius: 50%;
+    height: 35px;
+    width: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.MuiTab-root{
+    min-width: 80px !important;
+}
