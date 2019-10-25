@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Container, Col, Row} from 'react-bootstrap';
+import {Container} from 'react-bootstrap';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import NavBar from "./components/Navigation/NavBar";
 import SliderMenu from "./components/Navigation/SliderMenu";
@@ -106,22 +106,22 @@ class App extends Component {
 
     };
 
-    handleSaveState = (name:string) =>{
+    handleSaveState = (name: string) => {
         let data = {
-            question:this.state.questions,
-            userId:name,
+            question: this.state.questions,
+            userId: name,
             feedBack: this.state.feedbackRating,
         };
         // const newPollKey = firebaseApp.database().ref().child('userdata').push().key;
         firebaseApp.database().ref(`/userdata/${name}`).update(data)
     };
 
-    handleLoadState = (name:string) =>{
+    handleLoadState = (name: string) => {
         let db = firebaseApp.database().ref(`/userdata/${name}`);
-        db.once('value').then ((snapshot) => {
+        db.once('value').then((snapshot) => {
             const data = snapshot.val();
             this.setState({...data})
-        }).catch(err=>{
+        }).catch(err => {
             console.log(err);
         });
     };
@@ -181,7 +181,8 @@ class App extends Component {
                     </Router>
                 </Container>
             </div>
-        );
+        )
+            ;
     }
 }
 

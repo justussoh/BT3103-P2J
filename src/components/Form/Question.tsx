@@ -37,19 +37,33 @@ type MyProps = {
     toggleComplete: (arg0: boolean) => void,
 };
 
-class Question extends React.Component<MyProps, {}> {
+class Question extends React.Component<MyProps, { selected: Set<number> }> {
+    constructor(props: MyProps) {
+        super(props);
+        this.state = { selected: new Set() };
+    }
 
     handleAnswerChange = (newValue: string) => {
         this.props.question.answer = newValue;
     };
 
     checkMCQAns = (i: number) => {
-        const ans = this.props.question.answer as number;
-        if (i === ans) {
-            this.props.toggleComplete(true);
+        this.props.toggleComplete(i === (this.props.question.answer as number));
+    }
+
+    checkCheckboxesAns = () => {
+        const expected = new Set(this.props.question.answer as number[]);
+        this.props.toggleComplete(eqSet(expected, this.state.selected));
+    }
+
+    handleCheckboxAnsChange = (event: any, i: number) => {
+        let selected = this.state.selected;
+        if (event.target.checked) {
+            selected.add(i);
         } else {
-            this.props.toggleComplete(false);
-        }
+            selected.delete(i);
+        };
+        this.setState({ selected: selected });
     }
 
     renderQuestion = () => {
@@ -59,13 +73,31 @@ class Question extends React.Component<MyProps, {}> {
             case QuestionType.MultipleChoice:
                 return this.renderMCQ();
             case QuestionType.Checkboxes:
-                return (
-                    // TODO implement
-                    <Row className='w-100'></Row>
-                );
+                return this.renderCheckboxes();
             default:
                 break;
         }
+    }
+
+    renderCheckboxes = () => {
+        const qn = this.props.question.questionText as string[];
+        let options = [];
+        for (let i = 1; i < qn.length; i++) {
+            options.push(
+                <label>
+                    {qn[i]}
+                    <input type='checkbox' onChange={(e) => this.handleCheckboxAnsChange(e, i)} />
+                    <br />
+                </label>
+            )
+        }
+        return (
+            <Row className='w-100'>
+                <div><p className='question-instruction'><strong>{qn[0]}</strong></p></div>
+                <div>{options}</div>
+                <Button className='button-start' onClick={this.checkCheckboxesAns}> Check answer </Button>
+            </Row>
+        )
     }
 
     renderMCQ = () => {
@@ -171,12 +203,19 @@ class Question extends React.Component<MyProps, {}> {
                         onClick={this.props.nextQuestion} style={{ marginLeft: 10 }}
                         disabled={!this.props.question.completed}
                     >
-                        {this.props.lastQuestion ? "SUBMIT" : 'NEXT'}
+                        {this.props.lastQuestion ? "Finish" : 'NEXT'}
                     </Button>
                 </Row>
             </Container>
         );
     }
+}
+
+// determines if 2 sets are equal. https://stackoverflow.com/a/31129384
+function eqSet(as: Set<any>, bs: Set<any>) {
+    if (as.size !== bs.size) return false;
+    for (var a of as) if (!bs.has(a)) return false;
+    return true;
 }
 
 export default Question;
