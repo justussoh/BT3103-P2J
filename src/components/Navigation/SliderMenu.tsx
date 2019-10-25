@@ -64,6 +64,17 @@ class SliderMenu extends React.Component<MyProps, {}> {
                                     START
                                 </Button>
                             </Grid>
+                            <Grid item xs={12} className='d-flex align-items-center justify-content-center'>
+                                <Button variant="outlined" className='button-start'
+                                        onClick={this.props.toggleAdmin}>
+                                    RESUME
+                                </Button>
+                            </Grid>
+                            <Grid item xs={12} className='d-flex align-items-center justify-content-center'>
+                                <Button variant="outlined" className='button-start'
+                                        onClick={this.props.toggleAdmin}>
+                                    ADMIN MODE</Button>
+                            </Grid>
                             <Grid item xs={12}>
                                 <Divider variant='middle' style={{ backgroundColor: '#fff' }} />
                             </Grid>
@@ -76,9 +87,6 @@ class SliderMenu extends React.Component<MyProps, {}> {
                         :
                         <Grid container spacing={2}>
                             {listQuestions}
-                            <Button variant="outlined" className='button-start'
-                                onClick={this.props.toggleAdmin}>
-                                Admin mode</Button>
                         </Grid>
                     }
                 </Grid>

@@ -1,23 +1,14 @@
-import React, { Component } from 'react';
-import Typist from 'react-typist';
-import 'react-typist/dist/Typist.css';
-import { Container, Col, Row, Alert } from 'react-bootstrap';
+import React, {Component} from 'react';
+import {Container, Col, Row} from 'react-bootstrap';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import NavBar from "./components/Navigation/NavBar";
-import Question from "./components/Form/Question";
 import SliderMenu from "./components/Navigation/SliderMenu";
-import Button from '@material-ui/core/Button';
-import Box from '@material-ui/core/Box';
-import AceEditor from 'react-ace';
-import Rating from '@material-ui/lab/Rating';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
 import axios from "axios";
 
-import 'brace/mode/javascript';
-import 'brace/theme/monokai';
-
+import QuestionInterface from './components/Question/QuestionInterface'
 
 import './App.css';
-import { questions } from "./QuestionList";
+import {questions} from "./QuestionList";
 
 export interface BackendResponse {
     data: {
@@ -41,7 +32,7 @@ class App extends Component {
     };
 
     handleMenu = (isOpen: boolean) => {
-        this.setState({ openMenu: isOpen })
+        this.setState({openMenu: isOpen})
     };
 
 
@@ -54,32 +45,32 @@ class App extends Component {
     };
 
     handleMenuStateChange = (state: any) => {
-        this.setState({ openMenu: state.isOpen })
+        this.setState({openMenu: state.isOpen})
     };
 
     handleStart = () => {
-        this.setState({ question: 1, openMenu: false, })
+        this.setState({question: 1, openMenu: false,})
     };
 
     handleNextQuestion = () => {
-        this.setState({ question: this.state.question + 1, showAlert: false })
+        this.setState({question: this.state.question + 1, showAlert: false})
     };
 
     handlePrevQuestion = () => {
-        this.setState({ question: this.state.question - 1, showAlert: false })
+        this.setState({question: this.state.question - 1, showAlert: false})
     };
     handleAlertClose = () => {
-        this.setState({ showAlert: false })
+        this.setState({showAlert: false})
     };
 
     handleStartOver = () => {
         // TODO clear progress of app
-        this.setState({ question: 0 })
+        this.setState({question: 0})
     };
 
     handleCheckAnswer = async () => {
         //Add in fetch nonsense
-        this.setState({ isLoading: true });
+        this.setState({isLoading: true});
         let gatewayURL = "https://cl8r4dbpqe.execute-api.us-east-1.amazonaws.com/Prod/";
         let questionURL = gatewayURL + `?question=${this.state.question}`;
         let answer = {
@@ -95,7 +86,7 @@ class App extends Component {
             }
         };
         try {
-            const res: BackendResponse = await axios.post(questionURL, { ...answer }, {
+            const res: BackendResponse = await axios.post(questionURL, {...answer}, {
                 headers: {
                     Accept: 'application/json',
                 }
@@ -105,107 +96,30 @@ class App extends Component {
             questions[this.state.question].completed = res.data.isComplete;
             questions[this.state.question].feedbackText = res.data.textFeedback;
             // questions[this.state.question].completed = true;
-            this.setState({ questions: questions })
+            this.setState({questions: questions})
         } catch (err) {
             console.log(err);
         } finally {
-            this.setState({ isLoading: false, showAlert: true });
+            this.setState({isLoading: false, showAlert: true});
         }
 
     };
 
     toggleAdmin = () => {
-        const pw = prompt('Please enter password')
+        const pw = prompt('Please enter password');
         if (pw === "richu") {
             const questions = this.state.questions
             questions.forEach(q => {
                 q.completed = true;
             });
-            this.setState({ questions: questions })
+            this.setState({questions: questions})
         }
     };
 
     toggleComplete = (isComplete: boolean) => {
         let questions = this.state.questions;
         questions[this.state.question].completed = isComplete;
-        this.setState({ questions: questions })
-    }
-
-    renderContent = () => {
-        const questions = this.state.questions;
-        const currQ = this.state.question;
-        switch (currQ) {
-            case 0:
-                return (
-                    <div className='d-flex align-items-center justify-content-center flex-column'>
-                        <Typist className='title-font'>
-                            Learn how to script in JavaScript from Python!
-                        </Typist>
-                        <div className='d-flex align-items-center justify-content-center flex-column'
-                            style={{ marginTop: '25px' }}>
-                            <AceEditor
-                                readOnly={false}
-                                wrapEnabled
-                                height='50vh'
-                                width='70vw'
-                                mode="javascript"
-                                theme="monokai"
-                                name="info-section"
-                                tabSize={0}
-                                editorProps={{
-                                    $blockScrolling: true,
-                                }}
-                                value={questions[currQ].questionText as string}
-                                style={{ maxWidth: 570 }}
-                            />
-                        </div>
-                        <Button variant="outlined" className='button-start ml-auto' size='large'
-                            onClick={this.handleStart}>
-                            START
-                        </Button>
-                    </div>
-                );
-            case questions.length:
-                return (
-                    <div className='d-flex flex-column align-items-center justify-content-center'>
-                        <Typist className='title-font'>
-                            Congratulations on finishing the course
-                        </Typist>
-                        <p style={{ marginBottom: 0 }}>Please leave us a rating below</p>
-                        <Box component="fieldset" mb={3} borderColor="transparent">
-                            <Rating
-                                name="simple-controlled"
-                                value={this.state.feedbackRating}
-                                onChange={(event, newValue) => {
-                                    this.setState({ feedbackRating: newValue })
-                                }}
-                                size="large"
-                                emptyIcon={<StarBorderIcon fontSize="inherit" style={{ color: "white" }} />}
-                            />
-                        </Box>
-                        <p>And also help us to complete a feedback form <a
-                            href='https://docs.google.com/forms/d/e/1FAIpQLSfM35tbCqA1qp8Z95il-rWhtXZdLI_3orBRK8onNHISGxbYNQ/viewform?usp=sf_link'
-                            className='feedback-link'>here</a>.</p>
-                        <Button variant="outlined" className='button-start' size='large'
-                            onClick={this.handleStartOver}>
-                            START OVER
-                        </Button>
-                    </div>
-                );
-            default:
-                return (
-                    <Question question={questions[currQ]}
-                        index={currQ}
-                        nextQuestion={this.handleNextQuestion}
-                        prevQuestion={this.handlePrevQuestion}
-                        checkAnswer={this.handleCheckAnswer}
-                        lastQuestion={currQ === questions.length - 1}
-                        toggleComplete={this.toggleComplete}
-                        isLoading={this.state.isLoading} />
-
-                );
-
-        }
+        this.setState({questions: questions})
     };
 
     render() {
@@ -213,36 +127,34 @@ class App extends Component {
         return (
             <div className="App">
                 <SliderMenu open={this.state.openMenu} handleMenu={this.handleMenu}
-                    handleMenuStateChange={this.handleMenuStateChange}
-                    handleClickQuestion={this.handleClickQuestion}
-                    handleStart={this.handleStart}
-                    questions={this.state.questions}
-                    question={currQ}
-                    toggleAdmin={this.toggleAdmin}
+                            handleMenuStateChange={this.handleMenuStateChange}
+                            handleClickQuestion={this.handleClickQuestion}
+                            handleStart={this.handleStart}
+                            questions={this.state.questions}
+                            question={currQ}
+                            toggleAdmin={this.toggleAdmin}
                 />
                 <Container fluid className='container-main d-flex align-items-center justify-content-center flex-column'
-                    id='page-wrap'>
-                    <NavBar handleMenu={this.handleMenu} />
-                    {this.state.showAlert ?
-                        <Row className='d-flex align-items-center justify-content-center' style={{ width: '80vw' }}>
-                            <Col xs={10}>
-                                {this.state.questions[currQ].completed ?
-                                    <Alert variant='success' onClose={this.handleAlertClose} dismissible>
-                                        You answered the question correctly! Please move on to the next question.
-                                    </Alert> :
-                                    <Alert variant='danger' onClose={this.handleAlertClose} dismissible>
-                                        Please try again! You can use the hints if you need more help.
-                                    </Alert>
-                                }
-                            </Col>
-                        </Row> : ''
+                           id='page-wrap'>
+                    <NavBar handleMenu={this.handleMenu}/>
+                    <Router>
+                        <Switch>
+                            <Route exact path="/"
+                                   render={(props) => <QuestionInterface {...props} questions={this.state.questions}
+                                                                         question={currQ} handleStart={this.handleStart}
+                                                                         feedbackRating={this.state.feedbackRating}
+                                                                         handleStartOver={this.handleStartOver}
+                                                                         showAlert={this.state.showAlert}
+                                                                         handleNextQuestion={this.handleNextQuestion}
+                                                                         handlePrevQuestion={this.handlePrevQuestion}
+                                                                         handleCheckAnswer={this.handleCheckAnswer}
+                                                                         toggleComplete={this.toggleComplete}
+                                                                         isLoading={this.state.isLoading}
+                                                                         handleAlertClose={this.handleAlertClose}
 
-                    }
-                    <Row className='d-flex align-items-center justify-content-center' style={{ width: '80vw' }}>
-                        <Col xs={10}>
-                            {this.renderContent()}
-                        </Col>
-                    </Row>
+                                   />}/>
+                        </Switch>
+                    </Router>
                 </Container>
             </div>
         );
