@@ -170,4 +170,15 @@ export const questions: QuestionIface[] =
             completed: false,
             type: QuestionType.MultipleChoice
         },
+        {
+            questionName: "sample checkboxes question",
+            questionTitle: "sample checkboxes question",
+            questionTutorial: "answer this checkboxes question",
+            questionText: [`Prof Chris is...?`, `handsome`, `smart`, `charming`],
+            answer: [1, 2, 3],
+            hint: "",
+            feedbackText: "",
+            completed: false,
+            type: QuestionType.Checkboxes
+        },
     ]
