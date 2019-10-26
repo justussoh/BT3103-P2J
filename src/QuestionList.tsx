@@ -159,26 +159,26 @@ export const questions: QuestionIface[] =
             completed: false,
             type: QuestionType.EditableCode
         },
-        // {
-        //     questionName: "sample mcq question",
-        //     questionTitle: "sample mcq question",
-        //     questionTutorial: "answer the following sample mcq question",
-        //     questionText: [`what is the capital of china?`, `hong kong`, `taipei`, `beijing`],
-        //     answer: 3,
-        //     hint: "",
-        //     feedbackText: "",
-        //     completed: false,
-        //     type: QuestionType.MultipleChoice
-        // },
-        // {
-        //     questionName: "sample checkboxes question",
-        //     questionTitle: "sample checkboxes question",
-        //     questionTutorial: "answer this checkboxes question",
-        //     questionText: [`Prof Chris is...?`, `handsome`, `smart`, `charming`],
-        //     answer: [1, 2, 3],
-        //     hint: "",
-        //     feedbackText: "",
-        //     completed: false,
-        //     type: QuestionType.Checkboxes
-        // },
+        {
+            questionName: "Task 11",
+            questionTitle: "sample mcq question",
+            questionTutorial: "answer the following sample mcq question",
+            questionText: [`what is the capital of china?`, `hong kong`, `taipei`, `beijing`],
+            answer: 3,
+            hint: "",
+            feedbackText: "",
+            completed: false,
+            type: QuestionType.MultipleChoice
+        },
+        {
+            questionName: "Task 12",
+            questionTitle: "sample checkboxes question",
+            questionTutorial: "answer this checkboxes question",
+            questionText: [`Prof Chris is...?`, `handsome`, `smart`, `charming`],
+            answer: [1, 2, 3],
+            hint: "",
+            feedbackText: "",
+            completed: false,
+            type: QuestionType.Checkboxes
+        },
     ]

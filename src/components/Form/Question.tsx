@@ -49,12 +49,12 @@ class Question extends React.Component<MyProps, { selected: Set<number> }> {
 
     checkMCQAns = (i: number) => {
         this.props.toggleComplete(i === (this.props.question.answer as number));
-    }
+    };
 
     checkCheckboxesAns = () => {
         const expected = new Set(this.props.question.answer as number[]);
         this.props.toggleComplete(eqSet(expected, this.state.selected));
-    }
+    };
 
     handleCheckboxAnsChange = (event: any, i: number) => {
         let selected = this.state.selected;
@@ -62,9 +62,9 @@ class Question extends React.Component<MyProps, { selected: Set<number> }> {
             selected.add(i);
         } else {
             selected.delete(i);
-        };
+        }
         this.setState({ selected: selected });
-    }
+    };
 
     renderQuestion = () => {
         switch (this.props.question.type) {
@@ -77,7 +77,7 @@ class Question extends React.Component<MyProps, { selected: Set<number> }> {
             default:
                 break;
         }
-    }
+    };
 
     renderCheckboxes = () => {
         const qn = this.props.question.questionText as string[];
@@ -98,7 +98,7 @@ class Question extends React.Component<MyProps, { selected: Set<number> }> {
                 <Button className='button-start' onClick={this.checkCheckboxesAns}> Check answer </Button>
             </Row>
         )
-    }
+    };
 
     renderMCQ = () => {
         const qn = this.props.question.questionText as string[];
@@ -115,7 +115,7 @@ class Question extends React.Component<MyProps, { selected: Set<number> }> {
                 <ul>{rows}</ul>
             </Row>
         );
-    }
+    };
 
     renderEditableCode = () => {
         return (
@@ -175,7 +175,7 @@ class Question extends React.Component<MyProps, { selected: Set<number> }> {
                 </Col>
             </Row>
         );
-    }
+    };
 
     render() {
         return (

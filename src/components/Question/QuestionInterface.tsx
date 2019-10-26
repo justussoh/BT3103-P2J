@@ -134,11 +134,12 @@ class QuestionInterface extends Component<MyProps, {}> {
                                  {/*{question.questionName}*/}
                                  {/*</span>*/}
                                  <div className='question-circle'
-                                      style={{backgroundColor: !question.completed || index < currQ ? 'grey' : 'green'}}>{question.questionName.split(' ')[1]}</div>
+                                      style={{backgroundColor: index <= currQ || question.completed ? '#007bff':'grey'}}
+
+                                 >{question.questionName.split(' ')[1]}</div>
 
                              </div>
                          }
-                         disabled={index <= currQ}
                     />);
             }
         });
@@ -152,8 +153,8 @@ class QuestionInterface extends Component<MyProps, {}> {
                         <Tabs
                             value={currQ - 1}
                             onChange={(e, v) => {
-                                if (questions[currQ].completed) {
-                                    this.props.handleClickQuestion(v)
+                                if (questions[v+1].completed) {
+                                    this.props.handleClickQuestion(v+1)
                                 }
                             }}
                             textColor="primary"
