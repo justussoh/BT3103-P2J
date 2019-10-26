@@ -84,7 +84,7 @@ class Question extends React.Component<MyProps, { selected: Set<number> }> {
         let options = [];
         for (let i = 1; i < qn.length; i++) {
             options.push(
-                <label>
+                <label key={i}>
                     {qn[i]}
                     <input type='checkbox' onChange={(e) => this.handleCheckboxAnsChange(e, i)} />
                     <br />

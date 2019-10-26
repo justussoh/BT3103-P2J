@@ -108,9 +108,9 @@ class App extends Component {
 
     handleSaveState = (name: string) => {
         let data = {
-            question: this.state.questions,
+            questions: this.state.questions,
             userId: name,
-            feedBack: this.state.feedbackRating,
+            feedbackRating: this.state.feedbackRating,
         };
         // const newPollKey = firebaseApp.database().ref().child('userdata').push().key;
         firebaseApp.database().ref(`/userdata/${name}`).update(data)
@@ -120,7 +120,9 @@ class App extends Component {
         let db = firebaseApp.database().ref(`/userdata/${name}`);
         db.once('value').then((snapshot) => {
             const data = snapshot.val();
-            this.setState({...data})
+            let questions = Object.values(data.questions);
+            // console.log(questions)
+            this.setState({questions:questions, feedbackRating:data.feedbackRating})
         }).catch(err => {
             console.log(err);
         });
@@ -129,7 +131,7 @@ class App extends Component {
     toggleAdmin = () => {
         const pw = prompt('Please enter password');
         if (pw === "richu") {
-            const questions = this.state.questions
+            const questions = this.state.questions;
             questions.forEach(q => {
                 q.completed = true;
             });
