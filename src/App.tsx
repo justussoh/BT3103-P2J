@@ -1,6 +1,10 @@
 import React, {Component} from 'react';
 import {Container} from 'react-bootstrap';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from '@material-ui/icons/Close';
+import Slide from "@material-ui/core/Slide";
+import Snackbar from "@material-ui/core/Snackbar";
 import NavBar from "./components/Navigation/NavBar";
 import SliderMenu from "./components/Navigation/SliderMenu";
 import axios from "axios";
@@ -30,6 +34,7 @@ class App extends Component {
         feedbackRating: 0, // feedback rating out of 5
         isLoading: false,
         showAlert: false,
+        showSnackBar: false,
     };
 
     handleMenu = (isOpen: boolean) => {
@@ -122,7 +127,15 @@ class App extends Component {
             const data = snapshot.val();
             let questions = Object.values(data.questions);
             // console.log(questions)
-            this.setState({questions:questions, feedbackRating:data.feedbackRating})
+            this.setState({
+                questions: questions,
+                feedbackRating: data.feedbackRating,
+                showSnackBar:true,
+                openMenu:false
+            })
+            window.setTimeout(()=>{
+                this.setState({showSnackBar:false})
+            },3000)
         }).catch(err => {
             console.log(err);
         });
@@ -144,6 +157,15 @@ class App extends Component {
         questions[this.state.question].completed = isComplete;
         this.setState({questions: questions})
     };
+
+    handleCloseSnackBar=()=>{
+        this.setState({showSnackBar:false})
+    };
+
+    SlideTransition = (props:any) => {
+        return <Slide {...props} direction="up"/>
+    };
+
 
     render() {
         const currQ = this.state.question;
@@ -181,6 +203,20 @@ class App extends Component {
                                    />}/>
                         </Switch>
                     </Router>
+                    <Snackbar anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
+                              open={this.state.showSnackBar}
+                              message={<span id="message-id">Profile has been successfully loaded.</span>}
+                              action={
+                                  <IconButton
+                                      key="close"
+                                      color="inherit"
+                                      onClick={this.handleCloseSnackBar}
+                                  >
+                                      <CloseIcon/>
+                                  </IconButton>
+                              }
+                              TransitionComponent={this.SlideTransition}
+                    />
                 </Container>
             </div>
         )
