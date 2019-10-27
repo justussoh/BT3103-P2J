@@ -197,7 +197,7 @@ Do...while
 
 
 ## Promises
-- What is the output of the following code?
+- What is the output of the following code? (Ans: iii)
     ```javascript
     new Promise((resolve, reject) => {
             console.log('Initial');
