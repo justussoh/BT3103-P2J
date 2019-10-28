@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Container} from 'react-bootstrap';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {Router, Route, Switch} from 'react-router-dom';
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from "@material-ui/core/Slide";
@@ -9,11 +9,13 @@ import NavBar from "./components/Navigation/NavBar";
 import SliderMenu from "./components/Navigation/SliderMenu";
 import axios from "axios";
 import {firebaseApp} from './util/firebase';
+import history from "./history";
 
 import QuestionInterface from './components/Question/QuestionInterface'
 
 import './App.css';
 import {questions} from "./QuestionList";
+import Resume from "./components/Resume/Resume";
 
 export interface BackendResponse {
     data: {
@@ -35,7 +37,26 @@ class App extends Component {
         isLoading: false,
         showAlert: false,
         showSnackBar: false,
+        loggedIn:false,
+        uid:'',
     };
+
+    componentDidMount(): void {
+        firebaseApp.auth().onAuthStateChanged(user => {
+            if (user) {
+                let currentuser = firebaseApp.auth().currentUser;
+                if (currentuser !== null){
+                    this.setState({
+                        uid: currentuser.uid,
+                        username: currentuser.displayName,
+                        loggedIn: true,
+                    });
+                }
+            } else {
+                this.setState({loggedIn: false})
+            }
+        });
+    }
 
     handleMenu = (isOpen: boolean) => {
         this.setState({openMenu: isOpen})
@@ -102,7 +123,10 @@ class App extends Component {
             questions[this.state.question].completed = res.data.isComplete;
             questions[this.state.question].feedbackText = res.data.textFeedback;
             // questions[this.state.question].completed = true;
-            this.setState({questions: questions})
+            this.setState({questions: questions});
+            if (this.state.loggedIn){
+                this.handleSaveState(this.state.uid)
+            }
         } catch (err) {
             console.log(err);
         } finally {
@@ -125,17 +149,19 @@ class App extends Component {
         let db = firebaseApp.database().ref(`/userdata/${name}`);
         db.once('value').then((snapshot) => {
             const data = snapshot.val();
-            let questions = Object.values(data.questions);
-            // console.log(questions)
-            this.setState({
-                questions: questions,
-                feedbackRating: data.feedbackRating,
-                showSnackBar:true,
-                openMenu:false
-            })
-            window.setTimeout(()=>{
-                this.setState({showSnackBar:false})
-            },3000)
+            if (data !== null){
+                let questions = Object.values(data.questions);
+                // console.log(questions)
+                this.setState({
+                    questions: questions,
+                    feedbackRating: data.feedbackRating,
+                    showSnackBar: true,
+                    openMenu: false
+                });
+                window.setTimeout(() => {
+                    this.setState({showSnackBar: false})
+                }, 3000)
+            }
         }).catch(err => {
             console.log(err);
         });
@@ -158,11 +184,11 @@ class App extends Component {
         this.setState({questions: questions})
     };
 
-    handleCloseSnackBar=()=>{
-        this.setState({showSnackBar:false})
+    handleCloseSnackBar = () => {
+        this.setState({showSnackBar: false})
     };
 
-    SlideTransition = (props:any) => {
+    SlideTransition = (props: any) => {
         return <Slide {...props} direction="up"/>
     };
 
@@ -184,7 +210,7 @@ class App extends Component {
                 <Container fluid className='container-main d-flex align-items-center justify-content-center flex-column'
                            id='page-wrap'>
                     <NavBar handleMenu={this.handleMenu}/>
-                    <Router>
+                    <Router history={history}>
                         <Switch>
                             <Route exact path="/"
                                    render={(props) => <QuestionInterface {...props} questions={this.state.questions}
@@ -201,6 +227,10 @@ class App extends Component {
                                                                          handleClickQuestion={this.handleClickQuestion}
 
                                    />}/>
+                            <Route exact path='/load' render={(props) => <Resume {...props}
+                                                                                handleSaveState={this.handleSaveState}
+                                                                                handleLoadState={this.handleLoadState}
+                            />}/>
                         </Switch>
                     </Router>
                     <Snackbar anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}

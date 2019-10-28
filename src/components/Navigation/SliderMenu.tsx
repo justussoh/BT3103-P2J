@@ -7,7 +7,7 @@ import './SliderMenu.css';
 import Button from "@material-ui/core/Button";
 import Divider from '@material-ui/core/Divider';
 import {QuestionIface} from "../Form/Question";
-import TextField from "@material-ui/core/TextField";
+import history from "../../history";
 
 type MyProps = {
     open: boolean,
@@ -38,6 +38,10 @@ class SliderMenu extends React.Component<MyProps, {}> {
         }
     };
 
+    handleResume = () =>{
+        history.push('/load');
+        this.props.handleMenu(false);
+    };
 
     render() {
 
@@ -62,10 +66,12 @@ class SliderMenu extends React.Component<MyProps, {}> {
                             </Button>
                         </Grid>
                         <Grid item xs={12} className='d-flex align-items-center justify-content-center'>
-                            <Button variant="outlined" className='button-start'
-                                    onClick={this.props.toggleAdmin}>
-                                RESUME
-                            </Button>
+
+                                <Button variant="outlined" className='button-start'
+                                        onClick={this.handleResume}>
+                                    RESUME
+                                </Button>
+
                         </Grid>
                         <Grid item xs={12} className='d-flex align-items-center justify-content-center'>
                             <Button variant="outlined" className='button-start'
