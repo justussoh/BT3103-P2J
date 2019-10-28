@@ -197,38 +197,43 @@ Do...while
 
 
 ## Promises
-- What is the output of the following code?
+- What is the output of the following code? (Ans: iii)
     ```javascript
-    // Promise
-    const willIGetNewPhone = new Promise((resolve, reject) => {
-        if (isHappyMom) {
-            const phone = {
-                brand: 'Samsung',
-                color: 'black'
-            };
-            resolve(phone); // fulfilled
-        } else {
-            reject(new Error('mom is not happy')); // reject
-        }
-    });
-
-    const askMom = () => {
-        willIGetNewPhone
-            .then((fulfilled) => {
-                // yay, you got a new phone
-                console.log(fulfilled);
-            })
-            .catch((err) => {
-                // oops, mom don't buy it
-                console.log(err.message);
-            });
-    };
-
-    let isHappyMom = false;
-    askMom();
-    isHappyMom = true;
-    askMom(); 
+    new Promise((resolve, reject) => {
+            console.log('Initial');
+            resolve();
+        })
+        .then(() => {
+            throw new Error('Something failed');
+            console.log('Do this');
+        })
+        .catch(() => {
+            console.error('Do that');
+        })
+        .then(() => {
+            console.log('Do this, no matter what');
+        });
     ```
+    1. ```
+        Initial
+        Do this
+        ```
+    2. ```
+        Initial
+        Do this
+        Do that
+        ```
+    3. ```
+        Initial
+        Do that
+        Do this, no matter what
+        ```
+    4. ```
+        Initial
+        Something failed
+        Do this
+        Do that
+        ```
 
 ## Putting it all together [not in Prototype 1!]
 
