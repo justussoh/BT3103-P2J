@@ -76,6 +76,7 @@ class App extends Component {
     };
 
     handleStart = () => {
+        history.push('/');
         this.setState({question: 1, openMenu: false,})
     };
 
@@ -141,7 +142,6 @@ class App extends Component {
             userId: name,
             feedbackRating: this.state.feedbackRating,
         };
-        // const newPollKey = firebaseApp.database().ref().child('userdata').push().key;
         firebaseApp.database().ref(`/userdata/${name}`).update(data)
     };
 
@@ -174,6 +174,7 @@ class App extends Component {
             questions.forEach(q => {
                 q.completed = true;
             });
+            history.push('/');
             this.setState({questions: questions})
         }
     };
