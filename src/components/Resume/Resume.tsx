@@ -5,7 +5,6 @@ import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Icon from '@mdi/react';
 import { mdiFacebookBox, mdiGoogle } from '@mdi/js';
-import history from "../../history";
 
 import './Resume.css'
 
@@ -38,7 +37,7 @@ class Resume extends React.Component<MyProps, {}> {
             //console.log('Facebook login success');
             if (result !== null && result.user !== null && result.user.uid !== null) {
                 this.props.handleLoadState(result.user.uid);
-                history.push('/');
+                // history.push('/');
             }
         }).catch((error) => {
             console.log(error);
@@ -52,7 +51,7 @@ class Resume extends React.Component<MyProps, {}> {
             //console.log('Google login success');
             if (result !== null && result.user !== null && result.user.uid !== null) {
                 this.props.handleLoadState(result.user.uid);
-                history.push('/');
+                // history.push('/');
 
             }
         }).catch((error) => {

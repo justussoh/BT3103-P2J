@@ -7,7 +7,6 @@ import './SliderMenu.css';
 import Button from "@material-ui/core/Button";
 import Divider from '@material-ui/core/Divider';
 import { QuestionIface } from "../Form/Question";
-import history from "../../history";
 
 type MyProps = {
     open: boolean,
@@ -39,7 +38,7 @@ class SliderMenu extends React.Component<MyProps, {}> {
     };
 
     handleResume = () => {
-        history.push('/load');
+        // history.push('/load');
         this.props.handleMenu(false);
     };
 
