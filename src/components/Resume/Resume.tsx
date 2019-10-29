@@ -1,11 +1,10 @@
 import React from 'react';
-import {Container, Col, Row} from 'react-bootstrap';
-import {firebaseApp} from "../../util/firebase";
+import { firebaseApp } from "../../util/firebase";
 import * as firebase from 'firebase';
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Icon from '@mdi/react';
-import {mdiFacebookBox, mdiGoogle} from '@mdi/js';
+import { mdiFacebookBox, mdiGoogle } from '@mdi/js';
 import history from "../../history";
 
 import './Resume.css'
@@ -22,7 +21,7 @@ class Resume extends React.Component<MyProps, {}> {
     };
 
     handleUserIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        this.setState({userId: e.target.value});
+        this.setState({ userId: e.target.value });
     };
 
     handleSaveStateCheck = () => {
@@ -63,10 +62,10 @@ class Resume extends React.Component<MyProps, {}> {
 
     render() {
         return (
-            <div style={{width: 425}}>
+            <div style={{ width: 425 }}>
                 <Grid container spacing={3}>
                     <Grid item xs={12} className='d-flex align-items-center justify-content-center'>
-                        <span style={{color: 'white', textAlign: "center", fontWeight: 'bold'}}>
+                        <span style={{ color: 'white', textAlign: "center", fontWeight: 'bold' }}>
                             Type in your past user ID to continue or login to save your progress
                         </span>
                     </Grid>
@@ -74,19 +73,19 @@ class Resume extends React.Component<MyProps, {}> {
                         <div className='w-100'>
                             <label className="field a-field a-field_a3">
                                 <input className="field__input a-field__input" placeholder="e.g. sy95"
-                                       onChange={this.handleUserIdChange}
+                                    onChange={this.handleUserIdChange}
                                 />
                                 <span className="a-field__label-wrap">
-                                      <span className="a-field__label">Enter User ID</span>
-                                    </span>
+                                    <span className="a-field__label">Enter User ID</span>
+                                </span>
                             </label>
                             <div className='d-flex'>
                                 <Button variant="outlined" className='button-start' size='large'
-                                        onClick={this.handleSaveStateCheck}>
+                                    onClick={this.handleSaveStateCheck}>
                                     SAVE
                                 </Button>
                                 <Button variant="outlined" className='button-start ml-auto' size='large'
-                                        onClick={() => this.props.handleLoadState(this.state.userId)}>
+                                    onClick={() => this.props.handleLoadState(this.state.userId)}>
                                     LOAD
                                 </Button>
                             </div>
@@ -94,12 +93,12 @@ class Resume extends React.Component<MyProps, {}> {
                     </Grid>
                     <Grid item xs={12} className='d-flex align-items-center justify-content-center'>
                         <Button variant="outlined" onClick={this.handleFacebook} className='resume-auth' fullWidth>
-                            <span><Icon path={mdiFacebookBox} size={1} style={{fill: 'white'}}/> Facebook</span>
+                            <span><Icon path={mdiFacebookBox} size={1} style={{ fill: 'white' }} /> Facebook</span>
                         </Button>
                     </Grid>
                     <Grid item xs={12} className='d-flex align-items-center justify-content-center'>
                         <Button variant="outlined" onClick={this.handleGoogle} className='resume-auth' fullWidth>
-                            <span><Icon path={mdiGoogle} size={1} style={{fill: 'white'}}/> Google</span>
+                            <span><Icon path={mdiGoogle} size={1} style={{ fill: 'white' }} /> Google</span>
                         </Button>
                     </Grid>
                 </Grid>

@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import Typist from 'react-typist';
 import 'react-typist/dist/Typist.css';
-import {Container, Col, Row, Alert} from 'react-bootstrap';
+import { Container, Col, Row, Alert } from 'react-bootstrap';
 
-import {QuestionIface} from "../Form/Question";
+import { QuestionIface } from "../Form/Question";
 import Question from "../Form/Question";
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
@@ -13,8 +13,6 @@ import StarBorderIcon from '@material-ui/icons/StarBorder';
 
 import 'brace/mode/javascript';
 import 'brace/theme/monokai';
-import Grid from "@material-ui/core/Grid";
-import CircleIcon from '@material-ui/icons/Lens';
 
 import './QuestionInterface.css'
 import Tabs from '@material-ui/core/Tabs';
@@ -51,7 +49,7 @@ class QuestionInterface extends Component<MyProps, {}> {
                             Learn how to script in JavaScript from Python!
                         </Typist>
                         <div className='d-flex align-items-center justify-content-center flex-column'
-                             style={{marginTop: '25px'}}>
+                            style={{ marginTop: '25px' }}>
                             <AceEditor
                                 readOnly={false}
                                 wrapEnabled
@@ -65,11 +63,11 @@ class QuestionInterface extends Component<MyProps, {}> {
                                     $blockScrolling: true,
                                 }}
                                 value={questions[currQ].questionText as string}
-                                style={{maxWidth: 570}}
+                                style={{ maxWidth: 570 }}
                             />
                         </div>
                         <Button variant="outlined" className='button-start ml-auto' size='large'
-                                onClick={this.props.handleStart}>
+                            onClick={this.props.handleStart}>
                             START
                         </Button>
                     </div>
@@ -80,23 +78,23 @@ class QuestionInterface extends Component<MyProps, {}> {
                         <Typist className='title-font'>
                             Congratulations on finishing the course
                         </Typist>
-                        <p style={{marginBottom: 0}}>Please leave us a rating below</p>
+                        <p style={{ marginBottom: 0 }}>Please leave us a rating below</p>
                         <Box component="fieldset" mb={3} borderColor="transparent">
                             <Rating
                                 name="simple-controlled"
                                 value={this.props.feedbackRating}
                                 onChange={(event, newValue) => {
-                                    this.setState({feedbackRating: newValue})
+                                    this.setState({ feedbackRating: newValue })
                                 }}
                                 size="large"
-                                emptyIcon={<StarBorderIcon fontSize="inherit" style={{color: "white"}}/>}
+                                emptyIcon={<StarBorderIcon fontSize="inherit" style={{ color: "white" }} />}
                             />
                         </Box>
                         <p>And also help us to complete a feedback form <a
                             href='https://docs.google.com/forms/d/e/1FAIpQLSfM35tbCqA1qp8Z95il-rWhtXZdLI_3orBRK8onNHISGxbYNQ/viewform?usp=sf_link'
                             className='feedback-link'>here</a>.</p>
                         <Button variant="outlined" className='button-start' size='large'
-                                onClick={this.props.handleStartOver}>
+                            onClick={this.props.handleStartOver}>
                             START OVER
                         </Button>
                     </div>
@@ -104,13 +102,13 @@ class QuestionInterface extends Component<MyProps, {}> {
             default:
                 return (
                     <Question question={questions[currQ]}
-                              index={currQ}
-                              nextQuestion={this.props.handleNextQuestion}
-                              prevQuestion={this.props.handlePrevQuestion}
-                              checkAnswer={this.props.handleCheckAnswer}
-                              lastQuestion={currQ === questions.length - 1}
-                              toggleComplete={this.props.toggleComplete}
-                              isLoading={this.props.isLoading}/>
+                        index={currQ}
+                        nextQuestion={this.props.handleNextQuestion}
+                        prevQuestion={this.props.handlePrevQuestion}
+                        checkAnswer={this.props.handleCheckAnswer}
+                        lastQuestion={currQ === questions.length - 1}
+                        toggleComplete={this.props.toggleComplete}
+                        isLoading={this.props.isLoading} />
 
                 );
 
@@ -126,35 +124,35 @@ class QuestionInterface extends Component<MyProps, {}> {
             } else {
                 return (
                     <Tab key={index}
-                         className={`d-flex align-items-center ${question.completed ? "hover-pointer" : "hover-cancel"}`}
-                         label={
-                             <div className='d-flex align-items-center'>
-                                 {/* <CircleIcon style={{color: question.completed ? 'green' : 'red'}}/>*/}
-                                 {/* <span style={{marginLeft: 10, color: "white"}}>*/}
-                                 {/*{question.questionName}*/}
-                                 {/*</span>*/}
-                                 <div className='question-circle'
-                                      style={{backgroundColor: index <= currQ || question.completed ? '#007bff':'grey'}}
+                        className={`d-flex align-items-center ${question.completed ? "hover-pointer" : "hover-cancel"}`}
+                        label={
+                            <div className='d-flex align-items-center'>
+                                {/* <CircleIcon style={{color: question.completed ? 'green' : 'red'}}/>*/}
+                                {/* <span style={{marginLeft: 10, color: "white"}}>*/}
+                                {/*{question.questionName}*/}
+                                {/*</span>*/}
+                                <div className='question-circle'
+                                    style={{ backgroundColor: index <= currQ || question.completed ? '#007bff' : 'grey' }}
 
-                                 >{question.questionName.split(' ')[1]}</div>
+                                >{question.questionName.split(' ')[1]}</div>
 
-                             </div>
-                         }
+                            </div>
+                        }
                     />);
             }
         });
 
         return (
             <Container fluid className='container-main d-flex align-items-center justify-content-center flex-column'
-                       id='page-wrap'>
+                id='page-wrap'>
                 {currQ > 0 ?
                     <Row className='d-flex align-items-center justify-content-center'
-                         style={{width: '80vw', marginBottom: 15}}>
+                        style={{ width: '80vw', marginBottom: 15 }}>
                         <Tabs
                             value={currQ - 1}
                             onChange={(e, v) => {
-                                if (questions[v+1].completed) {
-                                    this.props.handleClickQuestion(v+1)
+                                if (questions[v + 1].completed) {
+                                    this.props.handleClickQuestion(v + 1)
                                 }
                             }}
                             textColor="primary"
@@ -163,7 +161,7 @@ class QuestionInterface extends Component<MyProps, {}> {
                             TabIndicatorProps={
                                 {
                                     className: 'active-tab',
-                                    style: {display: "none"}
+                                    style: { display: "none" }
                                 }
                             }
                         >
@@ -171,7 +169,7 @@ class QuestionInterface extends Component<MyProps, {}> {
                         </Tabs>
                     </Row> : ''}
                 {this.props.showAlert ?
-                    <Row className='d-flex align-items-center justify-content-center' style={{width: '80vw'}}>
+                    <Row className='d-flex align-items-center justify-content-center' style={{ width: '80vw' }}>
                         <Col xs={10}>
                             {this.props.questions[currQ].completed ?
                                 <Alert variant='success' onClose={this.props.handleAlertClose} dismissible>
@@ -185,7 +183,7 @@ class QuestionInterface extends Component<MyProps, {}> {
                     </Row> : ''
 
                 }
-                <Row className='d-flex align-items-center justify-content-center' style={{width: '80vw'}}>
+                <Row className='d-flex align-items-center justify-content-center' style={{ width: '80vw' }}>
                     <Col xs={10}>
                         {this.renderContent()}
                     </Col>

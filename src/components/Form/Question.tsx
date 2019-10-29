@@ -4,7 +4,7 @@ import AceEditor from "react-ace";
 import 'brace/mode/javascript';
 import 'brace/theme/monokai';
 import Button from "@material-ui/core/Button";
-import {Container, Col, Row, OverlayTrigger, Tooltip, ProgressBar} from 'react-bootstrap';
+import { Container, Col, Row, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import HelpIcon from '@material-ui/icons/HelpOutline';
 
@@ -40,7 +40,7 @@ type MyProps = {
 class Question extends React.Component<MyProps, { selected: Set<number> }> {
     constructor(props: MyProps) {
         super(props);
-        this.state = {selected: new Set()};
+        this.state = { selected: new Set() };
     }
 
     handleAnswerChange = (newValue: string) => {
@@ -63,7 +63,7 @@ class Question extends React.Component<MyProps, { selected: Set<number> }> {
         } else {
             selected.delete(i);
         }
-        this.setState({selected: selected});
+        this.setState({ selected: selected });
     };
 
     renderQuestion = () => {
@@ -86,8 +86,8 @@ class Question extends React.Component<MyProps, { selected: Set<number> }> {
             options.push(
                 <label key={i}>
                     {qn[i]}
-                    <input type='checkbox' onChange={(e) => this.handleCheckboxAnsChange(e, i)}/>
-                    <br/>
+                    <input type='checkbox' onChange={(e) => this.handleCheckboxAnsChange(e, i)} />
+                    <br />
                 </label>
             )
         }
@@ -123,13 +123,13 @@ class Question extends React.Component<MyProps, { selected: Set<number> }> {
                 <Col>
                     <Container fluid className='h-100'>
                         <Row className='h-50'>
-                            <div style={{lineHeight: 1}}>
+                            <div style={{ lineHeight: 1 }}>
                                 <h6>Instructions:</h6>
                                 {this.props.question.questionTutorial.split('\n').map(function (item, key) {
                                     return (
                                         <span key={key} className='question-font'>
                                             {item}
-                                            <br/>
+                                            <br />
                                         </span>)
                                 })}
                             </div>
@@ -143,9 +143,9 @@ class Question extends React.Component<MyProps, { selected: Set<number> }> {
                     </Container>
                 </Col>
                 <Col>
-                    <div className='d-flex align-items-center ' style={{marginBottom:10}}>
+                    <div className='d-flex align-items-center ' style={{ marginBottom: 10 }}>
                         <p className='question-instruction'><strong>{this.props.question.questionText}</strong></p>
-                        <div className='ml-auto' style={{marginRight:10}}>
+                        <div className='ml-auto' style={{ marginRight: 10 }}>
                             <OverlayTrigger
                                 key='bottom'
                                 placement='bottom'
@@ -155,7 +155,7 @@ class Question extends React.Component<MyProps, { selected: Set<number> }> {
                                     </Tooltip>
                                 }
                             >
-                                <HelpIcon/>
+                                <HelpIcon />
                             </OverlayTrigger>
                         </div>
                     </div>
@@ -187,7 +187,7 @@ class Question extends React.Component<MyProps, { selected: Set<number> }> {
                 {this.renderQuestion()}
                 <Row className='d-flex w-100'>
                     <Button variant="outlined" className='button-start' size='large'
-                            onClick={this.props.prevQuestion}>
+                        onClick={this.props.prevQuestion}>
                         PREVIOUS
                     </Button>
                     {/*<div className='d-flex align-items-center justify-content-center progress-bar-container'>*/}
@@ -195,14 +195,14 @@ class Question extends React.Component<MyProps, { selected: Set<number> }> {
                     {/*    <span className='question-instruction' style={{ marginLeft: 20 }}>{this.props.index}/?? Questions</span>*/}
                     {/*</div>*/}
                     {this.props.isLoading ?
-                        <CircularProgress className='loading-color ml-auto'/>
+                        <CircularProgress className='loading-color ml-auto' />
                         : <Button variant="outlined" className='button-start ml-auto' size='large'
-                                  onClick={this.props.checkAnswer}>
+                            onClick={this.props.checkAnswer}>
                             RUN
                         </Button>}
                     <Button variant="outlined" className='button-start' size='large'
-                            onClick={this.props.nextQuestion} style={{marginLeft: 10}}
-                            disabled={!this.props.question.completed}
+                        onClick={this.props.nextQuestion} style={{ marginLeft: 10 }}
+                        disabled={!this.props.question.completed}
                     >
                         {this.props.lastQuestion ? "Finish" : 'NEXT'}
                     </Button>
