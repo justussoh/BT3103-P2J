@@ -7,8 +7,10 @@ import './SliderMenu.css';
 import Button from "@material-ui/core/Button";
 import Divider from '@material-ui/core/Divider';
 import { QuestionIface } from "../Form/Question";
+import { withRouter } from 'react-router-dom';
+import {RouteComponentProps} from "react-router";
 
-type MyProps = {
+type MyProps = RouteComponentProps & {
     open: boolean,
     question: number,
     questions: QuestionIface[],
@@ -38,7 +40,7 @@ class SliderMenu extends React.Component<MyProps, {}> {
     };
 
     handleResume = () => {
-        // history.push('/load');
+        this.props.history.push('/load');
         this.props.handleMenu(false);
     };
 
@@ -147,4 +149,4 @@ class SliderMenu extends React.Component<MyProps, {}> {
     }
 }
 
-export default SliderMenu;
+export default withRouter(SliderMenu);

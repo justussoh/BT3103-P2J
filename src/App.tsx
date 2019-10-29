@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Container } from 'react-bootstrap';
-import { Router, Route, Switch } from 'react-router-dom';
+import {Route, Switch, withRouter} from 'react-router-dom';
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from "@material-ui/core/Slide";
@@ -9,7 +9,7 @@ import NavBar from "./components/Navigation/NavBar";
 import SliderMenu from "./components/Navigation/SliderMenu";
 import axios from "axios";
 import { firebaseApp } from './util/firebase';
-import history from "./history";
+import {RouteComponentProps} from "react-router";
 
 import QuestionInterface from './components/Question/QuestionInterface'
 
@@ -26,7 +26,7 @@ export interface BackendResponse {
     }
 };
 
-class App extends Component {
+class App extends Component<RouteComponentProps> {
 
     state = {
         openMenu: false,
@@ -76,7 +76,7 @@ class App extends Component {
     };
 
     handleStart = () => {
-        // history.push('/');
+        this.props.history.push('/');
         this.setState({ question: 1, openMenu: false, })
     };
 
@@ -174,7 +174,7 @@ class App extends Component {
             questions.forEach(q => {
                 q.completed = true;
             });
-            // history.push('/');
+            this.props.history.push('/');
             this.setState({ questions: questions })
         }
     };
@@ -212,7 +212,7 @@ class App extends Component {
                     id='page-wrap'>
                     <NavBar handleMenu={this.handleMenu} />
                     {/* TODO remove Router. does not work with gh-pages. see https://create-react-app.dev/docs/deployment/#notes-on-client-side-routing */}
-                    <Router history={history}>
+
                         <Switch>
                             <Route exact path="/"
                                 render={(props) => <QuestionInterface {...props} questions={this.state.questions}
@@ -234,7 +234,6 @@ class App extends Component {
                                 handleLoadState={this.handleLoadState}
                             />} />
                         </Switch>
-                    </Router>
                     <Snackbar anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                         open={this.state.showSnackBar}
                         message={<span id="message-id">Profile has been successfully loaded.</span>}
@@ -256,4 +255,4 @@ class App extends Component {
     }
 }
 
-export default App;
+export default withRouter(App);

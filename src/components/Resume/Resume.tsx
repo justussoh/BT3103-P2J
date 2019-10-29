@@ -5,10 +5,12 @@ import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Icon from '@mdi/react';
 import { mdiFacebookBox, mdiGoogle } from '@mdi/js';
+import {withRouter} from 'react-router-dom';
+import {RouteComponentProps} from "react-router";
 
 import './Resume.css'
 
-type MyProps = {
+type MyProps = RouteComponentProps & {
     handleSaveState: (arg0: string) => void,
     handleLoadState: (arg0: string) => void,
 };
@@ -37,7 +39,7 @@ class Resume extends React.Component<MyProps, {}> {
             //console.log('Facebook login success');
             if (result !== null && result.user !== null && result.user.uid !== null) {
                 this.props.handleLoadState(result.user.uid);
-                // history.push('/');
+                this.props.history.push('/');
             }
         }).catch((error) => {
             console.log(error);
@@ -51,7 +53,7 @@ class Resume extends React.Component<MyProps, {}> {
             //console.log('Google login success');
             if (result !== null && result.user !== null && result.user.uid !== null) {
                 this.props.handleLoadState(result.user.uid);
-                // history.push('/');
+                this.props.history.push('/');
 
             }
         }).catch((error) => {
@@ -106,5 +108,5 @@ class Resume extends React.Component<MyProps, {}> {
     }
 }
 
-export default Resume;
+export default withRouter(Resume);
 
