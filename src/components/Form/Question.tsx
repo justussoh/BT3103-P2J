@@ -16,8 +16,9 @@ export interface QuestionIface {
     hint: string,
     answer: string | number | number[],
     feedbackText: string,
-    completed: boolean
-    type: QuestionType
+    completed: boolean,
+    type: QuestionType,
+    testCode: string,
 }
 
 export enum QuestionType {

@@ -11,7 +11,8 @@ export const questions: QuestionIface[] =
             hint: "",
             feedbackText: "",
             completed: false,
-            type: QuestionType.EditableCode
+            type: QuestionType.EditableCode,
+            testCode: ``
         },
         {
             questionName: "Task 1",
@@ -27,7 +28,13 @@ export const questions: QuestionIface[] =
                 "'''",
             feedbackText: "",
             completed: false,
-            type: QuestionType.EditableCode
+            type: QuestionType.EditableCode,
+            testCode: `
+//main.spec.js
+const app = require("./main");
+test("default", () => {
+    expect(1).toBe(1);
+});`
         },
         {
             questionName: "Task 2",
@@ -38,14 +45,22 @@ export const questions: QuestionIface[] =
                 "const: Declares a block-scoped, read-only named constant.\n",
             questionText: "Please convert the following to JavaScript syntax!",
             hint: "",
-            answer: "x = 42\n" +
-                "y = 13\n" +
-                "x = \"forty-two\"\n" +
-                "z = \"The answer is\" + 42\n" +
-                "coffees = ['French Roast', 'Colombian', 'Kona']",
+            answer: `x = 42
+y = 13
+x = "forty-two"
+z = "The answer is" + 42
+coffees = ['French Roast', 'Colombian', 'Kona']
+`,
             feedbackText: "",
             completed: false,
-            type: QuestionType.EditableCode
+            type: QuestionType.EditableCode,
+            testCode: `
+//main.spec.js
+const app = require("./main");
+test("task2", () => {
+    expect(app.x).toBe(42);
+    expect(app.y).toBe(13);
+});`
         },
         {
             questionName: "Task 3",
@@ -56,7 +71,13 @@ export const questions: QuestionIface[] =
             answer: "def square(num):\n      return num * num",
             feedbackText: "",
             completed: false,
-            type: QuestionType.EditableCode
+            type: QuestionType.EditableCode,
+            testCode: `
+//main.spec.js
+const app = require("./main");
+test("default", () => {
+    expect(1).toBe(1);
+});`
         },
         {
             questionName: "Task 4",
@@ -69,7 +90,13 @@ export const questions: QuestionIface[] =
                 "    return a * b",
             feedbackText: "",
             completed: false,
-            type: QuestionType.EditableCode
+            type: QuestionType.EditableCode,
+            testCode: `
+//main.spec.js
+const app = require("./main");
+test("default", () => {
+    expect(1).toBe(1);
+});`
         },
         {
             questionName: "Task 5",
@@ -84,7 +111,13 @@ export const questions: QuestionIface[] =
                 "console.log(arr); // [2, 4, 6]",
             feedbackText: "",
             completed: false,
-            type: QuestionType.EditableCode
+            type: QuestionType.EditableCode,
+            testCode: `
+//main.spec.js
+const app = require("./main");
+test("default", () => {
+    expect(1).toBe(1);
+});`
         },
         {
             questionName: "Task 6",
@@ -103,7 +136,13 @@ export const questions: QuestionIface[] =
                 "}",
             feedbackText: "",
             completed: false,
-            type: QuestionType.EditableCode
+            type: QuestionType.EditableCode,
+            testCode: `
+//main.spec.js
+const app = require("./main");
+test("default", () => {
+    expect(1).toBe(1);
+});`
         },
         {
             questionName: "Task 7",
@@ -118,7 +157,13 @@ export const questions: QuestionIface[] =
                 "    logMyErrors(e)",
             feedbackText: "",
             completed: false,
-            type: QuestionType.EditableCode
+            type: QuestionType.EditableCode,
+            testCode: `
+//main.spec.js
+const app = require("./main");
+test("default", () => {
+    expect(1).toBe(1);
+});`
         },
         {
             questionName: "Task 8",
@@ -130,7 +175,13 @@ export const questions: QuestionIface[] =
                 "    print(\"i am at step: \" + step)",
             feedbackText: "",
             completed: false,
-            type: QuestionType.EditableCode
+            type: QuestionType.EditableCode,
+            testCode: `
+//main.spec.js
+const app = require("./main");
+test("default", () => {
+    expect(1).toBe(1);
+});`
         },
         {
             questionName: "Task 9",
@@ -146,7 +197,13 @@ export const questions: QuestionIface[] =
                 "   print (k, myCar[k]) ",
             feedbackText: "",
             completed: false,
-            type: QuestionType.EditableCode
+            type: QuestionType.EditableCode,
+            testCode: `
+//main.spec.js
+const app = require("./main");
+test("default", () => {
+    expect(1).toBe(1);
+});`
         },
         {
             questionName: "Task 10",
@@ -157,7 +214,13 @@ export const questions: QuestionIface[] =
             answer: "Haven complete",
             feedbackText: "",
             completed: false,
-            type: QuestionType.EditableCode
+            type: QuestionType.EditableCode,
+            testCode: `
+//main.spec.js
+const app = require("./main");
+test("default", () => {
+    expect(1).toBe(1);
+});`
         },
         {
             questionName: "Task 11",
@@ -168,7 +231,8 @@ export const questions: QuestionIface[] =
             hint: "",
             feedbackText: "",
             completed: false,
-            type: QuestionType.MultipleChoice
+            type: QuestionType.MultipleChoice,
+            testCode: ``
         },
         {
             questionName: "Task 12",
@@ -179,6 +243,7 @@ export const questions: QuestionIface[] =
             hint: "",
             feedbackText: "",
             completed: false,
-            type: QuestionType.Checkboxes
+            type: QuestionType.Checkboxes,
+            testCode: ``
         },
     ]
