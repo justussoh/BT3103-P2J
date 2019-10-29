@@ -104,7 +104,7 @@ class App extends Component {
         let answer = {
             "userToken": "ABCDE",
             "shown": {
-                "0": `//main.spec.js \nconst app = require("./main");\ndescribe("Load app from main.js", () => {\n    it("works", () => {\nexpect(true).toBeTruthy();\n    }); \n});`
+                "0": this.state.questions[this.state.question].testCode
             },
             "editable": {
                 "0": this.state.questions[this.state.question].answer
@@ -122,7 +122,7 @@ class App extends Component {
             console.log(res);
             let questions = this.state.questions;
             questions[this.state.question].completed = res.data.isComplete;
-            questions[this.state.question].feedbackText = res.data.textFeedback;
+            questions[this.state.question].feedbackText = res.data.htmlFeedback;
             // questions[this.state.question].completed = true;
             this.setState({ questions: questions });
             if (this.state.loggedIn) {
