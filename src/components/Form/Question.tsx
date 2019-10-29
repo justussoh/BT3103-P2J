@@ -137,7 +137,7 @@ class Question extends React.Component<MyProps, { selected: Set<number> }> {
                         <Row className='d-flex flex-column h-50'>
                             <h6>Output:</h6>
                             <div className='output-box'>
-                                <p className='feedback-text-font'>{this.props.question.feedbackText}</p>
+                                <p className='feedback-text-font'></p>
                             </div>
                         </Row>
                     </Container>
@@ -174,6 +174,7 @@ class Question extends React.Component<MyProps, { selected: Set<number> }> {
                         value={this.props.question.answer as string}
                     />
                 </Col>
+                <div dangerouslySetInnerHTML={{ __html: this.props.question.feedbackText }} />
             </Row>
         );
     };
