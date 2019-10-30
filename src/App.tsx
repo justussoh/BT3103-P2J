@@ -107,7 +107,7 @@ class App extends Component<RouteComponentProps> {
                 "0": this.state.questions[this.state.question].testCode
             },
             "editable": {
-                "0": this.state.questions[this.state.question].answer
+                "0": this.state.questions[this.state.question].answer + this.state.questions[this.state.question].exportCode
             },
             "hidden": {
                 "0": `{\n"scripts":{ "test":"jest" }\n}`,
@@ -121,6 +121,7 @@ class App extends Component<RouteComponentProps> {
             });
             console.log(res);
             let questions = this.state.questions;
+            questions[this.state.question].pastAnswer.push(this.state.questions[this.state.question].answer);
             questions[this.state.question].completed = res.data.isComplete;
             questions[this.state.question].feedbackText = res.data.htmlFeedback;
             // questions[this.state.question].completed = true;
