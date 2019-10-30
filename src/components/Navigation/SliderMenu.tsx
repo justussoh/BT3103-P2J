@@ -1,6 +1,4 @@
 import Grid from "@material-ui/core/Grid";
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from '@material-ui/icons/Close';
 import React from 'react';
 import { push as Menu, State } from "react-burger-menu";
 import './SliderMenu.css';
@@ -8,7 +6,7 @@ import Button from "@material-ui/core/Button";
 import Divider from '@material-ui/core/Divider';
 import { QuestionIface } from "../Form/Question";
 import { withRouter } from 'react-router-dom';
-import {RouteComponentProps} from "react-router";
+import { RouteComponentProps } from "react-router";
 
 type MyProps = RouteComponentProps & {
     open: boolean,
@@ -54,12 +52,6 @@ class SliderMenu extends React.Component<MyProps, {}> {
             >
                 {this.props.question === 0 || this.props.question === (this.props.questions.length) ?
                     <Grid container spacing={3}>
-                        <Grid item xs={12} className='d-flex align-items-center'>
-                            <IconButton className='closeButtonMenu ml-auto'
-                                onClick={() => this.props.handleMenu(false)}>
-                                <CloseIcon className='closeIconMenu' />
-                            </IconButton>
-                        </Grid>
                         <Grid item xs={12} className='d-flex align-items-center justify-content-center'>
                             <Button variant="outlined" className='button-start' size='large'
                                 onClick={this.props.handleStart}>
@@ -90,12 +82,6 @@ class SliderMenu extends React.Component<MyProps, {}> {
                     </Grid>
                     :
                     <Grid container spacing={2} className='h-100'>
-                        <Grid item xs={12} className='d-flex align-items-center'>
-                            <IconButton className='closeButtonMenu ml-auto'
-                                onClick={() => this.props.handleMenu(false)}>
-                                <CloseIcon className='closeIconMenu' />
-                            </IconButton>
-                        </Grid>
                         <Grid item xs={12}>
                             <span style={{ color: 'white' }}>
                                 Are you feeling lost? Need some help? Here are some resources to help you learn.
@@ -121,7 +107,7 @@ class SliderMenu extends React.Component<MyProps, {}> {
                             </span>
                         </Grid>
 
-                        <Grid item xs={12} className='userId-container'>
+                        <Grid item xs={12}>
                             <label className="field a-field a-field_a3">
                                 <input className="field__input a-field__input" placeholder="e.g. sy95"
                                     onChange={this.handleUserIdChange}
