@@ -20,7 +20,13 @@ export interface QuestionIface {
     type: QuestionType,
     testCode: string,
     exportCode: string,
-    pastAnswer: (string | number | number[])[],
+    pastAnswers: pastAnswerIface[],
+}
+
+export interface pastAnswerIface {
+    pass:boolean,
+    pastAnswer: string | number | number[],
+    errorMessage:string,
 }
 
 export enum QuestionType {

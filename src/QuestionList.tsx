@@ -14,7 +14,7 @@ export const questions: QuestionIface[] =
             type: QuestionType.EditableCode,
             testCode: ``,
             exportCode: '',
-            pastAnswer: [],
+            pastAnswers: [],
         },
         {
             questionName: "Task 1",
@@ -38,7 +38,7 @@ test("default", () => {
     expect(1).toBe(1);
 });`,
             exportCode: '',
-            pastAnswer: [],
+            pastAnswers: [],
         },
         {
             questionName: "Task 2",
@@ -66,7 +66,7 @@ test("task2", () => {
     expect(app.y).toBe(13);
 });`,
             exportCode: '',
-            pastAnswer: [],
+            pastAnswers: [],
         },
         {
             questionName: "Task 3",
@@ -85,7 +85,7 @@ test("default", () => {
     expect(1).toBe(1);
 });`,
             exportCode: '',
-            pastAnswer: [],
+            pastAnswers: [],
         },
         {
             questionName: "Task 4",
@@ -106,7 +106,7 @@ test("default", () => {
     expect(1).toBe(1);
 });`,
             exportCode: '',
-            pastAnswer: [],
+            pastAnswers: [],
         },
         {
             questionName: "Task 5",
@@ -129,7 +129,7 @@ test("default", () => {
     expect(1).toBe(1);
 });`,
             exportCode: '',
-            pastAnswer: [],
+            pastAnswers: [],
         },
         {
             questionName: "Task 6",
@@ -156,7 +156,7 @@ test("default", () => {
     expect(1).toBe(1);
 });`,
             exportCode: '',
-            pastAnswer: [],
+            pastAnswers: [],
         },
         {
             questionName: "Task 7",
@@ -179,7 +179,7 @@ test("default", () => {
     expect(1).toBe(1);
 });`,
             exportCode: '',
-            pastAnswer: [],
+            pastAnswers: [],
         },
         {
             questionName: "Task 8",
@@ -199,7 +199,7 @@ test("default", () => {
     expect(1).toBe(1);
 });`,
             exportCode: '',
-            pastAnswer: [],
+            pastAnswers: [],
         },
         {
             questionName: "Task 9",
@@ -223,7 +223,7 @@ test("default", () => {
     expect(1).toBe(1);
 });`,
             exportCode: '',
-            pastAnswer: [],
+            pastAnswers: [],
         },
         {
             questionName: "Task 10",
@@ -242,7 +242,7 @@ test("default", () => {
     expect(1).toBe(1);
 });`,
             exportCode: '',
-            pastAnswer: [],
+            pastAnswers: [],
         },
         {
             questionName: "Task 11",
@@ -256,7 +256,7 @@ test("default", () => {
             type: QuestionType.MultipleChoice,
             testCode: ``,
             exportCode: '',
-            pastAnswer: [],
+            pastAnswers: [],
         },
         {
             questionName: "Task 12",
@@ -270,6 +270,6 @@ test("default", () => {
             type: QuestionType.Checkboxes,
             testCode: ``,
             exportCode: '',
-            pastAnswer: [],
+            pastAnswers: [],
         },
     ]

@@ -121,9 +121,14 @@ class App extends Component<RouteComponentProps> {
             });
             console.log(res);
             let questions = this.state.questions;
-            questions[this.state.question].pastAnswer.push(this.state.questions[this.state.question].answer);
             questions[this.state.question].completed = res.data.isComplete;
             questions[this.state.question].feedbackText = res.data.htmlFeedback;
+            let pastAnswerObj = {
+                pass:res.data.isComplete,
+                pastAnswer: questions[this.state.question].answer,
+                errorMessage:res.data.htmlFeedback,
+            };
+            questions[this.state.question].pastAnswers.push(pastAnswerObj);
             // questions[this.state.question].completed = true;
             this.setState({ questions: questions });
             if (this.state.loggedIn) {
