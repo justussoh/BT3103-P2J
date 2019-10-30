@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Container } from 'react-bootstrap';
-import {Route, Switch, withRouter} from 'react-router-dom';
+import { Route, Switch, withRouter } from 'react-router-dom';
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from "@material-ui/core/Slide";
@@ -9,14 +9,14 @@ import NavBar from "./components/Navigation/NavBar";
 import SliderMenu from "./components/Navigation/SliderMenu";
 import axios from "axios";
 import { firebaseApp } from './util/firebase';
-import {RouteComponentProps} from "react-router";
+import { RouteComponentProps } from "react-router";
 
 import QuestionInterface from './components/Question/QuestionInterface'
 
 import './App.css';
 import { questions } from "./QuestionList";
 import Resume from "./components/Resume/Resume";
-import {QuestionIface} from "./components/Form/Question";
+import { QuestionIface } from "./components/Form/Question";
 
 export interface BackendResponse {
     data: {
@@ -124,19 +124,18 @@ class App extends Component<RouteComponentProps> {
             let questions = this.state.questions;
             questions[this.state.question].completed = res.data.isComplete;
             questions[this.state.question].feedbackText = res.data.htmlFeedback;
-            let pastAnswerObj = {
-                pass:res.data.isComplete,
+            questions[this.state.question].pastAnswers.push({
+                pass: res.data.isComplete,
                 pastAnswer: questions[this.state.question].answer,
-                errorMessage:res.data.htmlFeedback,
-            };
-            questions[this.state.question].pastAnswers.push(pastAnswerObj);
-            // questions[this.state.question].completed = true;
+                errorMessage: res.data.htmlFeedback,
+            });
+
             this.setState({ questions: questions });
             if (this.state.loggedIn) {
                 this.handleSaveState(this.state.uid)
             }
         } catch (err) {
-            console.log(err);
+            console.error(err);
         } finally {
             this.setState({ isLoading: false, showAlert: true });
         }
@@ -158,24 +157,23 @@ class App extends Component<RouteComponentProps> {
         db.once('value').then((snapshot) => {
             const data = snapshot.val();
             if (data !== null) {
-                let questions: any[] = Object.values(data.questions);
-                for ( let q of questions){
-                    q.pastAnswers = Object.values(q.pastAnswers);
+                let questions: QuestionIface[] = Object.values(data.questions);
+                for (let q of questions) {
+                    if (q.pastAnswers) { q.pastAnswers = Object.values(q.pastAnswers); }
                 }
-                // console.log(questions)
                 this.setState({
                     questions: questions,
                     feedbackRating: data.feedbackRating,
+                    question: data.currentQuestion
+                });
+                // close menu and open snackbar
+                this.setState({
                     showSnackBar: true,
                     openMenu: false,
-                    question:data.currentQuestion
-                });
-                window.setTimeout(() => {
-                    this.setState({ showSnackBar: false })
-                }, 3000)
+                })
             }
         }).catch(err => {
-            console.log(err);
+            console.error(err);
         });
     };
 
@@ -197,15 +195,6 @@ class App extends Component<RouteComponentProps> {
         this.setState({ questions: questions })
     };
 
-    handleCloseSnackBar = () => {
-        this.setState({ showSnackBar: false })
-    };
-
-    SlideTransition = (props: any) => {
-        return <Slide {...props} direction="up" />
-    };
-
-
     render() {
         const currQ = this.state.question;
         return (
@@ -225,40 +214,42 @@ class App extends Component<RouteComponentProps> {
                     <NavBar handleMenu={this.handleMenu} />
                     {/* TODO remove Router. does not work with gh-pages. see https://create-react-app.dev/docs/deployment/#notes-on-client-side-routing */}
 
-                        <Switch>
-                            <Route exact path="/"
-                                render={(props) => <QuestionInterface {...props} questions={this.state.questions}
-                                    question={currQ} handleStart={this.handleStart}
-                                    feedbackRating={this.state.feedbackRating}
-                                    handleStartOver={this.handleStartOver}
-                                    showAlert={this.state.showAlert}
-                                    handleNextQuestion={this.handleNextQuestion}
-                                    handlePrevQuestion={this.handlePrevQuestion}
-                                    handleCheckAnswer={this.handleCheckAnswer}
-                                    toggleComplete={this.toggleComplete}
-                                    isLoading={this.state.isLoading}
-                                    handleAlertClose={this.handleAlertClose}
-                                    handleClickQuestion={this.handleClickQuestion}
+                    <Switch>
+                        <Route exact path="/"
+                            render={(props) => <QuestionInterface {...props} questions={this.state.questions}
+                                question={currQ} handleStart={this.handleStart}
+                                feedbackRating={this.state.feedbackRating}
+                                handleStartOver={this.handleStartOver}
+                                showAlert={this.state.showAlert}
+                                handleNextQuestion={this.handleNextQuestion}
+                                handlePrevQuestion={this.handlePrevQuestion}
+                                handleCheckAnswer={this.handleCheckAnswer}
+                                toggleComplete={this.toggleComplete}
+                                isLoading={this.state.isLoading}
+                                handleAlertClose={this.handleAlertClose}
+                                handleClickQuestion={this.handleClickQuestion}
 
-                                />} />
-                            <Route exact path='/load' render={(props) => <Resume {...props}
-                                handleSaveState={this.handleSaveState}
-                                handleLoadState={this.handleLoadState}
                             />} />
-                        </Switch>
+                        <Route exact path='/load' render={(props) => <Resume {...props}
+                            handleSaveState={this.handleSaveState}
+                            handleLoadState={this.handleLoadState}
+                        />} />
+                    </Switch>
                     <Snackbar anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                         open={this.state.showSnackBar}
+                        autoHideDuration={3000}
+                        onClose={() => { this.setState({ showSnackBar: false }) }}
                         message={<span id="message-id">Profile has been successfully loaded.</span>}
                         action={
                             <IconButton
                                 key="close"
                                 color="inherit"
-                                onClick={this.handleCloseSnackBar}
+                                onClick={() => { this.setState({ showSnackBar: false }) }}
                             >
                                 <CloseIcon />
                             </IconButton>
                         }
-                        TransitionComponent={this.SlideTransition}
+                        TransitionComponent={(props) => { return <Slide {...props} direction="up" /> }}
                     />
                 </Container>
             </div>
