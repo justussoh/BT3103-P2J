@@ -16,6 +16,7 @@ import QuestionInterface from './components/Question/QuestionInterface'
 import './App.css';
 import { questions } from "./QuestionList";
 import Resume from "./components/Resume/Resume";
+import {QuestionIface} from "./components/Form/Question";
 
 export interface BackendResponse {
     data: {
@@ -157,7 +158,7 @@ class App extends Component<RouteComponentProps> {
         db.once('value').then((snapshot) => {
             const data = snapshot.val();
             if (data !== null) {
-                let questions = Object.values(data.questions);
+                let questions: any[] = Object.values(data.questions);
                 for ( let q of questions){
                     q.pastAnswers = Object.values(q.pastAnswers);
                 }
