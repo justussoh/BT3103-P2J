@@ -141,6 +141,7 @@ class App extends Component<RouteComponentProps> {
             questions: this.state.questions,
             userId: name,
             feedbackRating: this.state.feedbackRating,
+            currentQuestion: this.state.question,
         };
         firebaseApp.database().ref(`/userdata/${name}`).update(data)
     };
@@ -156,7 +157,8 @@ class App extends Component<RouteComponentProps> {
                     questions: questions,
                     feedbackRating: data.feedbackRating,
                     showSnackBar: true,
-                    openMenu: false
+                    openMenu: false,
+                    question:data.currentQuestion
                 });
                 window.setTimeout(() => {
                     this.setState({ showSnackBar: false })

@@ -1,4 +1,4 @@
-import { QuestionIface, QuestionType } from "./components/Form/Question";
+import {QuestionIface, QuestionType} from "./components/Form/Question";
 
 export const questions: QuestionIface[] =
     [
@@ -12,7 +12,9 @@ export const questions: QuestionIface[] =
             feedbackText: "",
             completed: false,
             type: QuestionType.EditableCode,
-            testCode: ``
+            testCode: ``,
+            exportCode: '',
+            pastAnswer: [],
         },
         {
             questionName: "Task 1",
@@ -34,7 +36,9 @@ export const questions: QuestionIface[] =
 const app = require("./main");
 test("default", () => {
     expect(1).toBe(1);
-});`
+});`,
+            exportCode: '',
+            pastAnswer: [],
         },
         {
             questionName: "Task 2",
@@ -60,7 +64,9 @@ const app = require("./main");
 test("task2", () => {
     expect(app.x).toBe(42);
     expect(app.y).toBe(13);
-});`
+});`,
+            exportCode: '',
+            pastAnswer: [],
         },
         {
             questionName: "Task 3",
@@ -77,7 +83,9 @@ test("task2", () => {
 const app = require("./main");
 test("default", () => {
     expect(1).toBe(1);
-});`
+});`,
+            exportCode: '',
+            pastAnswer: [],
         },
         {
             questionName: "Task 4",
@@ -96,7 +104,9 @@ test("default", () => {
 const app = require("./main");
 test("default", () => {
     expect(1).toBe(1);
-});`
+});`,
+            exportCode: '',
+            pastAnswer: [],
         },
         {
             questionName: "Task 5",
@@ -117,7 +127,9 @@ test("default", () => {
 const app = require("./main");
 test("default", () => {
     expect(1).toBe(1);
-});`
+});`,
+            exportCode: '',
+            pastAnswer: [],
         },
         {
             questionName: "Task 6",
@@ -142,7 +154,9 @@ test("default", () => {
 const app = require("./main");
 test("default", () => {
     expect(1).toBe(1);
-});`
+});`,
+            exportCode: '',
+            pastAnswer: [],
         },
         {
             questionName: "Task 7",
@@ -163,7 +177,9 @@ test("default", () => {
 const app = require("./main");
 test("default", () => {
     expect(1).toBe(1);
-});`
+});`,
+            exportCode: '',
+            pastAnswer: [],
         },
         {
             questionName: "Task 8",
@@ -181,7 +197,9 @@ test("default", () => {
 const app = require("./main");
 test("default", () => {
     expect(1).toBe(1);
-});`
+});`,
+            exportCode: '',
+            pastAnswer: [],
         },
         {
             questionName: "Task 9",
@@ -203,7 +221,9 @@ test("default", () => {
 const app = require("./main");
 test("default", () => {
     expect(1).toBe(1);
-});`
+});`,
+            exportCode: '',
+            pastAnswer: [],
         },
         {
             questionName: "Task 10",
@@ -220,7 +240,9 @@ test("default", () => {
 const app = require("./main");
 test("default", () => {
     expect(1).toBe(1);
-});`
+});`,
+            exportCode: '',
+            pastAnswer: [],
         },
         {
             questionName: "Task 11",
@@ -232,7 +254,9 @@ test("default", () => {
             feedbackText: "",
             completed: false,
             type: QuestionType.MultipleChoice,
-            testCode: ``
+            testCode: ``,
+            exportCode: '',
+            pastAnswer: [],
         },
         {
             questionName: "Task 12",
@@ -244,6 +268,8 @@ test("default", () => {
             feedbackText: "",
             completed: false,
             type: QuestionType.Checkboxes,
-            testCode: ``
+            testCode: ``,
+            exportCode: '',
+            pastAnswer: [],
         },
     ]

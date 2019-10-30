@@ -19,6 +19,8 @@ export interface QuestionIface {
     completed: boolean,
     type: QuestionType,
     testCode: string,
+    exportCode: string,
+    pastAnswer: string[],
 }
 
 export enum QuestionType {
