@@ -5,7 +5,6 @@ import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from "@material-ui/core/Slide";
 import Snackbar from "@material-ui/core/Snackbar";
-import NavBar from "./components/Navigation/NavBar";
 import SliderMenu from "./components/Navigation/SliderMenu";
 import axios from "axios";
 import { firebaseApp } from './util/firebase';
@@ -211,8 +210,6 @@ class App extends Component<RouteComponentProps> {
                 />
                 <Container fluid className='container-main d-flex align-items-center justify-content-center flex-column'
                     id='page-wrap'>
-                    <NavBar handleMenu={this.handleMenu} />
-                    {/* TODO remove Router. does not work with gh-pages. see https://create-react-app.dev/docs/deployment/#notes-on-client-side-routing */}
 
                     <Switch>
                         <Route exact path="/"
