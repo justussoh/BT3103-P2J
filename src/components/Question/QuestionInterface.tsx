@@ -1,10 +1,14 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import Typist from 'react-typist';
 import 'react-typist/dist/Typist.css';
-import { Container, Col, Row, Alert } from 'react-bootstrap';
+import {Container, Col, Row, Alert} from 'react-bootstrap';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
 
-import { QuestionIface } from "../Form/Question";
+import {QuestionIface} from "../Form/Question";
 import Question from "../Form/Question";
+import PastAnswers from "../PastAnswers/PastAnswers";
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import AceEditor from 'react-ace';
@@ -37,8 +41,16 @@ type MyProps = {
 };
 
 class QuestionInterface extends Component<MyProps, {}> {
+    state = {
+        showPastAnswers: false,
+    };
 
-    renderContent = () => {
+    handlePastAnswerSwitch = (e: any) => {
+        this.setState({showPastAnswers: e.target.checked})
+    };
+
+
+    renderQuestion = () => {
         const questions = this.props.questions;
         const currQ = this.props.question;
         switch (currQ) {
@@ -49,7 +61,7 @@ class QuestionInterface extends Component<MyProps, {}> {
                             Learn how to script in JavaScript from Python!
                         </Typist>
                         <div className='d-flex align-items-center justify-content-center flex-column'
-                            style={{ marginTop: '25px' }}>
+                             style={{marginTop: '25px'}}>
                             <AceEditor
                                 readOnly={false}
                                 wrapEnabled
@@ -63,11 +75,11 @@ class QuestionInterface extends Component<MyProps, {}> {
                                     $blockScrolling: true,
                                 }}
                                 value={questions[currQ].questionText as string}
-                                style={{ maxWidth: 570 }}
+                                style={{maxWidth: 570}}
                             />
                         </div>
                         <Button variant="outlined" className='button-start ml-auto' size='large'
-                            onClick={this.props.handleStart}>
+                                onClick={this.props.handleStart}>
                             START
                         </Button>
                     </div>
@@ -78,23 +90,23 @@ class QuestionInterface extends Component<MyProps, {}> {
                         <Typist className='title-font'>
                             Congratulations on finishing the course
                         </Typist>
-                        <p style={{ marginBottom: 0 }}>Please leave us a rating below</p>
+                        <p style={{marginBottom: 0}}>Please leave us a rating below</p>
                         <Box component="fieldset" mb={3} borderColor="transparent">
                             <Rating
                                 name="simple-controlled"
                                 value={this.props.feedbackRating}
                                 onChange={(event, newValue) => {
-                                    this.setState({ feedbackRating: newValue })
+                                    this.setState({feedbackRating: newValue})
                                 }}
                                 size="large"
-                                emptyIcon={<StarBorderIcon fontSize="inherit" style={{ color: "white" }} />}
+                                emptyIcon={<StarBorderIcon fontSize="inherit" style={{color: "white"}}/>}
                             />
                         </Box>
                         <p>And also help us to complete a feedback form <a
                             href='https://docs.google.com/forms/d/e/1FAIpQLSfM35tbCqA1qp8Z95il-rWhtXZdLI_3orBRK8onNHISGxbYNQ/viewform?usp=sf_link'
                             className='feedback-link'>here</a>.</p>
                         <Button variant="outlined" className='button-start' size='large'
-                            onClick={this.props.handleStartOver}>
+                                onClick={this.props.handleStartOver}>
                             START OVER
                         </Button>
                     </div>
@@ -102,16 +114,29 @@ class QuestionInterface extends Component<MyProps, {}> {
             default:
                 return (
                     <Question question={questions[currQ]}
-                        index={currQ}
-                        nextQuestion={this.props.handleNextQuestion}
-                        prevQuestion={this.props.handlePrevQuestion}
-                        checkAnswer={this.props.handleCheckAnswer}
-                        lastQuestion={currQ === questions.length - 1}
-                        toggleComplete={this.props.toggleComplete}
-                        isLoading={this.props.isLoading} />
+                              index={currQ}
+                              nextQuestion={this.props.handleNextQuestion}
+                              prevQuestion={this.props.handlePrevQuestion}
+                              checkAnswer={this.props.handleCheckAnswer}
+                              lastQuestion={currQ === questions.length - 1}
+                              toggleComplete={this.props.toggleComplete}
+                              isLoading={this.props.isLoading}/>
 
                 );
 
+        }
+    };
+
+    renderPastAnswers = () =>{
+        return <PastAnswers questions={this.props.questions}
+        question={this.props.question}/>
+    };
+
+    renderContent = () => {
+        if (!this.state.showPastAnswers) {
+            return this.renderQuestion()
+        } else {
+            return this.renderPastAnswers();
         }
     };
 
@@ -124,30 +149,24 @@ class QuestionInterface extends Component<MyProps, {}> {
             } else {
                 return (
                     <Tab key={index}
-                        className={`d-flex align-items-center ${question.completed ? "hover-pointer" : "hover-cancel"}`}
-                        label={
-                            <div className='d-flex align-items-center'>
-                                {/* <CircleIcon style={{color: question.completed ? 'green' : 'red'}}/>*/}
-                                {/* <span style={{marginLeft: 10, color: "white"}}>*/}
-                                {/*{question.questionName}*/}
-                                {/*</span>*/}
-                                <div className='question-circle'
-                                    style={{ backgroundColor: index <= currQ || question.completed ? '#007bff' : 'grey' }}
-
-                                >{question.questionName.split(' ')[1]}</div>
-
-                            </div>
-                        }
+                         className={`d-flex align-items-center ${question.completed ? "hover-pointer" : "hover-cancel"}`}
+                         label={
+                             <div className='d-flex align-items-center'>
+                                 <div className='question-circle'
+                                      style={{backgroundColor: index <= currQ || question.completed ? '#007bff' : 'grey'}}
+                                 >{question.questionName.split(' ')[1]}</div>
+                             </div>
+                         }
                     />);
             }
         });
 
         return (
             <Container fluid className='container-main d-flex align-items-center justify-content-center flex-column'
-                id='page-wrap'>
+                       id='page-wrap'>
                 {currQ > 0 ?
                     <Row className='d-flex align-items-center justify-content-center'
-                        style={{ width: '80vw', marginBottom: 15 }}>
+                         style={{width: '80vw', marginBottom: 15}}>
                         <Tabs
                             value={currQ - 1}
                             onChange={(e, v) => {
@@ -161,7 +180,7 @@ class QuestionInterface extends Component<MyProps, {}> {
                             TabIndicatorProps={
                                 {
                                     className: 'active-tab',
-                                    style: { display: "none" }
+                                    style: {display: "none"}
                                 }
                             }
                         >
@@ -169,7 +188,7 @@ class QuestionInterface extends Component<MyProps, {}> {
                         </Tabs>
                     </Row> : ''}
                 {this.props.showAlert ?
-                    <Row className='d-flex align-items-center justify-content-center' style={{ width: '80vw' }}>
+                    <Row className='d-flex align-items-center justify-content-center' style={{width: '80vw'}}>
                         <Col xs={10}>
                             {this.props.questions[currQ].completed ?
                                 <Alert variant='success' onClose={this.props.handleAlertClose} dismissible>
@@ -181,9 +200,25 @@ class QuestionInterface extends Component<MyProps, {}> {
                             }
                         </Col>
                     </Row> : ''
-
                 }
-                <Row className='d-flex align-items-center justify-content-center' style={{ width: '80vw' }}>
+                {currQ > 0 ?
+                    <Row className='d-flex align-items-center'
+                         style={{width: '80vw'}}>
+                        <FormGroup row className='ml-auto'>
+                            <FormControlLabel
+                                color="primary"
+                                control={
+                                    <Switch checked={this.state.showPastAnswers} onChange={this.handlePastAnswerSwitch}
+                                            value="showPastAnswers"/>
+                                }
+                                label="Show Past Answers"
+                                labelPlacement="start"
+                            />
+                        </FormGroup>
+                    </Row>
+                    : ''
+                }
+                <Row className='d-flex align-items-center justify-content-center' style={{width: '80vw'}}>
                     <Col xs={10}>
                         {this.renderContent()}
                     </Col>

@@ -158,6 +158,9 @@ class App extends Component<RouteComponentProps> {
             const data = snapshot.val();
             if (data !== null) {
                 let questions = Object.values(data.questions);
+                for ( let q of questions){
+                    q.pastAnswers = Object.values(q.pastAnswers);
+                }
                 // console.log(questions)
                 this.setState({
                     questions: questions,

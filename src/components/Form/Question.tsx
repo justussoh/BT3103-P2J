@@ -183,7 +183,7 @@ class Question extends React.Component<MyProps, { selected: Set<number> }> {
                         value={this.props.question.answer as string}
                     />
                 </Col>
-                <div dangerouslySetInnerHTML={{ __html: this.props.question.feedbackText }} />
+                {/*<div dangerouslySetInnerHTML={{ __html: this.props.question.feedbackText }} />*/}
             </Row>
         );
     };
