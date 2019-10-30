@@ -1,10 +1,3 @@
-.hover-cancel:hover{
-    cursor: not-allowed;
-}
-.hover-pointer:hover{
-    cursor: pointer;
-}
-
 .question-circle{
     border-radius: 50%;
     height: 35px;

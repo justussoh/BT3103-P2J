@@ -9,7 +9,6 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import HelpIcon from '@material-ui/icons/HelpOutline';
 
 export interface QuestionIface {
-    questionName: string,
     questionTitle: string,
     questionTutorial: string,
     questionText: string | string[],
@@ -24,9 +23,9 @@ export interface QuestionIface {
 }
 
 export interface pastAnswerIface {
-    pass:boolean,
+    pass: boolean,
     pastAnswer: string | number | number[],
-    errorMessage:string,
+    errorMessage: string,
 }
 
 export enum QuestionType {
@@ -192,7 +191,7 @@ class Question extends React.Component<MyProps, { selected: Set<number> }> {
         return (
             <Container className='d-flex align-items-center justify-content-center flex-column'>
                 <Row>
-                    <h3 className='question-title'>{this.props.question.questionName}: {this.props.question.questionTitle}</h3>
+                    <h3 className='question-title'>{this.props.question.questionTitle}</h3>
                 </Row>
                 {this.renderQuestion()}
                 <Row className='d-flex w-100'>
