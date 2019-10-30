@@ -63,7 +63,6 @@ Convert the following from python to javascript
     ```
 ## Control Flow
 - if-else
-- Switch
 
 Using if-else, define a function `odd(x)` that returns True when its integer argument is an odd number and False otherwise
 
@@ -72,7 +71,7 @@ function odd(x){
     return x%2 === 1
 }
 ```
-
+- switch
 Using `switch`, write a function `getPrice` that takes in the name of a fruit and logs the price of the fruit. Oranges are $1, apples are $2, and bananas are $3. If the fruit is none of the 3, log an apology. Sample execution below:
 
 ```javascript

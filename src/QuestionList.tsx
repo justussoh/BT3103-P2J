@@ -1,9 +1,8 @@
-import {QuestionIface, QuestionType} from "./components/Form/Question";
+import { QuestionIface, QuestionType } from "./components/Form/Question";
 
 export const questions: QuestionIface[] =
     [
         {
-            questionName: "",
             questionTitle: "",
             questionTutorial: "",
             questionText: "/*\n Welcome to From Python to JS. \n\n This quick and easy online module will teach you JavaScript, the popular programming language used for the Web. \n\n JavaScript is a scripting or programming language that allows you to implement complex things on web pages — every time a web page does more than just sit there and display static information for you to look at — displaying timely content updates, interactive maps, animated 2D/3D graphics, scrolling video jukeboxes, etc. — you can bet that JavaScript is probably involved. It is the third layer of the layer cake of standard web technologies, along with HTML and CSS .\n*/",
@@ -17,7 +16,6 @@ export const questions: QuestionIface[] =
             pastAnswers: [],
         },
         {
-            questionName: "Task 1",
             questionTitle: "Comments",
             questionTutorial: "In JavaScipt, commenting can be done by using: \n // For single line code \n /* For multiline code */",
             questionText: "Please convert the following to JavaScript syntax!",
@@ -32,7 +30,6 @@ export const questions: QuestionIface[] =
             completed: false,
             type: QuestionType.EditableCode,
             testCode: `
-//main.spec.js
 const app = require("./main");
 test("default", () => {
     expect(1).toBe(1);
@@ -41,79 +38,81 @@ test("default", () => {
             pastAnswers: [],
         },
         {
-            questionName: "Task 2",
             questionTitle: "Declarations",
             questionTutorial: "In JavaScipt, there are three kinds of variable declarations in JS.\n" +
-                "var: Declares a variable, optionally initializing it to a value\n" +
                 "let: Declares a block-scoped, local variable, optionally initializing it to a value\n" +
                 "const: Declares a block-scoped, read-only named constant.\n",
             questionText: "Please convert the following to JavaScript syntax!",
-            hint: "",
+            hint: "Declare your variables with const when needed",
             answer: `x = 42
 y = 13
 x = "forty-two"
-z = "The answer is" + 42
+z = "The answer is " + 42
 coffees = ['French Roast', 'Colombian', 'Kona']
 `,
             feedbackText: "",
             completed: false,
             type: QuestionType.EditableCode,
             testCode: `
-//main.spec.js
 const app = require("./main");
 test("task2", () => {
-    expect(app.x).toBe(42);
+    expect(app.x).toBe("forty-two");
     expect(app.y).toBe(13);
+    expect(app.z).toBe("The answer is 42");
+    expect(app.coffees).toBe(['French Roast', 'Colombian', 'Kona']);
 });`,
-            exportCode: '',
+            exportCode: `
+exports.x = x;
+exports.y = y;
+exports.z = z;
+exports.coffees = coffees;`,
             pastAnswers: [],
         },
         {
-            questionName: "Task 3",
             questionTitle: "Basic Functions",
             questionTutorial: "In JavaScipt, we first have to declare functions as functions.\n Also, replace the : with curly braces {}",
             questionText: "Please convert the following to JavaScript syntax!",
-            hint: "",
+            hint: "Look up how to write a simple Javascript function on MDN",
             answer: "def square(num):\n      return num * num",
             feedbackText: "",
             completed: false,
             type: QuestionType.EditableCode,
             testCode: `
-//main.spec.js
 const app = require("./main");
-test("default", () => {
-    expect(1).toBe(1);
+test("square", () => {
+    expect(square(3)).toBe(9);
+    expect(square(-3)).toBe(9);
 });`,
-            exportCode: '',
+            exportCode: "\nexports.square = square;",
             pastAnswers: [],
         },
         {
-            questionName: "Task 4",
-            questionTitle: "Default Parameters",
-            questionTutorial: "In JavaScipt, default parameters allow us to initialize functions with default values.\n",
-            questionText: "Please convert the following to JavaScript syntax!",
-            hint: "",
-            answer: "def multiply(a, b=5):\n" +
-                "    b = b if type(b)==int else 1\n" +
-                "    return a * b",
+            questionTitle: "Arrow functions",
+            questionTutorial: `An arrow function has a shorter syntax compared to function expressions. Arrow functions are always anonymous.
+Convert square to an arrow function.
+            `,
+            questionText: "Please convert 'square' into an arrow function",
+            hint: "Look up how to write a arrow functions on MDN",
+            answer: `function square(num) {
+    return num * num;
+}`,
             feedbackText: "",
             completed: false,
             type: QuestionType.EditableCode,
             testCode: `
-//main.spec.js
 const app = require("./main");
-test("default", () => {
-    expect(1).toBe(1);
+test("square", () => {
+    expect(square(3)).toBe(9);
+    expect(square(-3)).toBe(9);
 });`,
-            exportCode: '',
+            exportCode: "\nexports.square = square;",
             pastAnswers: [],
         },
         {
-            questionName: "Task 5",
             questionTitle: "Rest Parameters",
-            questionTutorial: "The rest parameter syntax allows us to represent an indefinite number of arguments as an array.\n",
+            questionTutorial: "The rest parameter syntax allows us to represent an indefinite number of arguments as an array.\n In the example, we use the rest parameters to collect arguments from the second one to the end. We then multiply them by the first one.",
             questionText: "Please convert the following to JavaScript syntax!",
-            hint: "",
+            hint: "The equivalent of '*args' in Python is '...args' in Javascript",
             answer: "def multiply(multiplier, *args):\n" +
                 "    return map(lambda x: multiplier * x, args) \n" +
                 "\n" +
@@ -123,47 +122,65 @@ test("default", () => {
             completed: false,
             type: QuestionType.EditableCode,
             testCode: `
-//main.spec.js
 const app = require("./main");
 test("default", () => {
-    expect(1).toBe(1);
+    expect(multiply(2,1,2,3)).toBe([2,4,6]);
 });`,
-            exportCode: '',
+            exportCode: "\nexports.multiply = multiply;",
             pastAnswers: [],
         },
         {
-            questionName: "Task 6",
-            questionTitle: "Control Flow",
-            questionTutorial: "Using if-else, define a function odd(x) that returns True when its integer argument is an odd number and False otherwise\n" +
-                "\n" +
-                "function odd(x){\n" +
-                "    return x%2 === 1\n" +
-                "}\n" +
-                "Using switch, write a function getPrice that takes in the name of a fruit and logs the price of the fruit. Oranges are $1, apples are $2, and bananas are $3. If the fruit is none of the 3, log an apology. Sample execution below:",
-            questionText: "Please write a switch statement",
-            hint: "",
-            answer: "getPrice('oranges') // logs \"$1\"\n" +
-                "getPrice('pears') // logs \"Sorry, we are out of pears.\"\n" +
-                "function getPrice(fruits) {\n" +
-                "}",
+            questionTitle: "Control Flow: if-else",
+            questionTutorial: "Using if-else, define a function odd(x) that returns True when its integer argument is an odd number and False otherwise\n",
+            questionText: "Define a function odd(x)",
+            hint: "if-else statements are surrounded by curly braces",
+            answer: `function odd(x) {
+
+}`,
             feedbackText: "",
             completed: false,
             type: QuestionType.EditableCode,
             testCode: `
-//main.spec.js
 const app = require("./main");
 test("default", () => {
-    expect(1).toBe(1);
+    expect(odd(1)).toBeTruthy();
+    expect(odd(2)).not.toBeTruthy();
+    expect(odd(3)).toBeTruthy();
 });`,
-            exportCode: '',
+            exportCode: '\nexports.odd = odd;',
             pastAnswers: [],
         },
         {
-            questionName: "Task 7",
+            questionTitle: "Control Flow: switch",
+            questionTutorial: `Using switch, write a function getPrice that takes in the name of a fruit and returns the price of the fruit. Oranges are $1, apples are $2, and bananas are $3. If the fruit is none of the 3, return an apology. Sample execution below:`,
+            questionText: "Please write a switch statement",
+            hint: "",
+            answer: `
+function getPrice(fruits) {
+}
+getPrice('oranges') // returns "$1"
+getPrice('apples') // returns "$2"
+getPrice('pears') // returns "Sorry, we are out of pears."
+`,
+            feedbackText: "",
+            completed: false,
+            type: QuestionType.EditableCode,
+            testCode: `
+const app = require("./main");
+test("default", () => {
+    expect(getPrice("oranges")).toBe("$1");
+    expect(getPrice("apples")).toBe("$2");
+    expect(getPrice("bananas")).toBe("$3");
+    expect(getPrice("other")).toBe("Sorry, we are out of other.");
+});`,
+            exportCode: '\nexports.getPrice = getPrice;',
+            pastAnswers: [],
+        },
+        {
             questionTitle: "Error Handling",
             questionTutorial: "",
             questionText: "Please convert the following to JavaScript syntax!",
-            hint: "",
+            hint: "'except Exception' is written as 'catch (e)' in Javascript",
             answer: "try:\n" +
                 "    monthName = getMonthName(month) # function could throw exception\n" +
                 "except Exception as e:\n" +
@@ -173,7 +190,6 @@ test("default", () => {
             completed: false,
             type: QuestionType.EditableCode,
             testCode: `
-//main.spec.js
 const app = require("./main");
 test("default", () => {
     expect(1).toBe(1);
@@ -182,8 +198,7 @@ test("default", () => {
             pastAnswers: [],
         },
         {
-            questionName: "Task 8",
-            questionTitle: "Loops and Iterations",
+            questionTitle: "Loops and Iterations: for loop",
             questionTutorial: "The for statement creates a loop that is executed as long as a condition is true.",
             questionText: "Please convert the following to JavaScript syntax!",
             hint: "",
@@ -193,7 +208,6 @@ test("default", () => {
             completed: false,
             type: QuestionType.EditableCode,
             testCode: `
-//main.spec.js
 const app = require("./main");
 test("default", () => {
     expect(1).toBe(1);
@@ -202,22 +216,23 @@ test("default", () => {
             pastAnswers: [],
         },
         {
-            questionName: "Task 9",
             questionTitle: "Working with Objects",
-            questionTutorial: "Objects are similar to Python dictionaries, they hold a key:value pairing. An example of initialising a object is as shown below:\n" +
-                "var myCar = new Object();\n" +
-                "myCar.make = 'Ford';\n" +
-                "myCar.model = 'Mustang';\n" +
-                "myCar.year = 1969;",
-            questionText: "Using a for..in loop, print all the available properties of",
-            hint: "",
-            answer: "for k in myCar.keys():\n" +
-                "   print (k, myCar[k]) ",
+            questionTutorial: "Objects are similar to Python dictionaries, they hold a key:value pairing. An example of initialising a object is as shown below:\n",
+            questionText: "Using a for..in loop, print all the available properties of myCar",
+            hint: "Convert the Python for loop to a Javascript for-in loop",
+            answer: `
+const myCar = {};
+myCar.make = 'Ford';
+myCar.model = 'Mustang';
+myCar.year = 1969;
+
+for k in myCar.keys():
+   print (k, myCar[k]) 
+            `,
             feedbackText: "",
             completed: false,
             type: QuestionType.EditableCode,
             testCode: `
-//main.spec.js
 const app = require("./main");
 test("default", () => {
     expect(1).toBe(1);
@@ -226,9 +241,8 @@ test("default", () => {
             pastAnswers: [],
         },
         {
-            questionName: "Task 10",
             questionTitle: "Promises",
-            questionTutorial: "Testing",
+            questionTutorial: "What is the output of the following code?",
             questionText: "Please convert the following to JavaScript syntax!",
             hint: "",
             answer: "Haven complete",
@@ -236,7 +250,6 @@ test("default", () => {
             completed: false,
             type: QuestionType.EditableCode,
             testCode: `
-//main.spec.js
 const app = require("./main");
 test("default", () => {
     expect(1).toBe(1);
@@ -245,7 +258,6 @@ test("default", () => {
             pastAnswers: [],
         },
         {
-            questionName: "Task 11",
             questionTitle: "sample mcq question",
             questionTutorial: "answer the following sample mcq question",
             questionText: [`what is the capital of china?`, `hong kong`, `taipei`, `beijing`],
@@ -259,7 +271,6 @@ test("default", () => {
             pastAnswers: [],
         },
         {
-            questionName: "Task 12",
             questionTitle: "sample checkboxes question",
             questionTutorial: "answer this checkboxes question",
             questionText: [`Prof Chris is...?`, `handsome`, `smart`, `charming`],

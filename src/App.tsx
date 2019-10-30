@@ -184,7 +184,11 @@ class App extends Component<RouteComponentProps> {
                 q.completed = true;
             });
             this.props.history.push('/');
-            this.setState({ questions: questions })
+            this.setState({
+                questions: questions,
+                question: 1,
+                openMenu: false
+            });
         }
     };
 
