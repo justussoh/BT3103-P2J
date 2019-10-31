@@ -188,10 +188,11 @@ class Question extends React.Component<MyProps, { selected: Set<number> }> {
     };
 
     render() {
+        const q = this.props.question
         return (
             <Container className='d-flex align-items-center justify-content-center flex-column'>
                 <Row>
-                    <h3 className='question-title'>{this.props.question.questionTitle}</h3>
+                    <h3 className='question-title'>{q.questionTitle}</h3>
                 </Row>
                 {this.renderQuestion()}
                 <Row className='d-flex w-100'>
@@ -199,19 +200,16 @@ class Question extends React.Component<MyProps, { selected: Set<number> }> {
                         onClick={this.props.prevQuestion}>
                         PREVIOUS
                     </Button>
-                    {/*<div className='d-flex align-items-center justify-content-center progress-bar-container'>*/}
-                    {/*    <ProgressBar variant="success" now={this.props.index * 10} style={{ width: 150 }} />*/}
-                    {/*    <span className='question-instruction' style={{ marginLeft: 20 }}>{this.props.index}/?? Questions</span>*/}
-                    {/*</div>*/}
                     {this.props.isLoading ?
                         <CircularProgress className='loading-color ml-auto' />
                         : <Button variant="outlined" className='button-start ml-auto' size='large'
-                            onClick={this.props.checkAnswer}>
+                            onClick={this.props.checkAnswer}
+                            disabled={q.type !== QuestionType.EditableCode}>
                             RUN
                         </Button>}
                     <Button variant="outlined" className='button-start' size='large'
                         onClick={this.props.nextQuestion} style={{ marginLeft: 10 }}
-                        disabled={!this.props.question.completed}
+                        disabled={!q.completed}
                     >
                         {this.props.lastQuestion ? "Finish" : 'NEXT'}
                     </Button>
