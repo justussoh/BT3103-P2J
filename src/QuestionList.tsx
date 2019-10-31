@@ -59,7 +59,7 @@ test("task2", () => {
     expect(app.x).toBe("forty-two");
     expect(app.y).toBe(13);
     expect(app.z).toBe("The answer is 42");
-    expect(app.coffees).toBe(['French Roast', 'Colombian', 'Kona']);
+    expect(app.coffees).toEqual(['French Roast', 'Colombian', 'Kona']);
 });`,
             exportCode: `
 exports.x = x;
@@ -153,7 +153,7 @@ test("default", () => {
         {
             questionTitle: "Control Flow: switch",
             questionTutorial: `Using switch, write a function getPrice that takes in the name of a fruit and returns the price of the fruit. Oranges are $1, apples are $2, and bananas are $3. If the fruit is none of the 3, return an apology. Sample execution below:`,
-            questionText: "Please write a switch statement",
+            questionText: "Write the function 'getPrice()'",
             hint: "",
             answer: `
 function getPrice(fruits) {
