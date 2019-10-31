@@ -177,27 +177,6 @@ test("default", () => {
             pastAnswers: [],
         },
         {
-            questionTitle: "Error Handling",
-            questionTutorial: "",
-            questionText: "Please convert the following to JavaScript syntax!",
-            hint: "'except Exception' is written as 'catch (e)' in Javascript",
-            answer: "try:\n" +
-                "    monthName = getMonthName(month) # function could throw exception\n" +
-                "except Exception as e:\n" +
-                "    monthName = 'unknown'\n" +
-                "    logMyErrors(e)",
-            feedbackText: "",
-            completed: false,
-            type: QuestionType.EditableCode,
-            testCode: `
-const app = require("./main");
-test("default", () => {
-    expect(1).toBe(1);
-});`,
-            exportCode: '',
-            pastAnswers: [],
-        },
-        {
             questionTitle: "Loops and Iterations: for loop",
             questionTutorial: "The for statement creates a loop that is executed as long as a condition is true.",
             questionText: "Please convert the following to JavaScript syntax!",
