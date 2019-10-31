@@ -181,17 +181,34 @@ test("default", () => {
             questionTutorial: "The for statement creates a loop that is executed as long as a condition is true.",
             questionText: "Please convert the following to JavaScript syntax!",
             hint: "",
-            answer: "for step in range(5):\n" +
-                "    print(\"i am at step: \" + step)",
+            answer: `
+// A for-loop
+for step in range(5):
+    print("i am at step: " + step)
+    
+// A while-loop
+n = 0
+x = 0
+while n < 3:
+    n += 1
+    x += n
+
+// A for-of loop
+arr = [3,5,7]
+for element in arr:
+    print(arr)`,
             feedbackText: "",
             completed: false,
             type: QuestionType.EditableCode,
             testCode: `
 const app = require("./main");
-test("default", () => {
-    expect(1).toBe(1);
+test("while loop", () => {
+    expect(app.x).toBe(6);
+    expect(app.n).toBe(3);
 });`,
-            exportCode: '',
+            exportCode: `
+exports.x = x;
+exports.n = n;`,
             pastAnswers: [],
         },
         {
