@@ -80,8 +80,8 @@ exports.coffees = coffees;`,
             testCode: `
 const app = require("./main");
 test("square", () => {
-    expect(square(3)).toBe(9);
-    expect(square(-3)).toBe(9);
+    expect(app.square(3)).toBe(9);
+    expect(app.square(-3)).toBe(9);
 });`,
             exportCode: "\nexports.square = square;",
             pastAnswers: [],
@@ -102,8 +102,8 @@ Convert square to an arrow function.
             testCode: `
 const app = require("./main");
 test("square", () => {
-    expect(square(3)).toBe(9);
-    expect(square(-3)).toBe(9);
+    expect(app.square(3)).toBe(9);
+    expect(app.square(-3)).toBe(9);
 });`,
             exportCode: "\nexports.square = square;",
             pastAnswers: [],
@@ -124,7 +124,7 @@ test("square", () => {
             testCode: `
 const app = require("./main");
 test("default", () => {
-    expect(multiply(2,1,2,3)).toBe([2,4,6]);
+    expect(app.multiply(2,1,2,3)).toBe([2,4,6]);
 });`,
             exportCode: "\nexports.multiply = multiply;",
             pastAnswers: [],
@@ -143,9 +143,9 @@ test("default", () => {
             testCode: `
 const app = require("./main");
 test("default", () => {
-    expect(odd(1)).toBeTruthy();
-    expect(odd(2)).not.toBeTruthy();
-    expect(odd(3)).toBeTruthy();
+    expect(app.odd(1)).toBeTruthy();
+    expect(app.odd(2)).not.toBeTruthy();
+    expect(app.odd(3)).toBeTruthy();
 });`,
             exportCode: '\nexports.odd = odd;',
             pastAnswers: [],
@@ -168,10 +168,10 @@ getPrice('pears') // returns "Sorry, we are out of pears."
             testCode: `
 const app = require("./main");
 test("default", () => {
-    expect(getPrice("oranges")).toBe("$1");
-    expect(getPrice("apples")).toBe("$2");
-    expect(getPrice("bananas")).toBe("$3");
-    expect(getPrice("other")).toBe("Sorry, we are out of other.");
+    expect(app.getPrice("oranges")).toBe("$1");
+    expect(app.getPrice("apples")).toBe("$2");
+    expect(app.getPrice("bananas")).toBe("$3");
+    expect(app.getPrice("other")).toBe("Sorry, we are out of other.");
 });`,
             exportCode: '\nexports.getPrice = getPrice;',
             pastAnswers: [],
