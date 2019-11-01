@@ -148,14 +148,19 @@ class QuestionInterface extends Component<MyProps, {}> {
             if (index === 0) {
                 return null;
             }
+            let className = 'question-circle';
+            if (question.completed) {
+                className += ' completed';
+            }
+            if (index === currQ) {
+                className += ' current'
+            }
             return (
                 <Tab key={index}
                     className={`d-flex align-items-center`}
                     label={
                         <div className='d-flex align-items-center'>
-                            <div className='question-circle'
-                                style={{ backgroundColor: index <= currQ || question.completed ? '#007bff' : 'grey' }}
-                            >{index}</div>
+                            <div className={className}>{index}</div>
                         </div>
                     }
                 />);
