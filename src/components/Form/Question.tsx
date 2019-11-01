@@ -156,8 +156,8 @@ class Question extends React.Component<MyProps, { selected: Set<number>, view: n
 
     renderEditableCode = () => {
         return (
-            <Row className='w-100' >
-                <Col xs={6}>
+            <Row className='w-100' style={{height:'50vh'}}>
+                <Col xs={6} style={{height:'100%'}} className='question-container'>
                     <Tabs
                         value={this.state.view}
                         onChange={this.handleClickQuestionView}
@@ -167,7 +167,6 @@ class Question extends React.Component<MyProps, { selected: Set<number>, view: n
                         TabIndicatorProps={
                             {
                                 className: 'active-tab',
-                                style: {display: "none"}
                             }
                         }
                     >
@@ -200,7 +199,7 @@ class Question extends React.Component<MyProps, { selected: Set<number>, view: n
 
                     </SwipeableViews>
                 </Col>
-                <Col xs={6}>
+                <Col xs={6} style={{height:'100%'}}>
                     <div className='d-flex align-items-center ' style={{marginBottom: 10}}>
                         <p className='question-instruction'><strong>{this.props.question.questionText}</strong></p>
                         <div className='ml-auto' style={{marginRight: 10}}>
@@ -219,7 +218,7 @@ class Question extends React.Component<MyProps, { selected: Set<number>, view: n
                     </div>
                     <AceEditor
                         wrapEnabled
-                        height='40vh'
+                        height='90%'
                         width='100%'
                         mode="javascript"
                         theme="monokai"

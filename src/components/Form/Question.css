@@ -38,3 +38,15 @@
     margin-top: 25px;
     margin-right: 20px;
 }
+
+.question-container .Mui-selected .MuiTab-wrapper{
+    color:white!important;
+}
+
+.question-container .MuiTab-wrapper{
+    color:grey!important;
+}
+
+.question-container .active-tab{
+    background-color: white!important;
+}
