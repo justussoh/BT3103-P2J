@@ -8,6 +8,13 @@
     color: white;
     font-weight: bold;
     font-size: 16px;
+    background-color: grey;
+}
+.question-circle.completed{
+    background-color: #007bff;
+}
+.question-circle.current{
+    border: solid 4px green;
 }
 
 .MuiTab-root{
