@@ -31,7 +31,7 @@ class PastAnswers extends React.Component<MyProps, {}> {
 
         if (!questions[currQ].pastAnswers || questions[currQ].pastAnswers.length === 0) {
             return (
-                <div style={{minHeight:'60vh'}} className='d-flex align-items-center'>
+                <div style={{minHeight: '60vh'}} className='d-flex align-items-center'>
                     <h6>You have not submitted any answer yet.</h6>
                 </div>
             )
@@ -39,24 +39,23 @@ class PastAnswers extends React.Component<MyProps, {}> {
 
         return (
             <Container fluid>
-                <Row>
-                    <Col lg="auto" md="auto">
-                        <Paper>
-                            <FormControl>
-                                <Select value={this.state.showAnswer} onChange={this.handlePastAnswerSelect}>
-                                    {questions[currQ].pastAnswers.map((ans, index) => {
-                                        return (
-                                            <MenuItem value={index}>{index + 1}. Attempt {index + 1}</MenuItem>
-                                        );
-                                    })}
-                                </Select>
-                            </FormControl>
-                        </Paper>
-                    </Col>
+                <Row style={{position: "absolute", top:'-40px'}}>
+                    <Paper>
+                        <FormControl>
+                            <Select value={this.state.showAnswer} onChange={this.handlePastAnswerSelect}>
+                                {questions[currQ].pastAnswers.map((ans, index) => {
+                                    return (
+                                        <MenuItem value={index}>{index + 1}. Attempt {index + 1}</MenuItem>
+                                    );
+                                })}
+                            </Select>
+                        </FormControl>
+                    </Paper>
                 </Row>
-                <Row>
-                    <Col>
+                <Row style={{height: '50vh'}}>
+                    <Col xs={6} style={{height: '100%'}}>
                         <AceEditor
+                            readOnly={true}
                             wrapEnabled
                             height='50vh'
                             width='100%'
@@ -71,8 +70,8 @@ class PastAnswers extends React.Component<MyProps, {}> {
                             style={{maxWidth: 570}}
                         />
                     </Col>
-                    <Col lg={6} md={6}>
-                        <Paper>
+                    <Col xs={6} style={{height: '100%'}}>
+                        <Paper style={{height: "100%", overflow: "scroll"}}>
                             <div
                                 dangerouslySetInnerHTML={{__html: questions[currQ].pastAnswers[this.state.showAnswer].errorMessage}}/>
                         </Paper>

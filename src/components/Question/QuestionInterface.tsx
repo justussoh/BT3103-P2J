@@ -176,6 +176,20 @@ class QuestionInterface extends Component<MyProps, {}> {
 
         return (
             <Container fluid>
+                {this.props.showAlert ?
+                    <Row className='d-flex align-items-center justify-content-center' style={{marginBottom:10}}>
+                        <Col xs={10}>
+                            {this.props.questions[currQ].completed ?
+                                <Alert variant='success' onClose={this.props.handleAlertClose} dismissible>
+                                    You answered the question correctly! Please move on to the next question.
+                                </Alert> :
+                                <Alert variant='danger' onClose={this.props.handleAlertClose} dismissible>
+                                    Please try again! You can use the hints if you need more help.
+                                </Alert>
+                            }
+                        </Col>
+                    </Row> : ''
+                }
                 {currQ > 0 && currQ < questions.length ?
                     <Row className='d-flex align-items-center justify-content-center'>
                         <Tabs
@@ -198,25 +212,12 @@ class QuestionInterface extends Component<MyProps, {}> {
                             {listQuestions}
                         </Tabs>
                     </Row> : ''}
-                {this.props.showAlert ?
+                {currQ > 0 && currQ < questions.length ?
                     <Row className='d-flex align-items-center justify-content-center'>
-                        <Col xs={10}>
-                            {this.props.questions[currQ].completed ?
-                                <Alert variant='success' onClose={this.props.handleAlertClose} dismissible>
-                                    You answered the question correctly! Please move on to the next question.
-                                </Alert> :
-                                <Alert variant='danger' onClose={this.props.handleAlertClose} dismissible>
-                                    Please try again! You can use the hints if you need more help.
-                                </Alert>
-                            }
-                        </Col>
-                    </Row> : ''
-                }
-                {currQ > 0 && currQ < questions.length?
-                    <Row className='d-flex align-items-center justify-content-center'>
-                        <div className='d-flex align-items-center justify-content-center' style={{width: '80%', position:'relative'}}>
+                        <div className='d-flex align-items-center justify-content-center'
+                             style={{width: '80%', position: 'relative'}}>
                             <h3 className='question-title'>{this.props.questions[currQ].questionTitle}</h3>
-                            <FormGroup row style={{position:"absolute", right:0}}>
+                            <FormGroup row style={{position: "absolute", right: 0}}>
                                 <FormControlLabel
                                     color="primary"
                                     control={
