@@ -295,16 +295,47 @@ test("default", () => {
         },
         {
             questionTitle: "Promises",
-            questionTutorial: "answer the following sample mcq question",
-            questionText: [`what is the capital of china?`, `hong kong`, `taipei`, `beijing`],
-            answer: 3,
-            defaultAnswer: 3,
+            questionTutorial: "Please answer the following MCQ qns.",
+            questionText: [`new Promise((resolve, reject) => {
+        console.log('Initial');
+        resolve();
+    })
+    .then(() => {
+        throw new Error('Something failed');
+        console.log('Do this');
+    })
+    .catch(() => {
+        console.error('Do that');
+    })
+    .then(() => {
+        console.log('Do this, no matter what');
+    });`,
+                `Initial
+ Do this`,
+                `Initial
+ Do this
+ Do that`,
+                `Initial
+ Do that
+ Do this, no matter what`,
+                `Initial
+ Something failed
+ Do this
+ Do that`
+            ],
+            answer: '',
+            defaultAnswer: '',
             hint: "",
             feedbackText: "",
             completed: false,
             type: QuestionType.MultipleChoice,
-            testCode: ``,
-            exportCode: '',
+            testCode: `
+const app = require("./main");
+test("task 9", () => {
+    expect(app.x).toBe(3);
+});`,
+            exportCode: `
+exports.x = x;`,
             pastAnswers: [],
         },
         {

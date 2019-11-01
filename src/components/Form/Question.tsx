@@ -39,15 +39,15 @@ export enum QuestionType {
     Checkboxes // select all that applies
 }
 
-function TabPanel(props:any) {
-    const { children, value, index, ...other } = props;
+function TabPanel(props: any) {
+    const {children, value, index, ...other} = props;
 
     return (
         <div
             hidden={value !== index}
             id={`simple-tabpanel-${index}`}
             aria-labelledby={`simple-tab-${index}`}
-            style={{maxWidth:'100%'}}
+            style={{maxWidth: '100%'}}
             {...other}
         >
             {children}
@@ -67,12 +67,13 @@ type MyProps = {
     toggleComplete: (arg0: boolean) => void,
 };
 
-class Question extends React.Component<MyProps, { selected: Set<number>, view: number }> {
+class Question extends React.Component<MyProps, { selected: Set<number>, view: number, mcqSelected: number }> {
     constructor(props: MyProps) {
         super(props);
         this.state = {
             selected: new Set(),
             view: 0,
+            mcqSelected: 0,
         };
     }
 
@@ -81,7 +82,9 @@ class Question extends React.Component<MyProps, { selected: Set<number>, view: n
     };
 
     checkMCQAns = (i: number) => {
-        this.props.toggleComplete(i === (this.props.question.answer as number));
+        this.props.question.answer = `x = ${i}`;
+        this.setState({mcqSelected: i})
+        // this.props.toggleComplete(i === (this.props.question.answer as number));
     };
 
     checkCheckboxesAns = () => {
@@ -141,25 +144,69 @@ class Question extends React.Component<MyProps, { selected: Set<number>, view: n
 
     renderMCQ = () => {
         const qn = this.props.question.questionText as string[];
-        let rows = [];
+        let selection = [];
         for (let i = 1; i < qn.length; i++) {
-            const text = qn[i]
-            rows.push(
-                <li onClick={() => this.checkMCQAns(i)} key={i}><span>{text}</span></li>
+            const text = qn[i];
+            selection.push(
+                <div onClick={() => this.checkMCQAns(i)} key={i}
+                     className={`mcq-button ${this.state.mcqSelected === i ? 'selected-mcq' : ''
+                     }`}
+                     style={{height: `${90 / (qn.length - 1)}%`, margin: `${10 / (qn.length - 1)}% 0px`}}
+                >
+                    {text.split('\n').map(function (item, key) {
+                        return (
+                            <p key={key} className='mcq-button-font'>
+                                {item}
+                            </p>)
+                    })}
+                </div>
             );
         }
         return (
-            <Row className='w-100'>
-                <p className='question-instruction'><strong>{qn[0]}</strong></p>
-                <ul>{rows}</ul>
+            <Row className='w-100' style={{height: '50vh'}}>
+                <Col xs={6}>
+                    <div className='d-flex align-items-center ' style={{marginBottom: 10}}>
+                        <p className='question-instruction'><strong>{this.props.question.questionTutorial}</strong></p>
+                        <div className='ml-auto' style={{marginRight: 10}}>
+                            <OverlayTrigger
+                                key='bottom'
+                                placement='bottom'
+                                overlay={
+                                    <Tooltip id='hint'>
+                                        {this.props.question.hint}
+                                    </Tooltip>
+                                }
+                            >
+                                <HelpIcon/>
+                            </OverlayTrigger>
+                        </div>
+                    </div>
+                    <AceEditor
+                        wrapEnabled
+                        height='90%'
+                        width='100%'
+                        mode="javascript"
+                        theme="monokai"
+                        name="answerInput"
+                        readOnly={true}
+                        tabSize={4}
+                        editorProps={{
+                            $blockScrolling: true,
+                        }}
+                        value={qn[0] as string}
+                    />
+                </Col>
+                <Col>
+                    {selection}
+                </Col>
             </Row>
         );
     };
 
     renderEditableCode = () => {
         return (
-            <Row className='w-100' style={{height:'50vh'}}>
-                <Col xs={6} style={{height:'100%'}} className='question-container'>
+            <Row className='w-100' style={{height: '50vh'}}>
+                <Col xs={6} style={{height: '100%'}} className='question-container'>
                     <Tabs
                         value={this.state.view}
                         onChange={this.handleClickQuestionView}
@@ -201,7 +248,7 @@ class Question extends React.Component<MyProps, { selected: Set<number>, view: n
 
                     </SwipeableViews>
                 </Col>
-                <Col xs={6} style={{height:'100%'}}>
+                <Col xs={6} style={{height: '100%'}}>
                     <div className='d-flex align-items-center ' style={{marginBottom: 10}}>
                         <p className='question-instruction'><strong>{this.props.question.questionText}</strong></p>
                         <div className='ml-auto' style={{marginRight: 10}}>
@@ -258,7 +305,8 @@ class Question extends React.Component<MyProps, { selected: Set<number>, view: n
                         <CircularProgress className='loading-color ml-auto'/>
                         : <Button variant="outlined" className='button-start ml-auto' size='large'
                                   onClick={this.props.checkAnswer}
-                                  disabled={q.type !== QuestionType.EditableCode}>
+                                  // disabled={q.type !== QuestionType.EditableCode}
+                        >
                             RUN
                         </Button>}
                     <Button variant="outlined" className='button-start' size='large'
