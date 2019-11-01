@@ -174,7 +174,7 @@ class QuestionInterface extends Component<MyProps, {}> {
 
         return (
             <Container fluid>
-                {currQ > 0 ?
+                {currQ > 0 && currQ < questions.length ?
                     <Row className='d-flex align-items-center justify-content-center'>
                         <Tabs
                             value={currQ - 1}
@@ -210,7 +210,7 @@ class QuestionInterface extends Component<MyProps, {}> {
                         </Col>
                     </Row> : ''
                 }
-                {currQ > 0 ?
+                {currQ > 0 && currQ < questions.length?
                     <Row className='d-flex align-items-center justify-content-center'>
                         <div className='d-flex align-items-center justify-content-center' style={{width: '80%', position:'relative'}}>
                             <h3 className='question-title'>{this.props.questions[currQ].questionTitle}</h3>

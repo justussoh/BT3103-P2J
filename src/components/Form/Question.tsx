@@ -143,7 +143,7 @@ class Question extends React.Component<MyProps, { selected: Set<number>, view: n
         for (let i = 1; i < qn.length; i++) {
             const text = qn[i]
             rows.push(
-                <li onClick={() => this.checkMCQAns(i)}><span>{text}</span></li>
+                <li onClick={() => this.checkMCQAns(i)} key={i}><span>{text}</span></li>
             );
         }
         return (
