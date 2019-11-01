@@ -202,7 +202,7 @@ class QuestionInterface extends Component<MyProps, {}> {
                 }
                 {currQ > 0 ?
                     <Row className='d-flex align-items-center'>
-                        <FormGroup row className='ml-auto'>
+                        <FormGroup row className='ml-auto' style={{marginRight: '10vw'}}>
                             <FormControlLabel
                                 color="primary"
                                 control={
@@ -217,7 +217,7 @@ class QuestionInterface extends Component<MyProps, {}> {
                     : ''
                 }
                 <Row className='d-flex align-items-center justify-content-center'>
-                    <Col lg="auto" md="auto">
+                    <Col xs={10}>
                         {this.renderContent()}
                     </Col>
                 </Row>

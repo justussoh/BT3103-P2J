@@ -13,3 +13,7 @@
 .MuiTab-root{
     min-width: 80px !important;
 }
+
+.react-swipeable-view-container{
+    height: 80%;
+}
