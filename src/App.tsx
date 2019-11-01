@@ -87,6 +87,7 @@ class App extends Component<RouteComponentProps> {
     handlePrevQuestion = () => {
         this.setState({ question: this.state.question - 1, showAlert: false })
     };
+
     handleAlertClose = () => {
         this.setState({ showAlert: false })
     };
@@ -94,6 +95,13 @@ class App extends Component<RouteComponentProps> {
     handleStartOver = () => {
         // TODO clear progress of app
         this.setState({ question: 0 })
+    };
+
+    handleResetAnswer = () =>{
+        let questions = this.state.questions;
+        let question = questions[this.state.question];
+        question.answer = question.defaultAnswer;
+        this.setState({questions})
     };
 
     handleCheckAnswer = async () => {
@@ -230,6 +238,7 @@ class App extends Component<RouteComponentProps> {
                                 handleNextQuestion={this.handleNextQuestion}
                                 handlePrevQuestion={this.handlePrevQuestion}
                                 handleCheckAnswer={this.handleCheckAnswer}
+                                handleResetAnswer={this.handleResetAnswer}
                                 toggleComplete={this.toggleComplete}
                                 isLoading={this.state.isLoading}
                                 handleAlertClose={this.handleAlertClose}

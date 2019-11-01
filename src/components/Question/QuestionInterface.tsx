@@ -38,6 +38,7 @@ type MyProps = {
     handleNextQuestion: () => void,
     handlePrevQuestion: () => void,
     handleCheckAnswer: () => void,
+    handleResetAnswer: () => void,
     toggleComplete: (arg0: boolean) => void,
     handleClickQuestion: (arg0: number) => void,
     handleAlertClose: () => void,
@@ -125,6 +126,7 @@ class QuestionInterface extends Component<MyProps, {}> {
                               nextQuestion={this.props.handleNextQuestion}
                               prevQuestion={this.props.handlePrevQuestion}
                               checkAnswer={this.props.handleCheckAnswer}
+                              resetAnswer={this.props.handleResetAnswer}
                               lastQuestion={currQ === questions.length - 1}
                               toggleComplete={this.props.toggleComplete}
                               isLoading={this.props.isLoading}/>

@@ -18,6 +18,7 @@ export interface QuestionIface {
     questionText: string | string[],
     hint: string,
     answer: string | number | number[],
+    defaultAnswer: string | number | number[],
     feedbackText: string,
     completed: boolean,
     type: QuestionType,
@@ -62,6 +63,7 @@ type MyProps = {
     nextQuestion: () => void,
     prevQuestion: () => void,
     checkAnswer: () => void,
+    resetAnswer: () => void,
     toggleComplete: (arg0: boolean) => void,
 };
 
@@ -245,6 +247,12 @@ class Question extends React.Component<MyProps, { selected: Set<number>, view: n
                     <Button variant="outlined" className='button-start' size='large'
                             onClick={this.props.prevQuestion}>
                         PREVIOUS
+                    </Button>
+                    <Button variant="outlined" className='button-start' size='large'
+                            onClick={this.props.resetAnswer}
+                            style={{marginLeft: 10}}
+                    >
+                        RESET
                     </Button>
                     {this.props.isLoading ?
                         <CircularProgress className='loading-color ml-auto'/>

@@ -1,4 +1,4 @@
-import { QuestionIface, QuestionType } from "./components/Form/Question";
+import {QuestionIface, QuestionType} from "./components/Form/Question";
 
 export const questions: QuestionIface[] =
     [
@@ -7,6 +7,7 @@ export const questions: QuestionIface[] =
             questionTutorial: "",
             questionText: "/*\n Welcome to From Python to JS. \n\n This quick and easy online module will teach you JavaScript, the popular programming language used for the Web. \n\n JavaScript is a scripting or programming language that allows you to implement complex things on web pages — every time a web page does more than just sit there and display static information for you to look at — displaying timely content updates, interactive maps, animated 2D/3D graphics, scrolling video jukeboxes, etc. — you can bet that JavaScript is probably involved. It is the third layer of the layer cake of standard web technologies, along with HTML and CSS .\n*/",
             answer: "",
+            defaultAnswer: "",
             hint: "",
             feedbackText: "",
             completed: false,
@@ -21,6 +22,12 @@ export const questions: QuestionIface[] =
             questionText: "Please convert the following to JavaScript syntax!",
             hint: "Replace # with // and ''' with /*",
             answer: "# a one line comment\n" +
+                "\n" +
+                "'''\n" +
+                "this is a longer,\n" +
+                "multi-line comment\n" +
+                "'''",
+            defaultAnswer: "# a one line comment\n" +
                 "\n" +
                 "'''\n" +
                 "this is a longer,\n" +
@@ -50,6 +57,12 @@ x = "forty-two"
 z = "The answer is " + 42
 coffees = ['French Roast', 'Colombian', 'Kona']
 `,
+            defaultAnswer: `x = 42
+y = 13
+x = "forty-two"
+z = "The answer is " + 42
+coffees = ['French Roast', 'Colombian', 'Kona']
+`,
             feedbackText: "",
             completed: false,
             type: QuestionType.EditableCode,
@@ -74,6 +87,7 @@ exports.coffees = coffees;`,
             questionText: "Please convert the following to JavaScript syntax!",
             hint: "Look up how to write a simple Javascript function on MDN",
             answer: "def square(num):\n      return num * num",
+            defaultAnswer: "def square(num):\n      return num * num",
             feedbackText: "",
             completed: false,
             type: QuestionType.EditableCode,
@@ -94,6 +108,9 @@ Convert square to an arrow function.
             questionText: "Please convert 'square' into an arrow function",
             hint: "Look up how to write a arrow functions on MDN",
             answer: `function square(num) {
+    return num * num;
+}`,
+            defaultAnswer: `function square(num) {
     return num * num;
 }`,
             feedbackText: "",
@@ -118,6 +135,11 @@ test("square", () => {
                 "\n" +
                 "var arr = multiply(2, 1, 2, 3);\n" +
                 "console.log(arr); // [2, 4, 6]",
+            defaultAnswer: "def multiply(multiplier, *args):\n" +
+                "    return map(lambda x: multiplier * x, args) \n" +
+                "\n" +
+                "var arr = multiply(2, 1, 2, 3);\n" +
+                "console.log(arr); // [2, 4, 6]",
             feedbackText: "",
             completed: false,
             type: QuestionType.EditableCode,
@@ -135,6 +157,9 @@ test("default", () => {
             questionText: "Define a function odd(x)",
             hint: "if-else statements are surrounded by curly braces",
             answer: `function odd(x) {
+
+}`,
+            defaultAnswer: `function odd(x) {
 
 }`,
             feedbackText: "",
@@ -162,6 +187,13 @@ getPrice('oranges') // returns "$1"
 getPrice('apples') // returns "$2"
 getPrice('pears') // returns "Sorry, we are out of pears."
 `,
+            defaultAnswer: `
+function getPrice(fruits) {
+}
+getPrice('oranges') // returns "$1"
+getPrice('apples') // returns "$2"
+getPrice('pears') // returns "Sorry, we are out of pears."
+`,
             feedbackText: "",
             completed: false,
             type: QuestionType.EditableCode,
@@ -182,6 +214,22 @@ test("default", () => {
             questionText: "Please convert the following to JavaScript syntax!",
             hint: "",
             answer: `
+// A for-loop
+for step in range(5):
+    print("i am at step: " + step)
+    
+// A while-loop
+n = 0
+x = 0
+while n < 3:
+    n += 1
+    x += n
+
+// A for-of loop
+arr = [3,5,7]
+for element in arr:
+    print(arr)`,
+            defaultAnswer: `
 // A for-loop
 for step in range(5):
     print("i am at step: " + step)
@@ -225,6 +273,15 @@ myCar.year = 1969;
 for k in myCar.keys():
    print (k, myCar[k]) 
             `,
+            defaultAnswer: `
+const myCar = {};
+myCar.make = 'Ford';
+myCar.model = 'Mustang';
+myCar.year = 1969;
+
+for k in myCar.keys():
+   print (k, myCar[k]) 
+            `,
             feedbackText: "",
             completed: false,
             type: QuestionType.EditableCode,
@@ -238,26 +295,10 @@ test("default", () => {
         },
         {
             questionTitle: "Promises",
-            questionTutorial: "What is the output of the following code?",
-            questionText: "Please convert the following to JavaScript syntax!",
-            hint: "",
-            answer: "Haven complete",
-            feedbackText: "",
-            completed: false,
-            type: QuestionType.EditableCode,
-            testCode: `
-const app = require("./main");
-test("default", () => {
-    expect(1).toBe(1);
-});`,
-            exportCode: '',
-            pastAnswers: [],
-        },
-        {
-            questionTitle: "sample mcq question",
             questionTutorial: "answer the following sample mcq question",
             questionText: [`what is the capital of china?`, `hong kong`, `taipei`, `beijing`],
             answer: 3,
+            defaultAnswer: 3,
             hint: "",
             feedbackText: "",
             completed: false,
@@ -271,6 +312,7 @@ test("default", () => {
             questionTutorial: "answer this checkboxes question",
             questionText: [`Prof Chris is...?`, `handsome`, `smart`, `charming`],
             answer: [1, 2, 3],
+            defaultAnswer: [1, 2, 3],
             hint: "",
             feedbackText: "",
             completed: false,
