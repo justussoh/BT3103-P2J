@@ -67,6 +67,8 @@ class QuestionInterface extends Component<MyProps, {}> {
                                 wrapEnabled
                                 height='50vh'
                                 width='70vw'
+                                fontSize={16}
+                                showPrintMargin={false}
                                 mode="javascript"
                                 theme="monokai"
                                 name="info-section"
@@ -75,7 +77,6 @@ class QuestionInterface extends Component<MyProps, {}> {
                                     $blockScrolling: true,
                                 }}
                                 value={questions[currQ].questionText as string}
-                                style={{ maxWidth: 570 }}
                             />
                         </div>
                         <Button variant="outlined" className='button-start ml-auto' size='large'
