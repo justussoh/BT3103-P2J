@@ -12,30 +12,18 @@ type MyProps = RouteComponentProps & {
     open: boolean,
     question: number,
     questions: QuestionIface[],
+    userID: string
+    onUserIDChange: (userID: string) => void,
     handleMenu: (arg0: boolean) => void,
     handleClickQuestion: (arg0: number) => void,
     handleMenuStateChange: (arg0: State) => void,
-    handleSaveState: (arg0: string) => void,
-    handleLoadState: (arg0: string) => void,
+    handleSaveState: () => void,
+    handleLoadState: () => void,
     handleStart: () => void,
     toggleAdmin: () => void,
 };
 
 class SliderMenu extends React.Component<MyProps, {}> {
-
-    state = {
-        userId: ''
-    };
-
-    handleUserIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        this.setState({ userId: e.target.value });
-    };
-
-    handleSaveStateCheck = () => {
-        if (this.state.userId !== '') {
-            this.props.handleSaveState(this.state.userId)
-        }
-    };
 
     handleResume = () => {
         this.props.history.push('/load');
@@ -109,8 +97,8 @@ class SliderMenu extends React.Component<MyProps, {}> {
 
                         <Grid item xs={12}>
                             <label className="field a-field a-field_a3">
-                                <input className="field__input a-field__input" placeholder="e.g. sy95"
-                                    onChange={this.handleUserIdChange}
+                                <input className="field__input a-field__input" value={this.props.userID}
+                                    onChange={(e) => { this.props.onUserIDChange(e.target.value); }}
                                 />
                                 <span className="a-field__label-wrap">
                                     <span className="a-field__label">Enter User ID</span>
@@ -118,11 +106,11 @@ class SliderMenu extends React.Component<MyProps, {}> {
                             </label>
                             <div className='d-flex'>
                                 <Button variant="outlined" className='button-start' size='large'
-                                    onClick={this.handleSaveStateCheck}>
+                                    onClick={this.props.handleSaveState}>
                                     SAVE
                                 </Button>
                                 <Button variant="outlined" className='button-start ml-auto' size='large'
-                                    onClick={() => this.props.handleLoadState(this.state.userId)}>
+                                    onClick={this.props.handleLoadState}>
                                     LOAD
                                 </Button>
                             </div>

@@ -131,7 +131,7 @@ class App extends Component<RouteComponentProps> {
 
             this.setState({ questions: questions });
             if (this.state.loggedIn) {
-                this.handleSaveState(this.state.uid)
+                this.handleSaveState();
             }
         } catch (err) {
             console.error(err);
@@ -141,7 +141,8 @@ class App extends Component<RouteComponentProps> {
 
     };
 
-    handleSaveState = (name: string) => {
+    handleSaveState = () => {
+        const name = this.state.uid;
         let data = {
             questions: this.state.questions,
             userId: name,
@@ -151,7 +152,8 @@ class App extends Component<RouteComponentProps> {
         firebaseApp.database().ref(`/userdata/${name}`).update(data)
     };
 
-    handleLoadState = (name: string) => {
+    handleLoadState = () => {
+        const name = this.state.uid;
         let db = firebaseApp.database().ref(`/userdata/${name}`);
         db.once('value').then((snapshot) => {
             const data = snapshot.val();
@@ -211,6 +213,8 @@ class App extends Component<RouteComponentProps> {
                     toggleAdmin={this.toggleAdmin}
                     handleSaveState={this.handleSaveState}
                     handleLoadState={this.handleLoadState}
+                    userID={this.state.uid}
+                    onUserIDChange={(name) => { this.setState({ uid: name }) }}
                 />
                 <Container fluid className='container-main d-flex align-items-center justify-content-center flex-column'
                     id='page-wrap'>
@@ -229,11 +233,14 @@ class App extends Component<RouteComponentProps> {
                                 isLoading={this.state.isLoading}
                                 handleAlertClose={this.handleAlertClose}
                                 handleClickQuestion={this.handleClickQuestion}
+                                saveState={this.handleSaveState}
 
                             />} />
                         <Route exact path='/load' render={(props) => <Resume {...props}
                             handleSaveState={this.handleSaveState}
                             handleLoadState={this.handleLoadState}
+                            userID={this.state.uid}
+                            onUserIDChange={(name) => { this.setState({ uid: name }) }}
                         />} />
                     </Switch>
                     <Snackbar anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}

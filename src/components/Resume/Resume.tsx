@@ -5,32 +5,19 @@ import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Icon from '@mdi/react';
 import { mdiFacebookBox, mdiGoogle } from '@mdi/js';
-import {withRouter} from 'react-router-dom';
-import {RouteComponentProps} from "react-router";
+import { withRouter } from 'react-router-dom';
+import { RouteComponentProps } from "react-router";
 
 import './Resume.css'
 
 type MyProps = RouteComponentProps & {
-    handleSaveState: (arg0: string) => void,
-    handleLoadState: (arg0: string) => void,
+    userID: string,
+    onUserIDChange: (name: string) => void,
+    handleSaveState: () => void,
+    handleLoadState: () => void,
 };
 
 class Resume extends React.Component<MyProps, {}> {
-
-    state = {
-        userId: ''
-    };
-
-    handleUserIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        this.setState({ userId: e.target.value });
-    };
-
-    handleSaveStateCheck = () => {
-        if (this.state.userId !== '') {
-            this.props.handleSaveState(this.state.userId)
-        }
-    };
-
 
     handleFacebook = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
@@ -38,7 +25,9 @@ class Resume extends React.Component<MyProps, {}> {
         firebaseApp.auth().signInWithPopup(provider).then((result) => {
             //console.log('Facebook login success');
             if (result !== null && result.user !== null && result.user.uid !== null) {
-                this.props.handleLoadState(result.user.uid);
+                const userID = result.user.uid;
+                this.props.onUserIDChange(userID);
+                this.props.handleLoadState();
                 this.props.history.push('/');
             }
         }).catch((error) => {
@@ -52,7 +41,9 @@ class Resume extends React.Component<MyProps, {}> {
         firebaseApp.auth().signInWithPopup(provider).then((result) => {
             //console.log('Google login success');
             if (result !== null && result.user !== null && result.user.uid !== null) {
-                this.props.handleLoadState(result.user.uid);
+                const userID = result.user.uid;
+                this.props.onUserIDChange(userID);
+                this.props.handleLoadState();
                 this.props.history.push('/');
 
             }
@@ -73,8 +64,8 @@ class Resume extends React.Component<MyProps, {}> {
                     <Grid item xs={12} className='d-flex align-items-center justify-content-center'>
                         <div className='w-100'>
                             <label className="field a-field a-field_a3">
-                                <input className="field__input a-field__input" placeholder="e.g. sy95"
-                                    onChange={this.handleUserIdChange}
+                                <input className="field__input a-field__input" value={this.props.userID}
+                                    onChange={(e) => { this.props.onUserIDChange(e.target.value) }}
                                 />
                                 <span className="a-field__label-wrap">
                                     <span className="a-field__label">Enter User ID</span>
@@ -82,11 +73,11 @@ class Resume extends React.Component<MyProps, {}> {
                             </label>
                             <div className='d-flex'>
                                 <Button variant="outlined" className='button-start' size='large'
-                                    onClick={this.handleSaveStateCheck}>
+                                    onClick={this.props.handleSaveState}>
                                     SAVE
                                 </Button>
                                 <Button variant="outlined" className='button-start ml-auto' size='large'
-                                    onClick={() => this.props.handleLoadState(this.state.userId)}>
+                                    onClick={this.props.handleLoadState}>
                                     LOAD
                                 </Button>
                             </div>
