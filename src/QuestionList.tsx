@@ -124,7 +124,7 @@ test("square", () => {
             testCode: `
 const app = require("./main");
 test("default", () => {
-    expect(app.multiply(2,1,2,3)).toBe([2,4,6]);
+    expect(app.multiply(2,1,2,3)).toEqual([2,4,6]);
 });`,
             exportCode: "\nexports.multiply = multiply;",
             pastAnswers: [],
