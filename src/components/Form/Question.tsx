@@ -46,7 +46,7 @@ function TabPanel(props:any) {
             hidden={value !== index}
             id={`simple-tabpanel-${index}`}
             aria-labelledby={`simple-tab-${index}`}
-
+            style={{maxWidth:'100%'}}
             {...other}
         >
             {children}
@@ -156,8 +156,8 @@ class Question extends React.Component<MyProps, { selected: Set<number>, view: n
 
     renderEditableCode = () => {
         return (
-            <Row className='w-100'>
-                <Col>
+            <Row className='w-100' >
+                <Col xs={6}>
                     <Tabs
                         value={this.state.view}
                         onChange={this.handleClickQuestionView}
@@ -199,28 +199,8 @@ class Question extends React.Component<MyProps, { selected: Set<number>, view: n
                         </TabPanel>
 
                     </SwipeableViews>
-                    {/*<Container fluid className='h-100'>*/}
-                    {/*    <Row className='h-50'>*/}
-                    {/*        <div style={{lineHeight: 1}}>*/}
-                    {/*            <h6>Instructions:</h6>*/}
-                    {/*            {this.props.question.questionTutorial.split('\n').map(function (item, key) {*/}
-                    {/*                return (*/}
-                    {/*                    <span key={key} className='question-font'>*/}
-                    {/*                        {item}*/}
-                    {/*                        <br/>*/}
-                    {/*                    </span>)*/}
-                    {/*            })}*/}
-                    {/*        </div>*/}
-                    {/*    </Row>*/}
-                    {/*    <Row className='d-flex flex-column h-50'>*/}
-                    {/*        <h6>Output:</h6>*/}
-                    {/*        <div className='output-box'>*/}
-                    {/*            <p className='feedback-text-font'></p>*/}
-                    {/*        </div>*/}
-                    {/*    </Row>*/}
-                    {/*</Container>*/}
                 </Col>
-                <Col>
+                <Col xs={6}>
                     <div className='d-flex align-items-center ' style={{marginBottom: 10}}>
                         <p className='question-instruction'><strong>{this.props.question.questionText}</strong></p>
                         <div className='ml-auto' style={{marginRight: 10}}>
@@ -261,9 +241,6 @@ class Question extends React.Component<MyProps, { selected: Set<number>, view: n
         const q = this.props.question;
         return (
             <Container className='d-flex align-items-center justify-content-center flex-column'>
-                <Row>
-                    <h3 className='question-title'>{q.questionTitle}</h3>
-                </Row>
                 {this.renderQuestion()}
                 <Row className='d-flex w-100'>
                     <Button variant="outlined" className='button-start' size='large'
