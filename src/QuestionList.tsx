@@ -262,7 +262,7 @@ exports.n = n;`,
         {
             questionTitle: "Working with Objects",
             questionTutorial: "Objects are similar to Python dictionaries, they hold a key:value pairing. An example of initialising a object is as shown below:\n",
-            questionText: "Using a for..in loop, print all the available properties of myCar",
+            questionText: "Using a for..in loop, add all available properties of myCar into an array",
             hint: "Convert the Python for loop to a Javascript for-in loop",
             answer: `
 const myCar = {};
@@ -270,8 +270,10 @@ myCar.make = 'Ford';
 myCar.model = 'Mustang';
 myCar.year = 1969;
 
+const res = []
+
 for k in myCar.keys():
-   print (k, myCar[k]) 
+   res.append(myCar[k]) 
             `,
             defaultAnswer: `
 const myCar = {};
@@ -279,18 +281,21 @@ myCar.make = 'Ford';
 myCar.model = 'Mustang';
 myCar.year = 1969;
 
+const res = []
+
 for k in myCar.keys():
-   print (k, myCar[k]) 
+   res.append(myCar[k]) 
             `,
             feedbackText: "",
             completed: false,
             type: QuestionType.EditableCode,
             testCode: `
 const app = require("./main");
-test("default", () => {
-    expect(1).toBe(1);
+test("task 8", () => {
+    expect(app.res.length).toBe(3);
 });`,
-            exportCode: '',
+            exportCode: `
+exports.res = res;`,
             pastAnswers: [],
         },
         {

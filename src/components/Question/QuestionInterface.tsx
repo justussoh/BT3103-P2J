@@ -54,6 +54,10 @@ class QuestionInterface extends Component<MyProps, {}> {
         this.setState({showPastAnswers: e.target.checked})
     };
 
+    handleCloseHistory = () =>{
+        this.setState({showPastAnswers:false})
+    };
+
 
     renderQuestion = () => {
         const questions = this.props.questions;
@@ -196,6 +200,7 @@ class QuestionInterface extends Component<MyProps, {}> {
                             value={currQ - 1}
                             onChange={(e, v) => {
                                 if (questions[v + 1].completed) {
+                                    this.handleCloseHistory();
                                     this.props.handleClickQuestion(v + 1)
                                 }
                             }}
