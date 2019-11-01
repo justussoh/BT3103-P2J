@@ -27,7 +27,11 @@ type MyProps = {
     question: number,
     showAlert: boolean,
     isLoading: boolean,
+
+    // for feed
     feedbackRating: number,
+    onFeedbackRatingChange: (feedbackRating: number) => void,
+
     questions: QuestionIface[],
     handleStart: () => void,
     handleStartOver: () => void,
@@ -37,7 +41,7 @@ type MyProps = {
     toggleComplete: (arg0: boolean) => void,
     handleClickQuestion: (arg0: number) => void,
     handleAlertClose: () => void,
-
+    saveState: () => void,
 };
 
 class QuestionInterface extends Component<MyProps, {}> {
@@ -97,7 +101,9 @@ class QuestionInterface extends Component<MyProps, {}> {
                                 name="simple-controlled"
                                 value={this.props.feedbackRating}
                                 onChange={(event, newValue) => {
-                                    this.setState({ feedbackRating: newValue })
+                                    this.props.onFeedbackRatingChange(newValue);
+                                    // save rating to firebase
+                                    this.props.saveState();
                                 }}
                                 size="large"
                                 emptyIcon={<StarBorderIcon fontSize="inherit" style={{ color: "white" }} />}
@@ -207,7 +213,7 @@ class QuestionInterface extends Component<MyProps, {}> {
                 }
                 {currQ > 0 ?
                     <Row className='d-flex align-items-center'>
-                        <FormGroup row className='ml-auto' style={{marginRight: '10vw'}}>
+                        <FormGroup row className='ml-auto' style={{ marginRight: '10vw' }}>
                             <FormControlLabel
                                 color="primary"
                                 control={

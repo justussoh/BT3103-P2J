@@ -150,6 +150,7 @@ class App extends Component<RouteComponentProps> {
             currentQuestion: this.state.question,
         };
         firebaseApp.database().ref(`/userdata/${name}`).update(data)
+        console.log("saved data to firebase!")
     };
 
     handleLoadState = () => {
@@ -234,6 +235,7 @@ class App extends Component<RouteComponentProps> {
                                 handleAlertClose={this.handleAlertClose}
                                 handleClickQuestion={this.handleClickQuestion}
                                 saveState={this.handleSaveState}
+                                onFeedbackRatingChange={(n) => { this.setState({ feedbackRating: n }); }}
 
                             />} />
                         <Route exact path='/load' render={(props) => <Resume {...props}
