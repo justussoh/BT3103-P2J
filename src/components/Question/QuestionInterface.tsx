@@ -173,8 +173,7 @@ class QuestionInterface extends Component<MyProps, {}> {
         });
 
         return (
-            <Container fluid
-                id='page-wrap'>
+            <Container fluid>
                 {currQ > 0 ?
                     <Row className='d-flex align-items-center justify-content-center'>
                         <Tabs
