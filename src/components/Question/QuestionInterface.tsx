@@ -161,11 +161,10 @@ class QuestionInterface extends Component<MyProps, {}> {
         });
 
         return (
-            <Container fluid className='container-main d-flex align-items-center justify-content-center flex-column'
+            <Container fluid
                 id='page-wrap'>
                 {currQ > 0 ?
-                    <Row className='d-flex align-items-center justify-content-center'
-                        style={{ width: '80vw', marginBottom: 15 }}>
+                    <Row className='d-flex align-items-center justify-content-center'>
                         <Tabs
                             value={currQ - 1}
                             onChange={(e, v) => {
@@ -187,7 +186,7 @@ class QuestionInterface extends Component<MyProps, {}> {
                         </Tabs>
                     </Row> : ''}
                 {this.props.showAlert ?
-                    <Row className='d-flex align-items-center justify-content-center' style={{ width: '80vw' }}>
+                    <Row className='d-flex align-items-center justify-content-center'>
                         <Col xs={10}>
                             {this.props.questions[currQ].completed ?
                                 <Alert variant='success' onClose={this.props.handleAlertClose} dismissible>
@@ -201,8 +200,7 @@ class QuestionInterface extends Component<MyProps, {}> {
                     </Row> : ''
                 }
                 {currQ > 0 ?
-                    <Row className='d-flex align-items-center'
-                        style={{ width: '80vw' }}>
+                    <Row className='d-flex align-items-center'>
                         <FormGroup row className='ml-auto'>
                             <FormControlLabel
                                 color="primary"
@@ -217,8 +215,8 @@ class QuestionInterface extends Component<MyProps, {}> {
                     </Row>
                     : ''
                 }
-                <Row className='d-flex align-items-center justify-content-center' style={{ width: '80vw' }}>
-                    <Col xs={10}>
+                <Row className='d-flex align-items-center justify-content-center'>
+                    <Col lg="auto" md="auto">
                         {this.renderContent()}
                     </Col>
                 </Row>
