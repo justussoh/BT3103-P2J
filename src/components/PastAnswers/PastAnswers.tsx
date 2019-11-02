@@ -1,5 +1,5 @@
 import React from 'react';
-import {QuestionIface} from "../Form/Question";
+import { QuestionIface } from "../Form/Question";
 import AceEditor from "react-ace";
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
@@ -8,7 +8,7 @@ import Select from '@material-ui/core/Select';
 import 'brace/mode/javascript';
 import 'brace/theme/monokai';
 import Paper from "@material-ui/core/Paper";
-import {Row, Col, Container} from "react-bootstrap";
+import { Row, Col, Container } from "react-bootstrap";
 
 type MyProps = {
     questions: QuestionIface[],
@@ -22,7 +22,7 @@ class PastAnswers extends React.Component<MyProps, {}> {
     };
 
     handlePastAnswerSelect = (e: any) => {
-        this.setState({showAnswer: e.target.value})
+        this.setState({ showAnswer: e.target.value })
     };
 
     render() {
@@ -31,15 +31,13 @@ class PastAnswers extends React.Component<MyProps, {}> {
 
         if (!questions[currQ].pastAnswers || questions[currQ].pastAnswers.length === 0) {
             return (
-                <div style={{minHeight: '60vh'}} className='d-flex align-items-center'>
-                    <h6>You have not submitted any answer yet.</h6>
-                </div>
+                <h6 className="text-center">You have not submitted any answer yet.</h6>
             )
         }
 
         return (
             <Container fluid>
-                <Row style={{position: "absolute", top:'-40px'}}>
+                <Row style={{ position: "absolute", top: '-40px' }}>
                     <Paper>
                         <FormControl>
                             <Select value={this.state.showAnswer} onChange={this.handlePastAnswerSelect}>
@@ -52,8 +50,8 @@ class PastAnswers extends React.Component<MyProps, {}> {
                         </FormControl>
                     </Paper>
                 </Row>
-                <Row style={{height: '50vh'}}>
-                    <Col xs={6} style={{height: '100%'}}>
+                <Row style={{ height: '50vh' }}>
+                    <Col xs={6} style={{ height: '100%' }}>
                         <AceEditor
                             readOnly={true}
                             wrapEnabled
@@ -67,13 +65,13 @@ class PastAnswers extends React.Component<MyProps, {}> {
                                 $blockScrolling: true,
                             }}
                             value={questions[currQ].pastAnswers[this.state.showAnswer].pastAnswer as string}
-                            style={{maxWidth: 570}}
+                            style={{ maxWidth: 570 }}
                         />
                     </Col>
-                    <Col xs={6} style={{height: '100%'}}>
-                        <Paper style={{height: "100%", overflow: "scroll"}}>
+                    <Col xs={6} style={{ height: '100%' }}>
+                        <Paper style={{ height: "100%", overflow: "scroll" }}>
                             <div
-                                dangerouslySetInnerHTML={{__html: questions[currQ].pastAnswers[this.state.showAnswer].errorMessage}}/>
+                                dangerouslySetInnerHTML={{ __html: questions[currQ].pastAnswers[this.state.showAnswer].errorMessage }} />
                         </Paper>
                     </Col>
                 </Row>

@@ -97,11 +97,11 @@ class App extends Component<RouteComponentProps> {
         this.setState({ question: 0 })
     };
 
-    handleResetAnswer = () =>{
+    handleResetAnswer = () => {
         let questions = this.state.questions;
         let question = questions[this.state.question];
         question.answer = question.defaultAnswer;
-        this.setState({questions})
+        this.setState({ questions })
     };
 
     handleCheckAnswer = async () => {
@@ -225,7 +225,7 @@ class App extends Component<RouteComponentProps> {
                     userID={this.state.uid}
                     onUserIDChange={(name) => { this.setState({ uid: name }) }}
                 />
-                <Container fluid className='container-main d-flex align-items-center justify-content-center flex-column'
+                <Container fluid className='d-flex align-items-center justify-content-center flex-column p-5'
                     id='page-wrap'>
 
                     <Switch>

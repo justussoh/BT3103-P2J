@@ -3,7 +3,7 @@ body, html {
   padding: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #fff;
+  background-color: #171c28;
   color: #444452;
   font-family: Apercu,"Source Sans Pro",system,system-ui,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
   line-height: 1.5;
@@ -11,12 +11,11 @@ body, html {
   color:white;
 }
 
-.container-main {
+.App {
   position: relative;
   height:100vh;
   width: 100vw;
   overflow: hidden;
-  background-color: #171c28;
 }
 
 .title-font{
