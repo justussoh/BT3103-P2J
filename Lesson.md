@@ -233,6 +233,60 @@ Do...while
         Do this
         Do that
         ```
+        
+## Application Question
+-Javascript has some advantages over python in that it is able to be used to create web applications. Fill in the following commented areas to make a todo list based on the past questions you have answered
+
+```
+class List extends React.Component {
+  constructor() {
+    super()
+    this.state = { 
+      input: '',
+      inputList:[],
+     }
+     
+     this.inputListExport = []
+     this.insertElement=this.insertElement.bind(this)
+     this.handleInputChange = this.handleInputChange.bind(this)
+  }
+  
+  handleInputChange(e){
+    this.setState({input:e.target.value})
+  }
+  
+  insertElement(){
+    let text = this.state.input
+    let inputList = this.state.inputList
+    //Please add text to the following inputList
+    
+    this.inputListExport = inputList
+    this.setState({inputList:inputList})
+  }
+  
+  renderList(){
+    let res=[]
+    let inputList = this.state.inputList
+    // Add All object in inputList into res
+    
+      res.push(<li>{
+       i
+      }</li>)
+    
+    return res
+  }
+  
+  render(){
+    return(
+    <div>
+    <ol id="listDisplay">{this.renderList()}</ol>
+    <input type="text" onChange={this.handleInputChange}/>
+    <button onClick={this.insertElement}>Insert</button>
+   </div>
+    )
+  }
+}
+```
 
 ## Putting it all together [not in Prototype 1!]
 
