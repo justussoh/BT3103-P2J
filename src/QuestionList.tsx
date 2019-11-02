@@ -344,16 +344,68 @@ exports.x = x;`,
             pastAnswers: [],
         },
         {
-            questionTitle: "sample checkboxes question",
-            questionTutorial: "answer this checkboxes question",
-            questionText: [`Prof Chris is...?`, `handsome`, `smart`, `charming`],
-            answer: [1, 2, 3],
-            defaultAnswer: [1, 2, 3],
+            questionTitle: "Display Dynamic List",
+            questionTutorial: "Please look for the comments and edit the code as deem fit.",
+            questionText: "Using what you have learned previously, complete the 2 following functions.\n 1. Write a function to add item into an array\n 2. Write a function to map array to following functions in place of where the comment should be at\n\nThen add 4 items into the list.",
+            answer:"",
+            defaultAnswer:
+                "class List extends React.Component {\n" +
+                "  constructor() {\n" +
+                "    super()\n" +
+                "    this.state = { \n" +
+                "      input: '',\n" +
+                "      inputList:[],\n" +
+                "     }\n" +
+                "     \n" +
+                "     this.inputListExport = []\n" +
+                "     this.insertElement=this.insertElement.bind(this)\n" +
+                "     this.handleInputChange = this.handleInputChange.bind(this)\n" +
+                "  }\n" +
+                "  \n" +
+                "  handleInputChange(e){\n" +
+                "    this.setState({input:e.target.value})\n" +
+                "  }\n" +
+                "  \n" +
+                "  insertElement(){\n" +
+                "    let text = this.state.input\n" +
+                "    let inputList = this.state.inputList\n" +
+                "    //Please add text to the following inputList\n" +
+                "    \n" +
+                "    this.inputListExport = inputList\n" +
+                "    this.setState({inputList:inputList})\n" +
+                "  }\n" +
+                "  \n" +
+                "  renderList(){\n" +
+                "    let res=[]\n" +
+                "    let inputList = this.state.inputList\n" +
+                "    // Add All object in inputList into res\n" +
+                "    \n" +
+                "      res.push(<li>{\n" +
+                "       i\n" +
+                "      }</li>)\n" +
+                "    \n" +
+                "    return res\n" +
+                "  }\n" +
+                "  \n" +
+                "  render(){\n" +
+                "    return(\n" +
+                "    <div>\n" +
+                "    <ol id=\"listDisplay\">{this.renderList()}</ol>\n" +
+                "    <input type=\"text\" onChange={this.handleInputChange}/>\n" +
+                "    <button onClick={this.insertElement}>Insert</button>\n" +
+                "   </div>\n" +
+                "    )\n" +
+                "  }\n" +
+                "}",
             hint: "",
             feedbackText: "",
             completed: false,
-            type: QuestionType.Checkboxes,
-            testCode: ``,
+            type: QuestionType.HTMLCode,
+            testCode: `
+            const app = require("./main");
+            test("task 10", () => {
+                expect(1).toBe(1);
+            });`,
             exportCode: '',
             pastAnswers: [],
         },

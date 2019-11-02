@@ -11,6 +11,13 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import SwipeableViews from 'react-swipeable-views';
 import Paper from "@material-ui/core/Paper";
+import {
+    LiveProvider,
+    LiveEditor,
+    LiveError,
+    LivePreview
+} from 'react-live';
+
 
 export interface QuestionIface {
     questionTitle: string,
@@ -36,7 +43,8 @@ export interface pastAnswerIface {
 export enum QuestionType {
     EditableCode, // qn with editable code that can run
     MultipleChoice, // mcq
-    Checkboxes // select all that applies
+    Checkboxes, // select all that applies
+    HTMLCode
 }
 
 function TabPanel(props: any) {
@@ -47,7 +55,7 @@ function TabPanel(props: any) {
             hidden={value !== index}
             id={`simple-tabpanel-${index}`}
             aria-labelledby={`simple-tab-${index}`}
-            style={{maxWidth: '100%'}}
+            style={{maxWidth: '100%', height: '100%'}}
             {...other}
         >
             {children}
@@ -116,6 +124,8 @@ class Question extends React.Component<MyProps, { selected: Set<number>, view: n
                 return this.renderMCQ();
             case QuestionType.Checkboxes:
                 return this.renderCheckboxes();
+            case QuestionType.HTMLCode:
+                return this.renderHtmlCode();
             default:
                 break;
         }
@@ -285,6 +295,76 @@ class Question extends React.Component<MyProps, { selected: Set<number>, view: n
         );
     };
 
+    renderHtmlCode = () => {
+        return (
+            <LiveProvider code={this.props.question.defaultAnswer as string}>
+                <Row className='w-100' style={{height: '50vh'}}>
+                    <Col xs={6} style={{height: '100%'}} className='question-container'>
+                        <Tabs
+                            value={this.state.view}
+                            onChange={this.handleClickQuestionView}
+                            textColor="primary"
+                            variant='fullWidth'
+                            centered
+                            TabIndicatorProps={
+                                {
+                                    className: 'active-tab',
+                                }
+                            }
+                        >
+                            <Tab label="Question" value={0}/>
+                            <Tab label="Edit Code" value={1}/>
+                        </Tabs>
+                        <SwipeableViews
+                            index={this.state.view}
+                            onChangeIndex={this.handleClickQuestionView}
+                            className='w-100 h-100'
+                        >
+                            <TabPanel value={this.state.view} index={0}>
+                                <div style={{lineHeight: 1}}>
+                                    <h6>Instructions:</h6>
+                                    {this.props.question.questionTutorial.split('\n').map(function (item, key) {
+                                        return (
+                                            <span key={key} className='question-font'>
+                                            {item}
+                                                <br/>
+                                        </span>)
+                                    })}
+                                </div>
+                            </TabPanel>
+                            <TabPanel value={this.state.view} index={1}>
+                                <LiveEditor/>
+                            </TabPanel>
+                        </SwipeableViews>
+                    </Col>
+                    <Col xs={6} style={{height: '100%'}}>
+                        <div className='d-flex align-items-center ' style={{marginBottom: 10}}>
+                            <p className='question-instruction'><strong>{this.props.question.questionTutorial}</strong>
+                            </p>
+                            <div className='ml-auto' style={{marginRight: 10}}>
+                                <OverlayTrigger
+                                    key='bottom'
+                                    placement='bottom'
+                                    overlay={
+                                        <Tooltip id='hint'>
+                                            {this.props.question.hint}
+                                        </Tooltip>
+                                    }
+                                >
+                                    <HelpIcon/>
+                                </OverlayTrigger>
+                            </div>
+                        </div>
+                        <Paper style={{height:'80%'}}>
+                            <LiveError/>
+                            <LivePreview/>
+                        </Paper>
+                    </Col>
+                </Row>
+            </LiveProvider>
+        );
+    };
+
     render() {
         const q = this.props.question;
         return (
@@ -305,7 +385,7 @@ class Question extends React.Component<MyProps, { selected: Set<number>, view: n
                         <CircularProgress className='loading-color ml-auto'/>
                         : <Button variant="outlined" className='button-start ml-auto' size='large'
                                   onClick={this.props.checkAnswer}
-                                  // disabled={q.type !== QuestionType.EditableCode}
+                            // disabled={q.type !== QuestionType.EditableCode}
                         >
                             RUN
                         </Button>}
