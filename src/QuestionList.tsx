@@ -302,7 +302,14 @@ exports.res = res;`,
         {
             questionTitle: "Promises",
             questionTutorial: "Please answer the following MCQ qns.",
-            questionText: [`new Promise((resolve, reject) => {
+            questionText: [`The Promise object represents the eventual completion (or failure) of an asynchronous operation, and its resulting value.
+By using .then function, a promise can be can be resolved.
+The .catch function will run if there are errors in the code.
+The .finally function will always run at the end of the stream.
+
+What will the following code log?
+         
+new Promise((resolve, reject) => {
         console.log('Initial');
         resolve();
     })
