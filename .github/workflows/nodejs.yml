@@ -10,14 +10,15 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: '12.x'
-    - run: |
+    - name: Configure github
+      run: |
         git config --global user.email "action@github.com"
         git config --global user.name "Github Action"
-    - run: |
-        npm install
-        npm run predeploy
-        npm run deploy
-    - name: Github pages deploy
-      uses: maxheld83/ghpages@v0.1.2
+    - name: Build and Deploy
+      uses: JamesIves/github-pages-deploy-action@2.0.3
       env:
-        BUILD_DIR: "build/"
+        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        BASE_BRANCH: master # The branch the action should deploy from.
+        BRANCH: gh-pages # The branch the action should deploy to.
+        FOLDER: build # The folder the action should deploy.
+        BUILD_SCRIPT: npm install && npm run predeploy # The build script the action should run prior to deploying.
