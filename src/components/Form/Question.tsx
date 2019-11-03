@@ -160,17 +160,8 @@ class Question extends React.Component<MyProps, { selected: Set<number>, view: n
                 className += " selected-mcq"
             }
             selection.push(
-                <div onClick={() => this.setState({ selected: new Set([i]) })} key={i}
-                    className={className}
-                    style={{ height: `${90 / (qn.length - 1)}%`, margin: `${10 / (qn.length - 1)}% 0px` }}
-                >
-                    {text.split('\n').map(function (item, key) {
-                        return (
-                            <p key={key} className='mcq-button-font'>
-                                {item}
-                            </p>)
-                    })}
-                </div>
+                <pre onClick={() => this.setState({ selected: new Set([i]) })} key={i}
+                    className={className}><code className='mcq-button-font'>{text}</code></pre>
             );
         }
         return (
@@ -207,7 +198,7 @@ class Question extends React.Component<MyProps, { selected: Set<number>, view: n
                         value={qn[0] as string}
                     />
                 </Col>
-                <Col>
+                <Col className='mh-100'>
                     {selection}
                     <Button variant='outlined' className='button-start' onClick={this.checkAns}> Check answer </Button>
                 </Col>

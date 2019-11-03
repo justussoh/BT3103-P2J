@@ -324,17 +324,17 @@ new Promise((resolve, reject) => {
         console.log('Do this, no matter what');
     });`,
                 `Initial
- Do this`,
+Do this`,
                 `Initial
- Do this
- Do that`,
+Do this
+Do that`,
                 `Initial
- Do that
- Do this, no matter what`,
+Do that
+Do this, no matter what`,
                 `Initial
- Something failed
- Do this
- Do that`
+Something failed
+Do this
+Do that`
             ],
             answer: 3,
             defaultAnswer: '',

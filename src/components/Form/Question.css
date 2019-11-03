@@ -56,11 +56,10 @@
 
 }
 
-.mcq-button-font{
+pre {
+    font-size: 60%;
+    cursor: pointer;
     color: white;
-    font-family: "Lucida Console", Monaco, monospace;
-    font-size: 12px;
-    margin-bottom: 0;
 }
 
 .selected-mcq{
