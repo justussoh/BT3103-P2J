@@ -1,0 +1,21 @@
+on:
+  push:
+    branches: 
+      - master # push events on master branch
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+    - name: npm install, build, and test
+      run: |
+        npm install
+        npm predeploy
+        npm deploy
+    - name: Github pages deploy
+      uses: maxheld83/ghpages@v0.1.2
+      env:
+        BUILDDIR: "build/"
