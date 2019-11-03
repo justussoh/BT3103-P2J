@@ -302,7 +302,7 @@ exports.res = res;`,
         {
             questionTitle: "Promises",
             questionTutorial: "Please answer the following MCQ qns.",
-            questionText: [`The Promise object represents the eventual completion (or failure) of an asynchronous operation, and its resulting value.
+            questionText: [`The Promise concept is not available to Python and is native to JavaScript. The Promise object represents the eventual completion (or failure) of an asynchronous operation, and its resulting value.
 By using .then function, a promise can be can be resolved.
 The .catch function will run if there are errors in the code.
 The .finally function will always run at the end of the stream.
