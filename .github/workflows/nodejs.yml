@@ -10,11 +10,9 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: '12.x'
-    - name: npm install, build, and test
-      run: |
-        npm install
-        npm predeploy
-        npm deploy
+    - run: npm install
+    - run: npm build
+    - run: npm test
     - name: Github pages deploy
       uses: maxheld83/ghpages@v0.1.2
       env:
