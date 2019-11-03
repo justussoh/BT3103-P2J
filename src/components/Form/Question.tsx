@@ -4,7 +4,7 @@ import AceEditor from "react-ace";
 import 'brace/mode/javascript';
 import 'brace/theme/monokai';
 import Button from "@material-ui/core/Button";
-import {Container, Col, Row, OverlayTrigger, Tooltip} from 'react-bootstrap';
+import { Container, Col, Row, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import HelpIcon from '@material-ui/icons/HelpOutline';
 import Tabs from "@material-ui/core/Tabs";
@@ -48,14 +48,14 @@ export enum QuestionType {
 }
 
 function TabPanel(props: any) {
-    const {children, value, index, ...other} = props;
+    const { children, value, index, ...other } = props;
 
     return (
         <div
             hidden={value !== index}
             id={`simple-tabpanel-${index}`}
             aria-labelledby={`simple-tab-${index}`}
-            style={{maxWidth: '100%', height: '100%'}}
+            style={{ maxWidth: '100%', height: '100%' }}
             {...other}
         >
             {children}
@@ -75,13 +75,12 @@ type MyProps = {
     toggleComplete: (arg0: boolean) => void,
 };
 
-class Question extends React.Component<MyProps, { selected: Set<number>, view: number, mcqSelected: number }> {
+class Question extends React.Component<MyProps, { selected: Set<number>, view: number }> {
     constructor(props: MyProps) {
         super(props);
         this.state = {
             selected: new Set(),
             view: 0,
-            mcqSelected: 0,
         };
     }
 
@@ -89,15 +88,14 @@ class Question extends React.Component<MyProps, { selected: Set<number>, view: n
         this.props.question.answer = newValue;
     };
 
-    checkMCQAns = (i: number) => {
-        this.props.question.answer = `x = ${i}`;
-        this.setState({mcqSelected: i})
-        // this.props.toggleComplete(i === (this.props.question.answer as number));
-    };
-
-    checkCheckboxesAns = () => {
-        const expected = new Set(this.props.question.answer as number[]);
-        this.props.toggleComplete(eqSet(expected, this.state.selected));
+    checkAns = () => {
+        let ans;
+        if (this.props.question.type === QuestionType.Checkboxes) {
+            ans = new Set(this.props.question.answer as number[])
+        } else {
+            ans = new Set([this.props.question.answer as number]);
+        }
+        this.props.toggleComplete(eqSet(ans, this.state.selected));
     };
 
     handleClickQuestionView = (e: any, i: number) => {
@@ -113,7 +111,7 @@ class Question extends React.Component<MyProps, { selected: Set<number>, view: n
         } else {
             selected.delete(i);
         }
-        this.setState({selected: selected});
+        this.setState({ selected: selected });
     };
 
     renderQuestion = () => {
@@ -138,8 +136,8 @@ class Question extends React.Component<MyProps, { selected: Set<number>, view: n
             options.push(
                 <label key={i}>
                     {qn[i]}
-                    <input type='checkbox' onChange={(e) => this.handleCheckboxAnsChange(e, i)}/>
-                    <br/>
+                    <input type='checkbox' onChange={(e) => this.handleCheckboxAnsChange(e, i)} />
+                    <br />
                 </label>
             )
         }
@@ -147,7 +145,7 @@ class Question extends React.Component<MyProps, { selected: Set<number>, view: n
             <Row className='w-100'>
                 <div><p className='question-instruction'><strong>{qn[0]}</strong></p></div>
                 <div>{options}</div>
-                <Button className='button-start' onClick={this.checkCheckboxesAns}> Check answer </Button>
+                <Button className='button-start' onClick={this.checkAns}> Check answer </Button>
             </Row>
         )
     };
@@ -157,11 +155,14 @@ class Question extends React.Component<MyProps, { selected: Set<number>, view: n
         let selection = [];
         for (let i = 1; i < qn.length; i++) {
             const text = qn[i];
+            let className = "mcq-button"
+            if (this.state.selected.has(i)) {
+                className += " selected-mcq"
+            }
             selection.push(
-                <div onClick={() => this.checkMCQAns(i)} key={i}
-                     className={`mcq-button ${this.state.mcqSelected === i ? 'selected-mcq' : ''
-                     }`}
-                     style={{height: `${90 / (qn.length - 1)}%`, margin: `${10 / (qn.length - 1)}% 0px`}}
+                <div onClick={() => this.setState({ selected: new Set([i]) })} key={i}
+                    className={className}
+                    style={{ height: `${90 / (qn.length - 1)}%`, margin: `${10 / (qn.length - 1)}% 0px` }}
                 >
                     {text.split('\n').map(function (item, key) {
                         return (
@@ -173,11 +174,11 @@ class Question extends React.Component<MyProps, { selected: Set<number>, view: n
             );
         }
         return (
-            <Row className='w-100' style={{height: '50vh'}}>
+            <Row className='w-100' style={{ height: '50vh' }}>
                 <Col xs={6}>
-                    <div className='d-flex align-items-center ' style={{marginBottom: 10}}>
+                    <div className='d-flex align-items-center ' style={{ marginBottom: 10 }}>
                         <p className='question-instruction'><strong>{this.props.question.questionTutorial}</strong></p>
-                        <div className='ml-auto' style={{marginRight: 10}}>
+                        <div>
                             <OverlayTrigger
                                 key='bottom'
                                 placement='bottom'
@@ -187,7 +188,7 @@ class Question extends React.Component<MyProps, { selected: Set<number>, view: n
                                     </Tooltip>
                                 }
                             >
-                                <HelpIcon/>
+                                <HelpIcon />
                             </OverlayTrigger>
                         </div>
                     </div>
@@ -208,6 +209,7 @@ class Question extends React.Component<MyProps, { selected: Set<number>, view: n
                 </Col>
                 <Col>
                     {selection}
+                    <Button variant='outlined' className='button-start' onClick={this.checkAns}> Check answer </Button>
                 </Col>
             </Row>
         );
@@ -215,8 +217,8 @@ class Question extends React.Component<MyProps, { selected: Set<number>, view: n
 
     renderEditableCode = () => {
         return (
-            <Row className='w-100' style={{height: '50vh'}}>
-                <Col xs={6} style={{height: '100%'}} className='question-container'>
+            <Row className='w-100' style={{ height: '50vh' }}>
+                <Col xs={6} style={{ height: '100%' }} className='question-container'>
                     <Tabs
                         value={this.state.view}
                         onChange={this.handleClickQuestionView}
@@ -229,8 +231,8 @@ class Question extends React.Component<MyProps, { selected: Set<number>, view: n
                             }
                         }
                     >
-                        <Tab label="Question" value={0}/>
-                        <Tab label="Output" value={1}/>
+                        <Tab label="Question" value={0} />
+                        <Tab label="Output" value={1} />
                     </Tabs>
                     <SwipeableViews
                         index={this.state.view}
@@ -238,13 +240,13 @@ class Question extends React.Component<MyProps, { selected: Set<number>, view: n
                         className='w-100 h-100'
                     >
                         <TabPanel value={this.state.view} index={0}>
-                            <div style={{lineHeight: 1}}>
+                            <div style={{ lineHeight: 1 }}>
                                 <h6>Instructions:</h6>
                                 {this.props.question.questionTutorial.split('\n').map(function (item, key) {
                                     return (
                                         <span key={key} className='question-font'>
                                             {item}
-                                            <br/>
+                                            <br />
                                         </span>)
                                 })}
                             </div>
@@ -252,16 +254,16 @@ class Question extends React.Component<MyProps, { selected: Set<number>, view: n
                         <TabPanel value={this.state.view} index={1}>
                             <Paper>
                                 <div
-                                    dangerouslySetInnerHTML={{__html: this.props.question.feedbackText}}/>
+                                    dangerouslySetInnerHTML={{ __html: this.props.question.feedbackText }} />
                             </Paper>
                         </TabPanel>
 
                     </SwipeableViews>
                 </Col>
-                <Col xs={6} style={{height: '100%'}}>
-                    <div className='d-flex align-items-center ' style={{marginBottom: 10}}>
+                <Col xs={6} style={{ height: '100%' }}>
+                    <div className='d-flex align-items-center ' style={{ marginBottom: 10 }}>
                         <p className='question-instruction'><strong>{this.props.question.questionText}</strong></p>
-                        <div className='ml-auto' style={{marginRight: 10}}>
+                        <div>
                             <OverlayTrigger
                                 key='bottom'
                                 placement='bottom'
@@ -271,7 +273,7 @@ class Question extends React.Component<MyProps, { selected: Set<number>, view: n
                                     </Tooltip>
                                 }
                             >
-                                <HelpIcon/>
+                                <HelpIcon />
                             </OverlayTrigger>
                         </div>
                     </div>
@@ -298,8 +300,8 @@ class Question extends React.Component<MyProps, { selected: Set<number>, view: n
     renderHtmlCode = () => {
         return (
             <LiveProvider code={this.props.question.defaultAnswer as string}>
-                <Row className='w-100' style={{height: '50vh'}}>
-                    <Col xs={6} style={{height: '100%'}} className='question-container'>
+                <Row className='w-100' style={{ height: '50vh' }}>
+                    <Col xs={6} className='question-container w-100 mh-100'>
                         <Tabs
                             value={this.state.view}
                             onChange={this.handleClickQuestionView}
@@ -312,8 +314,8 @@ class Question extends React.Component<MyProps, { selected: Set<number>, view: n
                                 }
                             }
                         >
-                            <Tab label="Question" value={0}/>
-                            <Tab label="Edit Code" value={1}/>
+                            <Tab label="Question" value={0} />
+                            <Tab label="Edit Code" value={1} />
                         </Tabs>
                         <SwipeableViews
                             index={this.state.view}
@@ -321,43 +323,40 @@ class Question extends React.Component<MyProps, { selected: Set<number>, view: n
                             className='w-100 h-100'
                         >
                             <TabPanel value={this.state.view} index={0}>
-                                <div style={{lineHeight: 1}}>
+                                <div style={{ lineHeight: 1 }}>
                                     <h6>Instructions:</h6>
                                     {this.props.question.questionTutorial.split('\n').map(function (item, key) {
                                         return (
                                             <span key={key} className='question-font'>
-                                            {item}
-                                                <br/>
-                                        </span>)
+                                                {item}
+                                                <br />
+                                            </span>)
                                     })}
                                 </div>
                             </TabPanel>
                             <TabPanel value={this.state.view} index={1}>
-                                <LiveEditor/>
+                                <LiveEditor />
                             </TabPanel>
                         </SwipeableViews>
                     </Col>
-                    <Col xs={6} style={{height: '100%'}}>
-                        <div className='d-flex align-items-center ' style={{marginBottom: 10}}>
-                            <p className='question-instruction'><strong>{this.props.question.questionTutorial}</strong>
-                            </p>
-                            <div className='ml-auto' style={{marginRight: 10}}>
-                                <OverlayTrigger
-                                    key='bottom'
-                                    placement='bottom'
-                                    overlay={
-                                        <Tooltip id='hint'>
-                                            {this.props.question.hint}
-                                        </Tooltip>
-                                    }
-                                >
-                                    <HelpIcon/>
-                                </OverlayTrigger>
-                            </div>
+                    <Col xs={6}>
+                        <div className='d-flex align-items-center ' style={{ marginBottom: 10 }}>
+                            <p className='question-instruction'><strong>{this.props.question.questionTutorial}</strong></p>
+                            <OverlayTrigger
+                                key='bottom'
+                                placement='bottom'
+                                overlay={
+                                    <Tooltip id='hint'>
+                                        {this.props.question.hint}
+                                    </Tooltip>
+                                }
+                            >
+                                <HelpIcon />
+                            </OverlayTrigger>
                         </div>
-                        <Paper style={{height:'80%'}}>
-                            <LiveError/>
-                            <LivePreview/>
+                        <Paper style={{ height: '80%' }}>
+                            <LiveError />
+                            <LivePreview />
                         </Paper>
                     </Col>
                 </Row>
@@ -372,26 +371,26 @@ class Question extends React.Component<MyProps, { selected: Set<number>, view: n
                 {this.renderQuestion()}
                 <Row className='d-flex w-100'>
                     <Button variant="outlined" className='button-start' size='large'
-                            onClick={this.props.prevQuestion}>
+                        onClick={this.props.prevQuestion}>
                         PREVIOUS
                     </Button>
                     <Button variant="outlined" className='button-start' size='large'
-                            onClick={this.props.resetAnswer}
-                            style={{marginLeft: 10}}
+                        onClick={this.props.resetAnswer}
+                        style={{ marginLeft: 10 }}
                     >
                         RESET
                     </Button>
                     {this.props.isLoading ?
-                        <CircularProgress className='loading-color ml-auto'/>
+                        <CircularProgress className='loading-color ml-auto' />
                         : <Button variant="outlined" className='button-start ml-auto' size='large'
-                                  onClick={this.props.checkAnswer}
-                            // disabled={q.type !== QuestionType.EditableCode}
+                            onClick={this.props.checkAnswer}
+                        // disabled={q.type !== QuestionType.EditableCode}
                         >
                             RUN
                         </Button>}
                     <Button variant="outlined" className='button-start' size='large'
-                            onClick={this.props.nextQuestion} style={{marginLeft: 10}}
-                            disabled={!q.completed}
+                        onClick={this.props.nextQuestion} style={{ marginLeft: 10 }}
+                        disabled={!q.completed}
                     >
                         {this.props.lastQuestion ? "Finish" : 'NEXT'}
                     </Button>

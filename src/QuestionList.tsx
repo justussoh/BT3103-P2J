@@ -336,19 +336,14 @@ new Promise((resolve, reject) => {
  Do this
  Do that`
             ],
-            answer: '',
+            answer: 3,
             defaultAnswer: '',
             hint: "",
             feedbackText: "",
             completed: false,
             type: QuestionType.MultipleChoice,
-            testCode: `
-const app = require("./main");
-test("task 9", () => {
-    expect(app.x).toBe(3);
-});`,
-            exportCode: `
-exports.x = x;`,
+            testCode: '',
+            exportCode: '',
             pastAnswers: [],
         },
         {

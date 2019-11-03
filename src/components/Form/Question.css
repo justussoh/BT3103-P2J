@@ -40,15 +40,15 @@
 }
 
 .question-container .Mui-selected .MuiTab-wrapper{
-    color:white!important;
+    color:white;
 }
 
 .question-container .MuiTab-wrapper{
-    color:grey!important;
+    color:grey;
 }
 
 .question-container .active-tab{
-    background-color: white!important;
+    background-color: white;
 }
 
 .mcq-button{
