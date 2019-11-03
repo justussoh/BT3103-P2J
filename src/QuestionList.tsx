@@ -1,4 +1,4 @@
-import {QuestionIface, QuestionType} from "./components/Form/Question";
+import { QuestionIface, QuestionType } from "./components/Form/Question";
 
 export const questions: QuestionIface[] =
     [
@@ -121,6 +121,7 @@ const app = require("./main");
 test("square", () => {
     expect(app.square(3)).toBe(9);
     expect(app.square(-3)).toBe(9);
+    expect(app.square.toString().includes("=>")).toBeTruthy();
 });`,
             exportCode: "\nexports.square = square;",
             pastAnswers: [],
@@ -347,7 +348,7 @@ exports.x = x;`,
             questionTitle: "Display Dynamic List",
             questionTutorial: "Please look for the comments and edit the code as deem fit.",
             questionText: "Using what you have learned previously, complete the 2 following functions.\n 1. Write a function to add item into an array\n 2. Write a function to map array to following functions in place of where the comment should be at\n\nThen add 4 items into the list.",
-            answer:"",
+            answer: "",
             defaultAnswer:
                 "class List extends React.Component {\n" +
                 "  constructor() {\n" +
