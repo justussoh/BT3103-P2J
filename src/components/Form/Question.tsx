@@ -231,16 +231,8 @@ class Question extends React.Component<MyProps, { selected: Set<number>, view: n
                         className='w-100 h-100'
                     >
                         <TabPanel value={this.state.view} index={0}>
-                            <div style={{ lineHeight: 1 }}>
-                                <h6>Instructions:</h6>
-                                {this.props.question.questionTutorial.split('\n').map(function (item, key) {
-                                    return (
-                                        <span key={key} className='question-font'>
-                                            {item}
-                                            <br />
-                                        </span>)
-                                })}
-                            </div>
+                            <h6>Instructions:</h6>
+                            <p>{this.props.question.questionTutorial}</p>
                         </TabPanel>
                         <TabPanel value={this.state.view} index={1}>
                             <Paper>
@@ -316,13 +308,7 @@ class Question extends React.Component<MyProps, { selected: Set<number>, view: n
                             <TabPanel value={this.state.view} index={0}>
                                 <div style={{ lineHeight: 1 }}>
                                     <h6>Instructions:</h6>
-                                    {this.props.question.questionTutorial.split('\n').map(function (item, key) {
-                                        return (
-                                            <span key={key} className='question-font'>
-                                                {item}
-                                                <br />
-                                            </span>)
-                                    })}
+                                    <p>{this.props.question.questionTutorial}</p>
                                 </div>
                             </TabPanel>
                             <TabPanel value={this.state.view} index={1}>

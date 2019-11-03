@@ -1,11 +1,5 @@
-.question-title {
-    color: white;
-    font-weight: bold;
-    font-size: 35px;
-}
-
-.question-font {
-    color: white;
+p {
+    white-space: pre-wrap;
     font-size: 12px;
 }
 
