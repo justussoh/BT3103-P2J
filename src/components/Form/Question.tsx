@@ -222,7 +222,7 @@ class Question extends React.Component<MyProps, { selected: Set<number>, view: n
                             }
                         }
                     >
-                        <Tab label="Question" value={0} />
+                        <Tab label="Instructions" value={0} />
                         <Tab label="Output" value={1} />
                     </Tabs>
                     <SwipeableViews
@@ -231,7 +231,6 @@ class Question extends React.Component<MyProps, { selected: Set<number>, view: n
                         className='w-100 h-100'
                     >
                         <TabPanel value={this.state.view} index={0}>
-                            <h6>Instructions:</h6>
                             <p>{this.props.question.questionTutorial}</p>
                         </TabPanel>
                         <TabPanel value={this.state.view} index={1}>
@@ -297,7 +296,7 @@ class Question extends React.Component<MyProps, { selected: Set<number>, view: n
                                 }
                             }
                         >
-                            <Tab label="Question" value={0} />
+                            <Tab label="Instructions" value={0} />
                             <Tab label="Edit Code" value={1} />
                         </Tabs>
                         <SwipeableViews
@@ -307,7 +306,6 @@ class Question extends React.Component<MyProps, { selected: Set<number>, view: n
                         >
                             <TabPanel value={this.state.view} index={0}>
                                 <div style={{ lineHeight: 1 }}>
-                                    <h6>Instructions:</h6>
                                     <p>{this.props.question.questionTutorial}</p>
                                 </div>
                             </TabPanel>
