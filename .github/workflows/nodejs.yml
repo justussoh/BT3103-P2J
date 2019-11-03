@@ -11,8 +11,8 @@ jobs:
       with:
         node-version: '12.x'
     - run: npm install
-    - run: npm predeploy
-    - run: npm deploy
+    - run: npm run predeploy
+    - run: npm run deploy
     - name: Github pages deploy
       uses: maxheld83/ghpages@v0.1.2
       env:
