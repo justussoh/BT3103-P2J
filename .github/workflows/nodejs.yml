@@ -20,4 +20,4 @@ jobs:
     - name: Github pages deploy
       uses: maxheld83/ghpages@v0.1.2
       env:
-        BUILDDIR: "build/"
+        BUILD_DIR: "build/"
