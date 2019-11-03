@@ -220,7 +220,7 @@ class QuestionInterface extends Component<MyProps, {}> {
                 {currQ > 0 && currQ < questions.length ?
                     <Row className='d-flex align-items-center justify-content-center'>
                         <h3 className='question-title'>{this.props.questions[currQ].questionTitle}</h3>
-                        <FormGroup row style={{ position: "absolute", right: 0 }}>
+                        <FormGroup row style={{ position: "absolute", right: "10%" }}>
                             <FormControlLabel
                                 color="primary"
                                 control={
