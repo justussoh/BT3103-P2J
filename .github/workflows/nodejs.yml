@@ -10,9 +10,13 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: '12.x'
-    - run: npm install
-    - run: npm run predeploy
-    - run: npm run deploy
+    - run: |
+        git config --global user.email "action@github.com"
+        git config --global user.name "Github Action"
+    - run: |
+        npm install
+        npm run predeploy
+        npm run deploy
     - name: Github pages deploy
       uses: maxheld83/ghpages@v0.1.2
       env:
