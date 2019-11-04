@@ -1,21 +1,21 @@
-import React, { Component } from 'react';
-import { Container } from 'react-bootstrap';
-import { Route, Switch, withRouter } from 'react-router-dom';
+import React, {Component} from 'react';
+import {Container} from 'react-bootstrap';
+import {Route, Switch, withRouter} from 'react-router-dom';
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from "@material-ui/core/Slide";
 import Snackbar from "@material-ui/core/Snackbar";
 import SliderMenu from "./components/Navigation/SliderMenu";
 import axios from "axios";
-import { firebaseApp } from './util/firebase';
-import { RouteComponentProps } from "react-router";
+import {firebaseApp} from './util/firebase';
+import {RouteComponentProps} from "react-router";
 
 import QuestionInterface from './components/Question/QuestionInterface'
 
 import './App.css';
-import { questions } from "./QuestionList";
+import {questions} from "./QuestionList";
 import Resume from "./components/Resume/Resume";
-import { QuestionIface } from "./components/Form/Question";
+import {QuestionIface} from "./components/Form/Question";
 
 export interface BackendResponse {
     data: {
@@ -51,15 +51,16 @@ class App extends Component<RouteComponentProps> {
                         username: currentuser.displayName,
                         loggedIn: true,
                     });
+                    this.handleLoadState()
                 }
             } else {
-                this.setState({ loggedIn: false })
+                this.setState({loggedIn: false})
             }
         });
     }
 
     handleMenu = (isOpen: boolean) => {
-        this.setState({ openMenu: isOpen })
+        this.setState({openMenu: isOpen})
     };
 
 
@@ -72,41 +73,41 @@ class App extends Component<RouteComponentProps> {
     };
 
     handleMenuStateChange = (state: any) => {
-        this.setState({ openMenu: state.isOpen })
+        this.setState({openMenu: state.isOpen})
     };
 
     handleStart = () => {
         this.props.history.push('/');
-        this.setState({ question: 1, openMenu: false, })
+        this.setState({question: 1, openMenu: false,})
     };
 
     handleNextQuestion = () => {
-        this.setState({ question: this.state.question + 1, showAlert: false })
+        this.setState({question: this.state.question + 1, showAlert: false})
     };
 
     handlePrevQuestion = () => {
-        this.setState({ question: this.state.question - 1, showAlert: false })
+        this.setState({question: this.state.question - 1, showAlert: false})
     };
 
     handleAlertClose = () => {
-        this.setState({ showAlert: false })
+        this.setState({showAlert: false})
     };
 
     handleStartOver = () => {
         // TODO clear progress of app
-        this.setState({ question: 0 })
+        this.setState({question: 0})
     };
 
     handleResetAnswer = () => {
         let questions = this.state.questions;
         let question = questions[this.state.question];
         question.answer = question.defaultAnswer;
-        this.setState({ questions })
+        this.setState({questions})
     };
 
     handleCheckAnswer = async () => {
         //Add in fetch nonsense
-        this.setState({ isLoading: true });
+        this.setState({isLoading: true});
         let gatewayURL = "https://cl8r4dbpqe.execute-api.us-east-1.amazonaws.com/Prod/";
         let questionURL = gatewayURL + `?question=${this.state.question}`;
         let answer = {
@@ -122,7 +123,7 @@ class App extends Component<RouteComponentProps> {
             }
         };
         try {
-            const res: BackendResponse = await axios.post(questionURL, { ...answer }, {
+            const res: BackendResponse = await axios.post(questionURL, {...answer}, {
                 headers: {
                     Accept: 'application/json',
                 }
@@ -137,14 +138,48 @@ class App extends Component<RouteComponentProps> {
                 errorMessage: res.data.htmlFeedback,
             });
 
-            this.setState({ questions: questions });
+
+            let db = firebaseApp.database().ref(`/logging/${this.state.question}`);
+            db.once('value').then((snapshot) => {
+                let data = snapshot.val();
+                if (data !== null) {
+                    if (res.data.isComplete) {
+                        data.correctAnswer += 1;
+                        data.totalTries += 1;
+                    } else {
+                        data.wrongAnswer += 1;
+                        data.totalTries += 1;
+                    }
+                    db.update(data);
+                }else{
+                    console.log('testing')
+                    if (res.data.isComplete) {
+                        data = {
+                            correctAnswer:1,
+                            wrongAnswer:0,
+                            totalTries:1,
+                        }
+                    } else {
+                        data = {
+                            correctAnswer:0,
+                            wrongAnswer:1,
+                            totalTries:1,
+                        }
+                    }
+                    db.update(data);
+                }
+            }).catch(err => {
+                console.error(err);
+            });
+
+            this.setState({questions: questions});
             if (this.state.loggedIn) {
                 this.handleSaveState();
             }
         } catch (err) {
             console.error(err);
         } finally {
-            this.setState({ isLoading: false, showAlert: true });
+            this.setState({isLoading: false, showAlert: true});
         }
 
     };
@@ -169,7 +204,11 @@ class App extends Component<RouteComponentProps> {
             if (data !== null) {
                 let questions: QuestionIface[] = Object.values(data.questions);
                 for (let q of questions) {
-                    if (q.pastAnswers) { q.pastAnswers = Object.values(q.pastAnswers); }
+                    if (q.pastAnswers) {
+                        q.pastAnswers = Object.values(q.pastAnswers);
+                    }else{
+                        q.pastAnswers=[];
+                    }
                 }
                 this.setState({
                     questions: questions,
@@ -206,7 +245,7 @@ class App extends Component<RouteComponentProps> {
     toggleComplete = (isComplete: boolean) => {
         let questions = this.state.questions;
         questions[this.state.question].completed = isComplete;
-        this.setState({ questions: questions })
+        this.setState({questions: questions})
     };
 
     render() {
@@ -214,61 +253,73 @@ class App extends Component<RouteComponentProps> {
         return (
             <div className="App">
                 <SliderMenu open={this.state.openMenu} handleMenu={this.handleMenu}
-                    handleMenuStateChange={this.handleMenuStateChange}
-                    handleClickQuestion={this.handleClickQuestion}
-                    handleStart={this.handleStart}
-                    questions={this.state.questions}
-                    question={currQ}
-                    toggleAdmin={this.toggleAdmin}
-                    handleSaveState={this.handleSaveState}
-                    handleLoadState={this.handleLoadState}
-                    userID={this.state.uid}
-                    onUserIDChange={(name) => { this.setState({ uid: name }) }}
-                />
-                <Container fluid className='d-flex align-items-center justify-content-center flex-column p-5'
-                    id='page-wrap'>
-
-                    <Switch>
-                        <Route exact path="/"
-                            render={(props) => <QuestionInterface {...props} questions={this.state.questions}
-                                question={currQ} handleStart={this.handleStart}
-                                feedbackRating={this.state.feedbackRating}
-                                handleStartOver={this.handleStartOver}
-                                showAlert={this.state.showAlert}
-                                handleNextQuestion={this.handleNextQuestion}
-                                handlePrevQuestion={this.handlePrevQuestion}
-                                handleCheckAnswer={this.handleCheckAnswer}
-                                handleResetAnswer={this.handleResetAnswer}
-                                toggleComplete={this.toggleComplete}
-                                isLoading={this.state.isLoading}
-                                handleAlertClose={this.handleAlertClose}
-                                handleClickQuestion={this.handleClickQuestion}
-                                saveState={this.handleSaveState}
-                                onFeedbackRatingChange={(n) => { this.setState({ feedbackRating: n }); }}
-
-                            />} />
-                        <Route exact path='/load' render={(props) => <Resume {...props}
+                            handleMenuStateChange={this.handleMenuStateChange}
+                            handleClickQuestion={this.handleClickQuestion}
+                            handleStart={this.handleStart}
+                            questions={this.state.questions}
+                            question={currQ}
+                            toggleAdmin={this.toggleAdmin}
                             handleSaveState={this.handleSaveState}
                             handleLoadState={this.handleLoadState}
                             userID={this.state.uid}
-                            onUserIDChange={(name) => { this.setState({ uid: name }) }}
-                        />} />
+                            onUserIDChange={(name) => {
+                                this.setState({uid: name})
+                            }}
+                />
+                <Container fluid className='d-flex align-items-center justify-content-center flex-column p-5'
+                           id='page-wrap'>
+
+                    <Switch>
+                        <Route exact path="/"
+                               render={(props) => <QuestionInterface {...props} questions={this.state.questions}
+                                                                     question={currQ} handleStart={this.handleStart}
+                                                                     feedbackRating={this.state.feedbackRating}
+                                                                     handleStartOver={this.handleStartOver}
+                                                                     showAlert={this.state.showAlert}
+                                                                     handleNextQuestion={this.handleNextQuestion}
+                                                                     handlePrevQuestion={this.handlePrevQuestion}
+                                                                     handleCheckAnswer={this.handleCheckAnswer}
+                                                                     handleResetAnswer={this.handleResetAnswer}
+                                                                     toggleComplete={this.toggleComplete}
+                                                                     isLoading={this.state.isLoading}
+                                                                     handleAlertClose={this.handleAlertClose}
+                                                                     handleClickQuestion={this.handleClickQuestion}
+                                                                     saveState={this.handleSaveState}
+                                                                     onFeedbackRatingChange={(n) => {
+                                                                         this.setState({feedbackRating: n});
+                                                                     }}
+
+                               />}/>
+                        <Route exact path='/load' render={(props) => <Resume {...props}
+                                                                             handleSaveState={this.handleSaveState}
+                                                                             handleLoadState={this.handleLoadState}
+                                                                             userID={this.state.uid}
+                                                                             onUserIDChange={(name) => {
+                                                                                 this.setState({uid: name})
+                                                                             }}
+                        />}/>
                     </Switch>
-                    <Snackbar anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-                        open={this.state.showSnackBar}
-                        autoHideDuration={3000}
-                        onClose={() => { this.setState({ showSnackBar: false }) }}
-                        message={<span id="message-id">Profile has been successfully loaded.</span>}
-                        action={
-                            <IconButton
-                                key="close"
-                                color="inherit"
-                                onClick={() => { this.setState({ showSnackBar: false }) }}
-                            >
-                                <CloseIcon />
-                            </IconButton>
-                        }
-                        TransitionComponent={(props) => { return <Slide {...props} direction="up" /> }}
+                    <Snackbar anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
+                              open={this.state.showSnackBar}
+                              autoHideDuration={3000}
+                              onClose={() => {
+                                  this.setState({showSnackBar: false})
+                              }}
+                              message={<span id="message-id">Profile has been successfully loaded.</span>}
+                              action={
+                                  <IconButton
+                                      key="close"
+                                      color="inherit"
+                                      onClick={() => {
+                                          this.setState({showSnackBar: false})
+                                      }}
+                                  >
+                                      <CloseIcon/>
+                                  </IconButton>
+                              }
+                              TransitionComponent={(props) => {
+                                  return <Slide {...props} direction="up"/>
+                              }}
                     />
                 </Container>
             </div>
