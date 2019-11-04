@@ -266,7 +266,7 @@ class App extends Component<RouteComponentProps> {
                                 this.setState({uid: name})
                             }}
                 />
-                <Container fluid className='d-flex align-items-center justify-content-center flex-column p-5'
+                <Container fluid className='d-flex align-items-center justify-content-center flex-column p-5 h-100'
                            id='page-wrap'>
 
                     <Switch>
@@ -299,28 +299,30 @@ class App extends Component<RouteComponentProps> {
                                                                              }}
                         />}/>
                     </Switch>
-                    <Snackbar anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
-                              open={this.state.showSnackBar}
-                              autoHideDuration={3000}
-                              onClose={() => {
-                                  this.setState({showSnackBar: false})
-                              }}
-                              message={<span id="message-id">Profile has been successfully loaded.</span>}
-                              action={
-                                  <IconButton
-                                      key="close"
-                                      color="inherit"
-                                      onClick={() => {
-                                          this.setState({showSnackBar: false})
-                                      }}
-                                  >
-                                      <CloseIcon/>
-                                  </IconButton>
-                              }
-                              TransitionComponent={(props) => {
-                                  return <Slide {...props} direction="up"/>
-                              }}
-                    />
+                    {this.state.showSnackBar?
+                        <Snackbar anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
+                                  open={this.state.showSnackBar}
+                                  autoHideDuration={3000}
+                                  onClose={() => {
+                                      this.setState({showSnackBar: false})
+                                  }}
+                                  message={<span id="message-id">Profile has been successfully loaded.</span>}
+                                  action={
+                                      <IconButton
+                                          key="close"
+                                          color="inherit"
+                                          onClick={() => {
+                                              this.setState({showSnackBar: false})
+                                          }}
+                                      >
+                                          <CloseIcon/>
+                                      </IconButton>
+                                  }
+                                  TransitionComponent={(props) => {
+                                      return <Slide {...props} direction="up"/>
+                                  }}
+                        />:""
+                    }
                 </Container>
             </div>
         )
