@@ -107,7 +107,7 @@ class App extends Component<RouteComponentProps> {
 
     handleCheckAnswer = async () => {
         //Add in fetch nonsense
-        this.setState({isLoading: true});
+        this.setState({isLoading: true, showAlert:false});
         let gatewayURL = "https://cl8r4dbpqe.execute-api.us-east-1.amazonaws.com/Prod/";
         let questionURL = gatewayURL + `?question=${this.state.question}`;
         let answer = {
@@ -152,7 +152,6 @@ class App extends Component<RouteComponentProps> {
                     }
                     db.update(data);
                 }else{
-                    console.log('testing')
                     if (res.data.isComplete) {
                         data = {
                             correctAnswer:1,
