@@ -46,7 +46,7 @@ test("default", () => {
         },
         {
             questionTitle: "Declarations",
-            questionTutorial: "In JavaScipt, there are three kinds of variable declarations in JS.\n" +
+            questionTutorial: "In JavaScipt, there are two kinds of variable declarations in JS.\n" +
                 "let: Declares a block-scoped, local variable, optionally initializing it to a value\n" +
                 "const: Declares a block-scoped, read-only named constant.\n",
             questionText: "Please convert the following to JavaScript syntax!",
@@ -190,14 +190,15 @@ test("default", () => {
             questionTutorial: "The for statement creates a loop that is executed as long as a condition is true.",
             questionText: "Please convert the following to JavaScript syntax!",
             hint: "",
-            answer: `// A for-loop
-const steps = new Array();
+            answer: `const steps = new Array();
+// A for-loop
 for step in range(5):
-    answer.append("i am at step: " + step),
+    steps.append("i am at step: " + step),
 `,
-            defaultAnswer: `// A for-loop
+            defaultAnswer: `const steps = new Array();
+// A for-loop
 for step in range(5):
-    print("i am at step: " + step),
+    steps.append("i am at step: " + step),
 `,
             feedbackText: "",
             completed: false,
@@ -205,11 +206,7 @@ for step in range(5):
             testCode: `
 const app = require("./main");
 test("default", () => {
-    expect(app.steps[0]).toEqual(“i am at step: 1”);
-    expect(app.steps[1]).toEqual(“i am at step: 2”);
-    expect(app.steps[2]).toEqual(“i am at step: 3”);
-    expect(app.steps[3]).toEqual(“i am at step: 4”);
-    expect(app.steps[4]).toEqual(“i am at step: 5”);
+    expect(app.steps).toEqual(['i am at step: 1', 'i am at step: 2', 'i am at step: 3', 'i am at step: 4', 'i am at step: 5']);
 });`,
             exportCode: `
 exports.steps = steps;`,
