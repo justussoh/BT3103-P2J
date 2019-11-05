@@ -221,7 +221,7 @@ test("default", () => {
 // A for-loop
 const steps = new Array();
 for step in range(5):
-    answer.push("i am at step: " + step),
+    steps.push("i am at step: " + step),
 
             defaultAnswer: `
 // A for-loop
