@@ -190,12 +190,12 @@ test("default", () => {
             questionTutorial: "The for statement creates a loop that is executed as long as a condition is true.",
             questionText: "Please convert the following to JavaScript syntax!",
             hint: "",
-            answer: `const steps = new Array();
+            answer: `let steps = [];
 // A for-loop
 for step in range(5):
     steps.append("i am at step: " + step),
 `,
-            defaultAnswer: `const steps = new Array();
+            defaultAnswer: `let steps = [];
 // A for-loop
 for step in range(5):
     steps.append("i am at step: " + step),
@@ -206,7 +206,7 @@ for step in range(5):
             testCode: `
 const app = require("./main");
 test("default", () => {
-    expect(app.steps).toEqual(['i am at step: 1', 'i am at step: 2', 'i am at step: 3', 'i am at step: 4', 'i am at step: 5']);
+    expect(app.steps).toEqual(['i am at step: 0', 'i am at step: 1', 'i am at step: 2', 'i am at step: 3', 'i am at step: 4']);
 });`,
             exportCode: `
 exports.steps = steps;`,
