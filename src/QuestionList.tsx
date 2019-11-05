@@ -51,8 +51,7 @@ test("default", () => {
                 "const: Declares a block-scoped, read-only named constant.\n",
             questionText: "Please convert the following to JavaScript syntax!",
             hint: "Declare your variables with const when needed",
-            answer: `x = 42
-y = 13
+            answer: `y = 13
 x = "forty-two"
 z = "The answer is " + 42
 coffees = ['French Roast', 'Colombian', 'Kona']
