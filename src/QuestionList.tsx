@@ -96,6 +96,7 @@ const app = require("./main");
 test("square", () => {
     expect(app.square(3)).toBe(9);
     expect(app.square(-3)).toBe(9);
+    expect(app.square(0)).toBe(0);
 });`,
             exportCode: "\nexports.square = square;",
             pastAnswers: [],
@@ -121,6 +122,7 @@ const app = require("./main");
 test("square", () => {
     expect(app.square(3)).toBe(9);
     expect(app.square(-3)).toBe(9);
+    expect(app.square(0)).toBe(0);
     expect(app.square.toString().includes("=>")).toBeTruthy();
 });`,
             exportCode: "\nexports.square = square;",
@@ -172,6 +174,7 @@ test("default", () => {
     expect(app.odd(1)).toBeTruthy();
     expect(app.odd(2)).not.toBeTruthy();
     expect(app.odd(3)).toBeTruthy();
+    expect(app.odd(0)).not.toBeTruthy();
 });`,
             exportCode: '\nexports.odd = odd;',
             pastAnswers: [],
@@ -216,48 +219,25 @@ test("default", () => {
             hint: "",
             answer: `
 // A for-loop
+const steps = new Array();
 for step in range(5):
-    print("i am at step: " + step)
-    
-// A while-loop
-n = 0
-x = 0
-while n < 3:
-    n += 1
-    x += n
+    answer.push("i am at step: " + step),
 
-// A for-of loop
-arr = [3,5,7]
-for element in arr:
-    print(arr)`,
             defaultAnswer: `
 // A for-loop
 for step in range(5):
-    print("i am at step: " + step)
-    
-// A while-loop
-n = 0
-x = 0
-while n < 3:
-    n += 1
-    x += n
-
-// A for-of loop
-arr = [3,5,7]
-for element in arr:
-    print(arr)`,
+    print("i am at step: " + step),
+            
             feedbackText: "",
             completed: false,
             type: QuestionType.EditableCode,
             testCode: `
 const app = require("./main");
-test("while loop", () => {
-    expect(app.x).toBe(6);
-    expect(app.n).toBe(3);
+test("default", () => {
+    expect(app.steps).toEqual([“i am at step: 1”, “i am at step: 2”, “i am at step: 3”, “i am at step: 4”, “i am at step: 5”]);
 });`,
             exportCode: `
-exports.x = x;
-exports.n = n;`,
+exports.steps = steps;`,
             pastAnswers: [],
         },
         {
