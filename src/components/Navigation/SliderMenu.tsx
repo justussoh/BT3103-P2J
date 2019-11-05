@@ -85,6 +85,13 @@ class SliderMenu extends React.Component<MyProps, {}> {
                                 <a href='https://developer.mozilla.org/en-US/docs/Web/JavaScript' target='_blank' rel="noopener noreferrer">02. MDN Web Documents</a>
                             </span>
                         </Grid>
+                        <Grid item xs={12}>
+                            <span style={{ color: 'white' }}>Check this video out for a quick introduction</span>
+                            <iframe width="100%" height="auto" src="https://www.youtube.com/embed/W6NZfCO5SIk"
+                                    frameBorder="0"
+                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                    allowFullScreen />
+                        </Grid>
 
                         <Grid item xs={12}>
                             <Divider variant='middle' style={{ backgroundColor: '#fff' }} />
