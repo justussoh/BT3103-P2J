@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import Typist from 'react-typist';
 import 'react-typist/dist/Typist.css';
-import { Container, Col, Row, Alert } from 'react-bootstrap';
+import { Container, Col, Row } from 'react-bootstrap';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
+import CustomAlert from '../Form/Alert';
 
 import { QuestionIface } from "../Form/Question";
 import Question from "../Form/Question";
@@ -31,7 +32,6 @@ type MyProps = {
     // for feed
     feedbackRating: number,
     onFeedbackRatingChange: (feedbackRating: number) => void,
-
     questions: QuestionIface[],
     handleStart: () => void,
     handleStartOver: () => void,
@@ -181,18 +181,10 @@ class QuestionInterface extends Component<MyProps, {}> {
         return (
             <Container fluid>
                 {this.props.showAlert ?
-                    <Row className='d-flex align-items-center justify-content-center' style={{ marginBottom: 10 }}>
-                        <Col xs={10}>
-                            {this.props.questions[currQ].completed ?
-                                <Alert variant='success' onClose={this.props.handleAlertClose} dismissible>
-                                    You answered the question correctly! Please move on to the next question.
-                                </Alert> :
-                                <Alert variant='danger' onClose={this.props.handleAlertClose} dismissible>
-                                    Please try again! You can use the hints if you need more help.
-                                </Alert>
-                            }
-                        </Col>
-                    </Row> : ''
+                    <CustomAlert handleAlertClose={this.props.handleAlertClose}
+                           question={this.props.question}
+                           questions={this.props.questions}
+                    /> : ''
                 }
                 {currQ > 0 && currQ < questions.length ?
                     <Row className='d-flex align-items-center justify-content-center'>
