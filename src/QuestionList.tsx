@@ -222,12 +222,12 @@ test("default", () => {
 const steps = new Array();
 for step in range(5):
     answer.append("i am at step: " + step),
-
+`,
             defaultAnswer: `
 // A for-loop
 for step in range(5):
     print("i am at step: " + step),
-            
+`,
             feedbackText: "",
             completed: false,
             type: QuestionType.EditableCode,
