@@ -129,32 +129,6 @@ test("square", () => {
             pastAnswers: [],
         },
         {
-            questionTitle: "Rest Parameters",
-            questionTutorial: "The rest parameter syntax allows us to represent an indefinite number of arguments as an array.\n In the example, we use the rest parameters to collect arguments from the second one to the end. We then multiply them by the first one.",
-            questionText: "Please convert the following to JavaScript syntax!",
-            hint: "The equivalent of '*args' in Python is '...args' in Javascript",
-            answer: "def multiply(multiplier, *args):\n" +
-                "    return map(lambda x: multiplier * x, args) \n" +
-                "\n" +
-                "var arr = multiply(2, 1, 2, 3);\n" +
-                "console.log(arr); // [2, 4, 6]",
-            defaultAnswer: "def multiply(multiplier, *args):\n" +
-                "    return map(lambda x: multiplier * x, args) \n" +
-                "\n" +
-                "var arr = multiply(2, 1, 2, 3);\n" +
-                "console.log(arr); // [2, 4, 6]",
-            feedbackText: "",
-            completed: false,
-            type: QuestionType.EditableCode,
-            testCode: `
-const app = require("./main");
-test("default", () => {
-    expect(app.multiply(2,1,2,3)).toEqual([2,4,6]);
-});`,
-            exportCode: "\nexports.multiply = multiply;",
-            pastAnswers: [],
-        },
-        {
             questionTitle: "Control Flow: if-else",
             questionTutorial: "Using if-else, define a function odd(x) that returns True when its integer argument is an odd number and False otherwise\n",
             questionText: "Define a function odd(x)",
@@ -217,14 +191,12 @@ test("default", () => {
             questionTutorial: "The for statement creates a loop that is executed as long as a condition is true.",
             questionText: "Please convert the following to JavaScript syntax!",
             hint: "",
-            answer: `
-// A for-loop
+            answer: `// A for-loop
 const steps = new Array();
 for step in range(5):
     answer.append("i am at step: " + step),
 `,
-            defaultAnswer: `
-// A for-loop
+            defaultAnswer: `// A for-loop
 for step in range(5):
     print("i am at step: " + step),
 `,
@@ -234,7 +206,11 @@ for step in range(5):
             testCode: `
 const app = require("./main");
 test("default", () => {
-    expect(app.steps).toEqual([“i am at step: 1”, “i am at step: 2”, “i am at step: 3”, “i am at step: 4”, “i am at step: 5”]);
+    expect(app.steps[0]).toEqual(“i am at step: 1”);
+    expect(app.steps[1]).toEqual(“i am at step: 2”);
+    expect(app.steps[2]).toEqual(“i am at step: 3”);
+    expect(app.steps[3]).toEqual(“i am at step: 4”);
+    expect(app.steps[4]).toEqual(“i am at step: 5”);
 });`,
             exportCode: `
 exports.steps = steps;`,
