@@ -18,7 +18,8 @@ type MyProps = RouteComponentProps & {
     handleClickQuestion: (arg0: number) => void,
     handleMenuStateChange: (arg0: State) => void,
     handleSaveState: () => void,
-    handleLoadState: () => void,
+    handleLoadState: (arg0:boolean) => void,
+    handleShowLoadedProfile: () => void,
     handleStart: () => void,
     toggleAdmin: () => void,
 };
@@ -117,7 +118,7 @@ class SliderMenu extends React.Component<MyProps, {}> {
                                     SAVE
                                 </Button>
                                 <Button variant="outlined" className='button-start ml-auto' size='large'
-                                    onClick={this.props.handleLoadState}>
+                                    onClick={()=>this.props.handleLoadState(true)}>
                                     LOAD
                                 </Button>
                             </div>

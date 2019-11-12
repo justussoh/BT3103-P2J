@@ -52,7 +52,7 @@ class App extends Component<RouteComponentProps> {
                         username: currentuser.displayName,
                         loggedIn: true,
                     });
-                    this.handleLoadState()
+                    this.handleLoadState(true)
                 }
             } else {
                 this.setState({loggedIn: false})
@@ -221,12 +221,12 @@ class App extends Component<RouteComponentProps> {
         firebaseApp.database().ref(`/userdata/${name}`).update(data);
 
         this.setState({loggedIn: true});
-        window.setTimeout(() => this.handleLoadState(), 1000);
+        window.setTimeout(() => this.handleLoadState(false), 1000);
         this.props.history.push('/');
         console.log("saved data to firebase!")
     };
 
-    handleLoadState = () => {
+    handleLoadState = (showSnackBar:boolean) => {
         const name = this.state.uid;
         let db = firebaseApp.database().ref(`/userdata/${name}`);
         db.once('value').then((snapshot) => {
@@ -253,10 +253,12 @@ class App extends Component<RouteComponentProps> {
                     loggedIn: true
                 });
                 // close menu and open snackbar
-                this.setState({
-                    showSnackBar: true,
-                    openMenu: false,
-                });
+                if(showSnackBar){
+                    this.setState({
+                        showSnackBar: true,
+                        openMenu: false,
+                    });
+                }
                 this.props.history.push('/');
             }
         }).catch(err => {

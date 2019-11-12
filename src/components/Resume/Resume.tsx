@@ -14,7 +14,7 @@ type MyProps = RouteComponentProps & {
     userID: string,
     onUserIDChange: (name: string) => void,
     handleSaveState: () => void,
-    handleLoadState: () => void,
+    handleLoadState: (arg0:boolean) => void,
 };
 
 class Resume extends React.Component<MyProps, {}> {
@@ -27,7 +27,7 @@ class Resume extends React.Component<MyProps, {}> {
             if (result !== null && result.user !== null && result.user.uid !== null) {
                 const userID = result.user.uid;
                 this.props.onUserIDChange(userID);
-                this.props.handleLoadState();
+                this.props.handleLoadState(true);
                 this.props.history.push('/');
             }
         }).catch((error) => {
@@ -43,7 +43,7 @@ class Resume extends React.Component<MyProps, {}> {
             if (result !== null && result.user !== null && result.user.uid !== null) {
                 const userID = result.user.uid;
                 this.props.onUserIDChange(userID);
-                this.props.handleLoadState();
+                this.props.handleLoadState(true);
                 this.props.history.push('/');
 
             }
@@ -77,7 +77,7 @@ class Resume extends React.Component<MyProps, {}> {
                                     SAVE
                                 </Button>
                                 <Button variant="outlined" className='button-start ml-auto' size='large'
-                                    onClick={this.props.handleLoadState}>
+                                    onClick={()=>this.props.handleLoadState(true)}>
                                     LOAD
                                 </Button>
                             </div>
