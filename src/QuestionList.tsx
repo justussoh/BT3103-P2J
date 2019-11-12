@@ -88,7 +88,7 @@ exports.coffees = coffees;`,
         },
         {
             questionTitle: "Basic Functions",
-            questionTutorial: "In JavaScipt, we first have to declare functions as functions.\n Also, replace the : with curly braces {}",
+            questionTutorial: "In JavaScript, we first have to declare functions as functions.\n Also, replace the : with curly braces {}",
             questionText: "Please convert the following to JavaScript syntax!",
             hint: "Look up how to write a simple Javascript function on MDN",
             answer: "def square(num):\n      return num * num",
@@ -110,8 +110,8 @@ test("square", () => {
         },
         {
             questionTitle: "Arrow functions",
-            questionTutorial: `An arrow function has a shorter syntax compared to function expressions. Arrow functions are always anonymous.
-Convert square to an arrow function.
+            questionTutorial: `An arrow function has a shorter syntax compared to function expressions.\n`+
+                `Arrow functions are always anonymous and can be defined using ()=>{} this syntax.
             `,
             questionText: "Please convert 'square' into an arrow function",
             hint: "Look up how to write a arrow functions on MDN",
@@ -139,7 +139,7 @@ test("square", () => {
         },
         {
             questionTitle: "Control Flow: if-else",
-            questionTutorial: "Using if-else, define a function odd(x) that returns True when its integer argument is an odd number and False otherwise\n",
+            questionTutorial: "If and else statement are same as python except use '{}' instead of ':'!\n Using if-else, define a function odd(x) that returns True when its integer argument is an odd number and False otherwise\n",
             questionText: "Define a function odd(x)",
             hint: "if-else statements are surrounded by curly braces",
             answer: `function odd(x) {
@@ -166,9 +166,9 @@ test("default", () => {
         },
         {
             questionTitle: "Control Flow: switch",
-            questionTutorial: `Using switch, write a function getPrice that takes in the name of a fruit and returns the price of the fruit. Oranges are $1, apples are $2, and bananas are $3. If the fruit is none of the 3, return an apology. Sample execution below:`,
+            questionTutorial: `Switch case are similar to if and else cases except that they allow for more than 2 checks.\n Using switch, write a function getPrice that takes in the name of a fruit and returns the price of the fruit. Oranges are $1, apples are $2, and bananas are $3. If the fruit is none of the 3, return an apology. Sample execution below:`,
             questionText: "Write the function 'getPrice()'",
-            hint: "",
+            hint: "Switch Statements can be defined using switch(params){case param1:....}",
             answer: `
 function getPrice(fruits) {
 }
@@ -201,9 +201,9 @@ test("default", () => {
         },
         {
             questionTitle: "Loops and Iterations: for loop",
-            questionTutorial: "The for statement creates a loop that is executed as long as a condition is true.",
+            questionTutorial: "The for statement creates a loop that is executed as long as a condition is true. Instead of ':' use '{}'",
             questionText: "Please convert the following to JavaScript syntax!",
-            hint: "",
+            hint: "Write a for-of loop which looks something like this: for (let i = 0; i < 5; i++) {",
             answer: `let steps = [];
 // A for-loop
 for step in range(5):
@@ -232,7 +232,7 @@ exports.steps = steps;`,
             questionTitle: "Working with Objects",
             questionTutorial: "Objects are similar to Python dictionaries, they hold a key:value pairing. An example of initialising a object is as shown below:\n",
             questionText: "Using a for..in loop, add all available properties of myCar into an array",
-            hint: "Convert the Python for loop to a Javascript for-in loop",
+            hint: "Write a for-in loop which looks something like this: for (k in myCar)",
             answer: `
 const myCar = {};
 myCar.make = 'Ford';
@@ -372,7 +372,7 @@ Do that`
                 "    )\n" +
                 "  }\n" +
                 "}",
-            hint: "",
+            hint: "1. Fill in the commented sections by pushing text into inputList.\n 2. Run a for loop with i and push all items i into res array.",
             feedbackText: "",
             completed: false,
             type: QuestionType.HTMLCode,
