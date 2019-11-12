@@ -15,6 +15,8 @@ export const questions: QuestionIface[] =
             testCode: ``,
             exportCode: '',
             pastAnswers: [],
+            startDateTime: null,
+            completedDateTime: null,
         },
         {
             questionTitle: "Comments",
@@ -43,6 +45,8 @@ test("default", () => {
 });`,
             exportCode: '',
             pastAnswers: [],
+            startDateTime: null,
+            completedDateTime: null,
         },
         {
             questionTitle: "Declarations",
@@ -79,6 +83,8 @@ exports.y = y;
 exports.z = z;
 exports.coffees = coffees;`,
             pastAnswers: [],
+            startDateTime: null,
+            completedDateTime: null,
         },
         {
             questionTitle: "Basic Functions",
@@ -99,6 +105,8 @@ test("square", () => {
 });`,
             exportCode: "\nexports.square = square;",
             pastAnswers: [],
+            startDateTime: null,
+            completedDateTime: null,
         },
         {
             questionTitle: "Arrow functions",
@@ -126,6 +134,8 @@ test("square", () => {
 });`,
             exportCode: "\nexports.square = square;",
             pastAnswers: [],
+            startDateTime: null,
+            completedDateTime: null,
         },
         {
             questionTitle: "Control Flow: if-else",
@@ -151,6 +161,8 @@ test("default", () => {
 });`,
             exportCode: '\nexports.odd = odd;',
             pastAnswers: [],
+            startDateTime: null,
+            completedDateTime: null,
         },
         {
             questionTitle: "Control Flow: switch",
@@ -184,6 +196,8 @@ test("default", () => {
 });`,
             exportCode: '\nexports.getPrice = getPrice;',
             pastAnswers: [],
+            startDateTime: null,
+            completedDateTime: null,
         },
         {
             questionTitle: "Loops and Iterations: for loop",
@@ -211,6 +225,8 @@ test("default", () => {
             exportCode: `
 exports.steps = steps;`,
             pastAnswers: [],
+            startDateTime: null,
+            completedDateTime: null,
         },
         {
             questionTitle: "Working with Objects",
@@ -250,6 +266,8 @@ test("task 8", () => {
             exportCode: `
 exports.res = res;`,
             pastAnswers: [],
+            startDateTime: null,
+            completedDateTime: null,
         },
         {
             questionTitle: "Promises",
@@ -297,6 +315,8 @@ Do that`
             testCode: '',
             exportCode: '',
             pastAnswers: [],
+            startDateTime: null,
+            completedDateTime: null,
         },
         {
             questionTitle: "Display Dynamic List",
@@ -363,5 +383,7 @@ Do that`
             });`,
             exportCode: '',
             pastAnswers: [],
+            startDateTime: null,
+            completedDateTime: null,
         },
     ]

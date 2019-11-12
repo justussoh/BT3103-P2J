@@ -32,6 +32,9 @@ export interface QuestionIface {
     testCode: string,
     exportCode: string,
     pastAnswers: pastAnswerIface[],
+    startDateTime: any,
+    completedDateTime: any,
+
 }
 
 export interface pastAnswerIface {
@@ -367,7 +370,7 @@ class Question extends React.Component<MyProps, { selected: Set<number>, view: n
                         onClick={this.props.nextQuestion} style={{ marginLeft: 10 }}
                         disabled={!q.completed}
                     >
-                        {this.props.lastQuestion ? "Finish" : 'NEXT'}
+                        {this.props.lastQuestion ? "FINISH" : 'NEXT'}
                     </Button>
                 </Row>
             </Container>

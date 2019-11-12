@@ -39,6 +39,7 @@ class App extends Component<RouteComponentProps> {
         showSnackBar: false,
         loggedIn: false,
         uid: '',
+        timeVisited: new Date(),
     };
 
     componentDidMount(): void {
@@ -57,6 +58,11 @@ class App extends Component<RouteComponentProps> {
                 this.setState({loggedIn: false})
             }
         });
+        let questions = this.state.questions;
+        if (questions[0].startDateTime === null) {
+            questions[0].startDateTime = this.state.timeVisited;
+        }
+        this.setState({questions});
     }
 
     handleMenu = (isOpen: boolean) => {
@@ -78,11 +84,20 @@ class App extends Component<RouteComponentProps> {
 
     handleStart = () => {
         this.props.history.push('/');
-        this.setState({question: 1, openMenu: false,})
+        let questions = this.state.questions;
+        if (questions[1].startDateTime === null) {
+            questions[1].startDateTime = new Date();
+        }
+        this.setState({question: 1, openMenu: false,questions:questions})
     };
 
     handleNextQuestion = () => {
-        this.setState({question: this.state.question + 1, showAlert: false})
+        this.setState({question: this.state.question + 1, showAlert: false});
+        if (this.state.question === this.state.questions.length - 1 && this.state.questions[0].completedDateTime === null) {
+            let questions = this.state.questions;
+            questions[0].completedDateTime = new Date();
+            this.setState({questions:questions});
+        }
     };
 
     handlePrevQuestion = () => {
@@ -107,7 +122,7 @@ class App extends Component<RouteComponentProps> {
 
     handleCheckAnswer = async () => {
         //Add in fetch nonsense
-        this.setState({isLoading: true, showAlert:false});
+        this.setState({isLoading: true, showAlert: false});
         let gatewayURL = "https://cl8r4dbpqe.execute-api.us-east-1.amazonaws.com/Prod/";
         let questionURL = gatewayURL + `?question=${this.state.question}`;
         let answer = {
@@ -137,7 +152,9 @@ class App extends Component<RouteComponentProps> {
                 pastAnswer: questions[this.state.question].answer,
                 errorMessage: res.data.htmlFeedback,
             });
-
+            if(questions[this.state.question].completedDateTime === null && res.data.isComplete){
+                questions[this.state.question].completedDateTime = new Date();
+            }
 
             let db = firebaseApp.database().ref(`/logging/${this.state.question}`);
             db.once('value').then((snapshot) => {
@@ -151,18 +168,18 @@ class App extends Component<RouteComponentProps> {
                         data.totalTries += 1;
                     }
                     db.update(data);
-                }else{
+                } else {
                     if (res.data.isComplete) {
                         data = {
-                            correctAnswer:1,
-                            wrongAnswer:0,
-                            totalTries:1,
+                            correctAnswer: 1,
+                            wrongAnswer: 0,
+                            totalTries: 1,
                         }
                     } else {
                         data = {
-                            correctAnswer:0,
-                            wrongAnswer:1,
-                            totalTries:1,
+                            correctAnswer: 0,
+                            wrongAnswer: 1,
+                            totalTries: 1,
                         }
                     }
                     db.update(data);
@@ -191,7 +208,9 @@ class App extends Component<RouteComponentProps> {
             feedbackRating: this.state.feedbackRating,
             currentQuestion: this.state.question,
         };
-        firebaseApp.database().ref(`/userdata/${name}`).update(data)
+        firebaseApp.database().ref(`/userdata/${name}`).update(data);
+        this.handleLoadState();
+        this.props.history.push('/');
         console.log("saved data to firebase!")
     };
 
@@ -205,8 +224,8 @@ class App extends Component<RouteComponentProps> {
                 for (let q of questions) {
                     if (q.pastAnswers) {
                         q.pastAnswers = Object.values(q.pastAnswers);
-                    }else{
-                        q.pastAnswers=[];
+                    } else {
+                        q.pastAnswers = [];
                     }
                 }
                 this.setState({
@@ -218,7 +237,8 @@ class App extends Component<RouteComponentProps> {
                 this.setState({
                     showSnackBar: true,
                     openMenu: false,
-                })
+                });
+                this.props.history.push('/');
             }
         }).catch(err => {
             console.error(err);
@@ -298,7 +318,7 @@ class App extends Component<RouteComponentProps> {
                                                                              }}
                         />}/>
                     </Switch>
-                    {this.state.showSnackBar?
+                    {this.state.showSnackBar ?
                         <Snackbar anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
                                   open={this.state.showSnackBar}
                                   autoHideDuration={3000}
@@ -320,7 +340,7 @@ class App extends Component<RouteComponentProps> {
                                   TransitionComponent={(props) => {
                                       return <Slide {...props} direction="up"/>
                                   }}
-                        />:""
+                        /> : ""
                     }
                 </Container>
             </div>
