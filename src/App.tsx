@@ -209,6 +209,7 @@ class App extends Component<RouteComponentProps> {
             currentQuestion: this.state.question,
         };
         firebaseApp.database().ref(`/userdata/${name}`).update(data);
+        this.setState({loggedIn: true});
         this.handleLoadState();
         this.props.history.push('/');
         console.log("saved data to firebase!")
@@ -231,8 +232,9 @@ class App extends Component<RouteComponentProps> {
                 this.setState({
                     questions: questions,
                     feedbackRating: data.feedbackRating,
-                    question: data.currentQuestion
-                });
+                    question: data.currentQuestion,
+                    loggedIn: true
+            });
                 // close menu and open snackbar
                 this.setState({
                     showSnackBar: true,
