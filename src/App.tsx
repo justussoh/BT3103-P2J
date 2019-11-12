@@ -88,16 +88,18 @@ class App extends Component<RouteComponentProps> {
         if (questions[1].startDateTime === null) {
             questions[1].startDateTime = new Date();
         }
-        this.setState({question: 1, openMenu: false,questions:questions})
+        this.setState({question: 1, openMenu: false, questions: questions})
     };
 
     handleNextQuestion = () => {
         this.setState({question: this.state.question + 1, showAlert: false});
+        let questions = this.state.questions;
         if (this.state.question === this.state.questions.length - 1 && this.state.questions[0].completedDateTime === null) {
-            let questions = this.state.questions;
             questions[0].completedDateTime = new Date();
-            this.setState({questions:questions});
+        } else if (questions[this.state.question].startDateTime === null) {
+            questions[this.state.question].startDateTime = new Date();
         }
+        this.setState({questions: questions});
     };
 
     handlePrevQuestion = () => {
@@ -152,9 +154,11 @@ class App extends Component<RouteComponentProps> {
                 pastAnswer: questions[this.state.question].answer,
                 errorMessage: res.data.htmlFeedback,
             });
-            if(questions[this.state.question].completedDateTime === null && res.data.isComplete){
+            if (questions[this.state.question].completedDateTime === null && res.data.isComplete) {
+                console.log("savedTime");
                 questions[this.state.question].completedDateTime = new Date();
             }
+            console.log(questions);
 
             let db = firebaseApp.database().ref(`/logging/${this.state.question}`);
             await db.once('value').then((snapshot) => {
@@ -211,7 +215,7 @@ class App extends Component<RouteComponentProps> {
         firebaseApp.database().ref(`/userdata/${name}`).update(data);
 
         this.setState({loggedIn: true});
-        window.setTimeout(()=>this.handleLoadState(), 1000);
+        window.setTimeout(() => this.handleLoadState(), 1000);
         this.props.history.push('/');
         console.log("saved data to firebase!")
     };
@@ -229,13 +233,19 @@ class App extends Component<RouteComponentProps> {
                     } else {
                         q.pastAnswers = [];
                     }
+                    if (!q.completedDateTime){
+                        q.completedDateTime=null
+                    }
+                    if (!q.startDateTime){
+                        q.startDateTime=null
+                    }
                 }
                 this.setState({
                     questions: questions,
                     feedbackRating: data.feedbackRating,
                     question: data.currentQuestion,
                     loggedIn: true
-            });
+                });
                 // close menu and open snackbar
                 this.setState({
                     showSnackBar: true,
@@ -247,10 +257,6 @@ class App extends Component<RouteComponentProps> {
             console.error(err);
         });
     };
-
-    componentDidUpdate(prevProps: Readonly<RouteComponentProps>, prevState: Readonly<{}>, snapshot?: any): void {
-        console.log(this.state)
-    }
 
     toggleAdmin = () => {
         const pw = prompt('Please enter password');
@@ -271,7 +277,7 @@ class App extends Component<RouteComponentProps> {
     toggleComplete = (isComplete: boolean) => {
         let questions = this.state.questions;
         questions[this.state.question].completed = isComplete;
-        if(isComplete){
+        if (isComplete) {
             questions[this.state.question].completedDateTime = new Date();
         }
         this.setState({questions: questions})
