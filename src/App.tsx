@@ -163,7 +163,6 @@ class App extends Component<RouteComponentProps> {
                 errorMessage: res.data.htmlFeedback,
             });
             if (questions[this.state.question].completedDateTime === null && res.data.isComplete) {
-                console.log("savedTime");
                 questions[this.state.question].completedDateTime = new Date();
             }
             let db = firebaseApp.database().ref(`/logging/${this.state.question}`);
@@ -219,9 +218,8 @@ class App extends Component<RouteComponentProps> {
             currentQuestion: this.state.question,
         };
         firebaseApp.database().ref(`/userdata/${name}`).update(data);
-
         this.setState({loggedIn: true});
-        window.setTimeout(() => this.handleLoadState(false), 1000);
+        // window.setTimeout(() => this.handleLoadState(false), 1000);
         this.props.history.push('/');
         console.log("saved data to firebase!")
     };
