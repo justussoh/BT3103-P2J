@@ -19,7 +19,6 @@ type MyProps = RouteComponentProps & {
     handleMenuStateChange: (arg0: State) => void,
     handleSaveState: () => void,
     handleLoadState: (arg0:boolean) => void,
-    handleShowLoadedProfile: () => void,
     handleStart: () => void,
     toggleAdmin: () => void,
 };

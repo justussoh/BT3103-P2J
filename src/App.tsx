@@ -103,9 +103,11 @@ class App extends Component<RouteComponentProps> {
             questions[this.state.question].startDateTime = new Date();
         }
         this.setState({questions: questions});
-        if (this.state.loggedIn) {
-            this.handleSaveState();
-        }
+        window.setTimeout(()=>{
+            if (this.state.loggedIn) {
+                this.handleSaveState();
+            }
+        },1000)
     };
 
     handlePrevQuestion = () => {
@@ -164,8 +166,6 @@ class App extends Component<RouteComponentProps> {
                 console.log("savedTime");
                 questions[this.state.question].completedDateTime = new Date();
             }
-            console.log(questions);
-
             let db = firebaseApp.database().ref(`/logging/${this.state.question}`);
             await db.once('value').then((snapshot) => {
                 let data = snapshot.val();
