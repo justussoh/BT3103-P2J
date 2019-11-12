@@ -192,7 +192,7 @@ test("default", () => {
     expect(app.getPrice("oranges")).toBe("$1");
     expect(app.getPrice("apples")).toBe("$2");
     expect(app.getPrice("bananas")).toBe("$3");
-    expect(app.getPrice("other")).toBe("Sorry, we are out of other.");
+    expect(app.getPrice("other")).toBe("Sorry, we are out of other fruits.");
 });`,
             exportCode: '\nexports.getPrice = getPrice;',
             pastAnswers: [],

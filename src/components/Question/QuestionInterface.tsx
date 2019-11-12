@@ -30,6 +30,7 @@ type MyProps = RouteComponentProps & {
     question: number,
     showAlert: boolean,
     isLoading: boolean,
+    loggedIn: boolean,
 
     // for feed
     feedbackRating: number,
@@ -120,7 +121,9 @@ class QuestionInterface extends Component<MyProps, {}> {
                                 onChange={(event, newValue) => {
                                     this.props.onFeedbackRatingChange(newValue);
                                     // save rating to firebase
-                                    this.props.saveState();
+                                    if (this.props.loggedIn){
+                                        this.props.saveState();
+                                    }
                                 }}
                                 size="large"
                                 emptyIcon={<StarBorderIcon fontSize="inherit" style={{color: "white"}}/>}

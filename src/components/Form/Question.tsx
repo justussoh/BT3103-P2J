@@ -362,7 +362,7 @@ class Question extends React.Component<MyProps, { selected: Set<number>, view: n
                         <CircularProgress className='loading-color ml-auto' />
                         : <Button variant="outlined" className='button-start ml-auto' size='large'
                             onClick={this.props.checkAnswer}
-                            hidden={q.type !== QuestionType.EditableCode}
+                            hidden={q.type === QuestionType.MultipleChoice}
                         >
                             RUN
                         </Button>}

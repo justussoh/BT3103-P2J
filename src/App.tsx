@@ -307,6 +307,7 @@ class App extends Component<RouteComponentProps> {
                                                                      onFeedbackRatingChange={(n) => {
                                                                          this.setState({feedbackRating: n});
                                                                      }}
+                                                                     loggedIn={this.state.loggedIn}
 
                                />}/>
                         <Route exact path='/load' render={(props) => <Resume {...props}
