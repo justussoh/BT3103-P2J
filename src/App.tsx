@@ -157,7 +157,7 @@ class App extends Component<RouteComponentProps> {
             }
 
             let db = firebaseApp.database().ref(`/logging/${this.state.question}`);
-            db.once('value').then((snapshot) => {
+            await db.once('value').then((snapshot) => {
                 let data = snapshot.val();
                 if (data !== null) {
                     if (res.data.isComplete) {
@@ -209,9 +209,9 @@ class App extends Component<RouteComponentProps> {
             currentQuestion: this.state.question,
         };
         firebaseApp.database().ref(`/userdata/${name}`).update(data);
-        console.log(data);
+
         this.setState({loggedIn: true});
-        // this.handleLoadState();
+        window.setTimeout(()=>this.handleLoadState(), 1000);
         this.props.history.push('/');
         console.log("saved data to firebase!")
     };
@@ -271,6 +271,9 @@ class App extends Component<RouteComponentProps> {
     toggleComplete = (isComplete: boolean) => {
         let questions = this.state.questions;
         questions[this.state.question].completed = isComplete;
+        if(isComplete){
+            questions[this.state.question].completedDateTime = new Date();
+        }
         this.setState({questions: questions})
     };
 
