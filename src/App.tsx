@@ -88,6 +88,9 @@ class App extends Component<RouteComponentProps> {
         if (questions[1].startDateTime === null) {
             questions[1].startDateTime = new Date();
         }
+        if (this.state.loggedIn) {
+            this.handleSaveState();
+        }
         this.setState({question: 1, openMenu: false, questions: questions})
     };
 
@@ -100,6 +103,9 @@ class App extends Component<RouteComponentProps> {
             questions[this.state.question].startDateTime = new Date();
         }
         this.setState({questions: questions});
+        if (this.state.loggedIn) {
+            this.handleSaveState();
+        }
     };
 
     handlePrevQuestion = () => {
