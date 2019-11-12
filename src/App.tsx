@@ -209,8 +209,9 @@ class App extends Component<RouteComponentProps> {
             currentQuestion: this.state.question,
         };
         firebaseApp.database().ref(`/userdata/${name}`).update(data);
+        console.log(data);
         this.setState({loggedIn: true});
-        this.handleLoadState();
+        // this.handleLoadState();
         this.props.history.push('/');
         console.log("saved data to firebase!")
     };
@@ -246,6 +247,10 @@ class App extends Component<RouteComponentProps> {
             console.error(err);
         });
     };
+
+    componentDidUpdate(prevProps: Readonly<RouteComponentProps>, prevState: Readonly<{}>, snapshot?: any): void {
+        console.log(this.state)
+    }
 
     toggleAdmin = () => {
         const pw = prompt('Please enter password');

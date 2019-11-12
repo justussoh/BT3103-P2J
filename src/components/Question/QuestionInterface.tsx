@@ -121,9 +121,12 @@ class QuestionInterface extends Component<MyProps, {}> {
                                 onChange={(event, newValue) => {
                                     this.props.onFeedbackRatingChange(newValue);
                                     // save rating to firebase
-                                    if (this.props.loggedIn){
-                                        this.props.saveState();
-                                    }
+                                    window.setTimeout(()=>{
+                                        if (this.props.loggedIn){
+                                            this.props.saveState();
+                                        }
+                                    },1000)
+
                                 }}
                                 size="large"
                                 emptyIcon={<StarBorderIcon fontSize="inherit" style={{color: "white"}}/>}
