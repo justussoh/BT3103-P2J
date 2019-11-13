@@ -26,13 +26,11 @@ class CustomAlert extends React.Component<MyProps, {}> {
     };
 
     componentDidMount(): void {
-        console.log("componentDidMount");
         let db = firebaseApp.database().ref(`/logging/${this.props.question}`);
         db.once('value').then((snapshot) => {
             let data = snapshot.val();
             if (data !== null) {
                 this.setState({ data: data })
-                console.log("retrieved alert data from db")
             }
         }).catch(err => {
             console.error(err);
