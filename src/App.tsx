@@ -1,21 +1,21 @@
-import React, {Component} from 'react';
-import {Container} from 'react-bootstrap';
-import {Route, Switch, withRouter} from 'react-router-dom';
+import React, { Component } from 'react';
+import { Container } from 'react-bootstrap';
+import { Route, Switch, withRouter } from 'react-router-dom';
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from "@material-ui/core/Slide";
 import Snackbar from "@material-ui/core/Snackbar";
 import SliderMenu from "./components/Navigation/SliderMenu";
 import axios from "axios";
-import {firebaseApp} from './util/firebase';
-import {RouteComponentProps} from "react-router";
+import { firebaseApp } from './util/firebase';
+import { RouteComponentProps } from "react-router";
 
 import QuestionInterface from './components/Question/QuestionInterface'
 
 import './App.css';
-import {questions} from "./QuestionList";
+import { questions } from "./QuestionList";
 import Resume from "./components/Resume/Resume";
-import {QuestionIface} from "./components/Form/Question";
+import { QuestionIface } from "./components/Form/Question";
 
 export interface BackendResponse {
     data: {
@@ -55,18 +55,18 @@ class App extends Component<RouteComponentProps> {
                     this.handleLoadState(true)
                 }
             } else {
-                this.setState({loggedIn: false})
+                this.setState({ loggedIn: false })
             }
         });
         let questions = this.state.questions;
         if (questions[0].startDateTime === null) {
             questions[0].startDateTime = this.state.timeVisited;
         }
-        this.setState({questions});
+        this.setState({ questions });
     }
 
     handleMenu = (isOpen: boolean) => {
-        this.setState({openMenu: isOpen})
+        this.setState({ openMenu: isOpen })
     };
 
 
@@ -79,7 +79,7 @@ class App extends Component<RouteComponentProps> {
     };
 
     handleMenuStateChange = (state: any) => {
-        this.setState({openMenu: state.isOpen})
+        this.setState({ openMenu: state.isOpen })
     };
 
     handleStart = () => {
@@ -91,48 +91,48 @@ class App extends Component<RouteComponentProps> {
         if (this.state.loggedIn) {
             this.handleSaveState();
         }
-        this.setState({question: 1, openMenu: false, questions: questions})
+        this.setState({ question: 1, openMenu: false, questions: questions })
     };
 
     handleNextQuestion = () => {
-        this.setState({question: this.state.question + 1, showAlert: false});
+        this.setState({ question: this.state.question + 1, showAlert: false });
         let questions = this.state.questions;
         if (this.state.question === this.state.questions.length - 1 && this.state.questions[0].completedDateTime === null) {
             questions[0].completedDateTime = new Date();
         } else if (questions[this.state.question].startDateTime === null) {
             questions[this.state.question].startDateTime = new Date();
         }
-        this.setState({questions: questions});
-        window.setTimeout(()=>{
+        this.setState({ questions: questions });
+        window.setTimeout(() => {
             if (this.state.loggedIn) {
                 this.handleSaveState();
             }
-        },1000)
+        }, 1000)
     };
 
     handlePrevQuestion = () => {
-        this.setState({question: this.state.question - 1, showAlert: false})
+        this.setState({ question: this.state.question - 1, showAlert: false })
     };
 
     handleAlertClose = () => {
-        this.setState({showAlert: false})
+        this.setState({ showAlert: false })
     };
 
     handleStartOver = () => {
         // TODO clear progress of app
-        this.setState({question: 0})
+        this.setState({ question: 0 })
     };
 
     handleResetAnswer = () => {
         let questions = this.state.questions;
         let question = questions[this.state.question];
         question.answer = question.defaultAnswer;
-        this.setState({questions})
+        this.setState({ questions })
     };
 
     handleCheckAnswer = async () => {
         //Add in fetch nonsense
-        this.setState({isLoading: true, showAlert: false});
+        this.setState({ isLoading: true, showAlert: false });
         let gatewayURL = "https://cl8r4dbpqe.execute-api.us-east-1.amazonaws.com/Prod/";
         let questionURL = gatewayURL + `?question=${this.state.question}`;
         let answer = {
@@ -148,12 +148,11 @@ class App extends Component<RouteComponentProps> {
             }
         };
         try {
-            const res: BackendResponse = await axios.post(questionURL, {...answer}, {
+            const res: BackendResponse = await axios.post(questionURL, { ...answer }, {
                 headers: {
                     Accept: 'application/json',
                 }
             });
-            console.log(res);
             let questions = this.state.questions;
             questions[this.state.question].completed = res.data.isComplete;
             questions[this.state.question].feedbackText = res.data.htmlFeedback;
@@ -165,18 +164,18 @@ class App extends Component<RouteComponentProps> {
             if (questions[this.state.question].completedDateTime === null && res.data.isComplete) {
                 questions[this.state.question].completedDateTime = new Date();
             }
+
+            // update firebase with attempt statistics
             let db = firebaseApp.database().ref(`/logging/${this.state.question}`);
             await db.once('value').then((snapshot) => {
                 let data = snapshot.val();
                 if (data !== null) {
+                    data.totalTries += 1;
                     if (res.data.isComplete) {
                         data.correctAnswer += 1;
-                        data.totalTries += 1;
                     } else {
                         data.wrongAnswer += 1;
-                        data.totalTries += 1;
                     }
-                    db.update(data);
                 } else {
                     if (res.data.isComplete) {
                         data = {
@@ -191,20 +190,20 @@ class App extends Component<RouteComponentProps> {
                             totalTries: 1,
                         }
                     }
-                    db.update(data);
                 }
+                db.update(data);
             }).catch(err => {
                 console.error(err);
             });
 
-            this.setState({questions: questions});
+            this.setState({ questions: questions });
             if (this.state.loggedIn) {
                 this.handleSaveState();
             }
         } catch (err) {
             console.error(err);
         } finally {
-            this.setState({isLoading: false, showAlert: true});
+            this.setState({ isLoading: false, showAlert: true });
         }
 
     };
@@ -218,13 +217,13 @@ class App extends Component<RouteComponentProps> {
             currentQuestion: this.state.question,
         };
         firebaseApp.database().ref(`/userdata/${name}`).update(data);
-        this.setState({loggedIn: true});
+        this.setState({ loggedIn: true });
         // window.setTimeout(() => this.handleLoadState(false), 1000);
         this.props.history.push('/');
         console.log("saved data to firebase!")
     };
 
-    handleLoadState = (showSnackBar:boolean) => {
+    handleLoadState = (showSnackBar: boolean) => {
         const name = this.state.uid;
         let db = firebaseApp.database().ref(`/userdata/${name}`);
         db.once('value').then((snapshot) => {
@@ -237,11 +236,11 @@ class App extends Component<RouteComponentProps> {
                     } else {
                         q.pastAnswers = [];
                     }
-                    if (!q.completedDateTime){
-                        q.completedDateTime=null
+                    if (!q.completedDateTime) {
+                        q.completedDateTime = null
                     }
-                    if (!q.startDateTime){
-                        q.startDateTime=null
+                    if (!q.startDateTime) {
+                        q.startDateTime = null
                     }
                 }
                 this.setState({
@@ -251,7 +250,7 @@ class App extends Component<RouteComponentProps> {
                     loggedIn: true
                 });
                 // close menu and open snackbar
-                if(showSnackBar){
+                if (showSnackBar) {
                     this.setState({
                         showSnackBar: true,
                         openMenu: false,
@@ -286,7 +285,7 @@ class App extends Component<RouteComponentProps> {
         if (isComplete) {
             questions[this.state.question].completedDateTime = new Date();
         }
-        this.setState({questions: questions})
+        this.setState({ questions: questions })
     };
 
     render() {
@@ -294,75 +293,75 @@ class App extends Component<RouteComponentProps> {
         return (
             <div className="App">
                 <SliderMenu open={this.state.openMenu} handleMenu={this.handleMenu}
-                            handleMenuStateChange={this.handleMenuStateChange}
-                            handleClickQuestion={this.handleClickQuestion}
-                            handleStart={this.handleStart}
-                            questions={this.state.questions}
-                            question={currQ}
-                            toggleAdmin={this.toggleAdmin}
+                    handleMenuStateChange={this.handleMenuStateChange}
+                    handleClickQuestion={this.handleClickQuestion}
+                    handleStart={this.handleStart}
+                    questions={this.state.questions}
+                    question={currQ}
+                    toggleAdmin={this.toggleAdmin}
+                    handleSaveState={this.handleSaveState}
+                    handleLoadState={this.handleLoadState}
+                    userID={this.state.uid}
+                    onUserIDChange={(name) => {
+                        this.setState({ uid: name })
+                    }}
+                />
+                <Container fluid className='d-flex align-items-center justify-content-center flex-column p-5 h-100'
+                    id='page-wrap'>
+
+                    <Switch>
+                        <Route exact path="/"
+                            render={(props) => <QuestionInterface {...props} questions={this.state.questions}
+                                question={currQ} handleStart={this.handleStart}
+                                feedbackRating={this.state.feedbackRating}
+                                handleStartOver={this.handleStartOver}
+                                showAlert={this.state.showAlert}
+                                handleNextQuestion={this.handleNextQuestion}
+                                handlePrevQuestion={this.handlePrevQuestion}
+                                handleCheckAnswer={this.handleCheckAnswer}
+                                handleResetAnswer={this.handleResetAnswer}
+                                toggleComplete={this.toggleComplete}
+                                isLoading={this.state.isLoading}
+                                handleAlertClose={this.handleAlertClose}
+                                handleClickQuestion={this.handleClickQuestion}
+                                saveState={this.handleSaveState}
+                                onFeedbackRatingChange={(n) => {
+                                    this.setState({ feedbackRating: n });
+                                }}
+                                loggedIn={this.state.loggedIn}
+
+                            />} />
+                        <Route exact path='/load' render={(props) => <Resume {...props}
                             handleSaveState={this.handleSaveState}
                             handleLoadState={this.handleLoadState}
                             userID={this.state.uid}
                             onUserIDChange={(name) => {
-                                this.setState({uid: name})
+                                this.setState({ uid: name })
                             }}
-                />
-                <Container fluid className='d-flex align-items-center justify-content-center flex-column p-5 h-100'
-                           id='page-wrap'>
-
-                    <Switch>
-                        <Route exact path="/"
-                               render={(props) => <QuestionInterface {...props} questions={this.state.questions}
-                                                                     question={currQ} handleStart={this.handleStart}
-                                                                     feedbackRating={this.state.feedbackRating}
-                                                                     handleStartOver={this.handleStartOver}
-                                                                     showAlert={this.state.showAlert}
-                                                                     handleNextQuestion={this.handleNextQuestion}
-                                                                     handlePrevQuestion={this.handlePrevQuestion}
-                                                                     handleCheckAnswer={this.handleCheckAnswer}
-                                                                     handleResetAnswer={this.handleResetAnswer}
-                                                                     toggleComplete={this.toggleComplete}
-                                                                     isLoading={this.state.isLoading}
-                                                                     handleAlertClose={this.handleAlertClose}
-                                                                     handleClickQuestion={this.handleClickQuestion}
-                                                                     saveState={this.handleSaveState}
-                                                                     onFeedbackRatingChange={(n) => {
-                                                                         this.setState({feedbackRating: n});
-                                                                     }}
-                                                                     loggedIn={this.state.loggedIn}
-
-                               />}/>
-                        <Route exact path='/load' render={(props) => <Resume {...props}
-                                                                             handleSaveState={this.handleSaveState}
-                                                                             handleLoadState={this.handleLoadState}
-                                                                             userID={this.state.uid}
-                                                                             onUserIDChange={(name) => {
-                                                                                 this.setState({uid: name})
-                                                                             }}
-                        />}/>
+                        />} />
                     </Switch>
                     {this.state.showSnackBar ?
-                        <Snackbar anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
-                                  open={this.state.showSnackBar}
-                                  autoHideDuration={3000}
-                                  onClose={() => {
-                                      this.setState({showSnackBar: false})
-                                  }}
-                                  message={<span id="message-id">Profile has been successfully loaded.</span>}
-                                  action={
-                                      <IconButton
-                                          key="close"
-                                          color="inherit"
-                                          onClick={() => {
-                                              this.setState({showSnackBar: false})
-                                          }}
-                                      >
-                                          <CloseIcon/>
-                                      </IconButton>
-                                  }
-                                  TransitionComponent={(props) => {
-                                      return <Slide {...props} direction="up"/>
-                                  }}
+                        <Snackbar anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                            open={this.state.showSnackBar}
+                            autoHideDuration={3000}
+                            onClose={() => {
+                                this.setState({ showSnackBar: false })
+                            }}
+                            message={<span id="message-id">Profile has been successfully loaded.</span>}
+                            action={
+                                <IconButton
+                                    key="close"
+                                    color="inherit"
+                                    onClick={() => {
+                                        this.setState({ showSnackBar: false })
+                                    }}
+                                >
+                                    <CloseIcon />
+                                </IconButton>
+                            }
+                            TransitionComponent={(props) => {
+                                return <Slide {...props} direction="up" />
+                            }}
                         /> : ""
                     }
                 </Container>
