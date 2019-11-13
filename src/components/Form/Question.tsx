@@ -348,6 +348,7 @@ class Question extends React.Component<MyProps, { selected: Set<number>, view: n
             <Container className='d-flex align-items-center justify-content-center flex-column'>
                 {this.renderQuestion()}
                 <Row className='d-flex w-100'>
+
                     <Button variant="outlined" className='button-start' size='large'
                             onClick={this.props.prevQuestion}>
                         PREVIOUS

@@ -40,3 +40,9 @@ body, html {
   text-decoration: none !important;
   color:#007bff;
 }
+
+.signup-title{
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+}
