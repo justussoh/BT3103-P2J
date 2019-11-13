@@ -9,15 +9,14 @@ import SliderMenu from "./components/Navigation/SliderMenu";
 import axios from "axios";
 import {firebaseApp} from './util/firebase';
 import {RouteComponentProps} from "react-router";
-
 import QuestionInterface from './components/Question/QuestionInterface'
-
 import './App.css';
 import {questions} from "./QuestionList";
 import Resume from "./components/Resume/Resume";
 import {QuestionIface} from "./components/Form/Question";
 import Signup from "./components/SignupPage/Signup";
 import Home from "./components/Home/Home";
+import About from "./components/About/About";
 
 export interface BackendResponse {
     data: {
@@ -320,6 +319,7 @@ class App extends Component<RouteComponentProps> {
                                                                        loggedIn={this.state.loggedIn}
                                                                        handleStart={this.handleStart}
                         />}/>
+                        <Route exact path="/about" component={About}/>
                         <Route exact path="/questions"
                                render={(props) => <QuestionInterface {...props} questions={this.state.questions}
                                                                      question={currQ} handleStart={this.handleStart}

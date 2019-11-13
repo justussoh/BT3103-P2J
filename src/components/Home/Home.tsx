@@ -20,6 +20,11 @@ class Home extends React.Component<MyProps, {}> {
 
     };
 
+    handleAbout = () => {
+        this.props.history.push('/about');
+
+    };
+
     render() {
         const questions = this.props.questions;
         return (
@@ -51,6 +56,10 @@ class Home extends React.Component<MyProps, {}> {
                             onClick={this.handleResume}>
                         RESUME
                     </Button>
+                    <Button variant="outlined" className='button-start' size='large' style={{marginLeft:10}}
+                            onClick={this.handleAbout}>
+                        ABOUT US
+                    </Button>
                     <Button variant="outlined" className='button-start ml-auto' size='large'
                             onClick={this.props.handleStart}>
                         START
@@ -59,8 +68,6 @@ class Home extends React.Component<MyProps, {}> {
             </div>
         );
     }
-
-
 }
 
 export default withRouter(Home);
