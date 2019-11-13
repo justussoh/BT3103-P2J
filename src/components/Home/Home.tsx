@@ -22,7 +22,6 @@ class Home extends React.Component<MyProps, {}> {
 
     handleAbout = () => {
         this.props.history.push('/about');
-
     };
 
     render() {

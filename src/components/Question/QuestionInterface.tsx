@@ -65,6 +65,9 @@ class QuestionInterface extends Component<MyProps, {}> {
         this.props.history.push('/load');
     };
 
+    handleAbout = () => {
+        this.props.history.push('/about');
+    };
 
     renderQuestion = () => {
         const questions = this.props.questions;
@@ -99,6 +102,10 @@ class QuestionInterface extends Component<MyProps, {}> {
                             <Button variant="outlined" className='button-start' size='large'
                                     onClick={this.handleResume}>
                                 RESUME
+                            </Button>
+                            <Button variant="outlined" className='button-start' size='large' style={{marginLeft:10}}
+                                    onClick={this.handleAbout}>
+                                ABOUT US
                             </Button>
                             <Button variant="outlined" className='button-start ml-auto' size='large'
                                     onClick={this.props.handleStart}>
