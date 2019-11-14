@@ -26,7 +26,7 @@ class About extends React.Component<MyProps, {}> {
                             We came up with this idea through surveying the student population in NUS and found a gap of
                             knowledge of not knowing JavaScript but still had a basic understanding of coding concepts.
                             Hence these 10 questions were developed using the MDN web resource to help users learn how
-                            to translate python (the most commonly know language based on our survey) to JavaScript (the
+                            to translate python (the most commonly known language based on our survey) to JavaScript (the
                             language students wanted to learn most). Some barriers of learning included inconvenience
                             and steep learning curve. We hope that this project bridges the gap and solves this problem
                             for students.
@@ -39,7 +39,7 @@ class About extends React.Component<MyProps, {}> {
                     <Col xs={6}>
                         <Carousel className='h-100'>
                             <Carousel.Item className='slide-item'>
-                                <h6>This web application though simple has help to revise on crucial concepts before
+                                <h6>This web application has helped me to revise on crucial concepts before
                                     taking a technical test for a job application! <br/><br/>-Shao Yang<br/>Year 4
                                     Business Analytics Student </h6>
                             </Carousel.Item>
