@@ -5,6 +5,11 @@ import { firebaseApp } from "../../util/firebase";
 
 type MyProps = {
     question: number,
+    alertData: {
+        correctAnswer: number,
+        totalTries: number,
+        wrongAnswer: number
+    }[],
     questions: QuestionIface[],
     handleAlertClose: () => void,
 };
@@ -16,35 +21,18 @@ function getRandomInt(max: number) {
 class CustomAlert extends React.Component<MyProps, {}> {
 
     state = {
-        data: {
-            correctAnswer: 0,
-            totalTries: 0,
-            wrongAnswer: 0
-        },
         errorAlert: ["Please try again! You can use the hints if you need more help."],
         successAlert: ["You answered the question correctly! Please move on to the next question."],
-    };
-
-    componentDidMount(): void {
-        let db = firebaseApp.database().ref(`/logging/${this.props.question}`);
-        db.once('value').then((snapshot) => {
-            let data = snapshot.val();
-            if (data !== null) {
-                this.setState({ data: data })
-            }
-        }).catch(err => {
-            console.error(err);
-        });
     };
 
     renderText = (pass: boolean) => {
         if (pass) {
             let successAlert = this.state.successAlert;
-            successAlert.push(`Congratulations, you are part of the ${Math.floor(this.state.data.correctAnswer)} people who got the question correct!`);
+            successAlert.push(`Congratulations, you are part of the ${Math.floor(this.props.alertData[this.props.question].correctAnswer)} people who got the question correct!`);
             return successAlert[getRandomInt(successAlert.length)];
         } else {
             let errorAlert = this.state.errorAlert;
-            const percentage = Math.floor((this.state.data.correctAnswer / this.state.data.totalTries) * 100);
+            const percentage = Math.floor((this.props.alertData[this.props.question].correctAnswer / this.props.alertData[this.props.question].totalTries) * 100);
             errorAlert.push(`Don't be disheartened this is one of our more difficult questions, only ${percentage}% got the question correct!`);
             return errorAlert[getRandomInt(errorAlert.length)];
         }

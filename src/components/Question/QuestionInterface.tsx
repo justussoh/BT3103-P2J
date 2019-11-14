@@ -24,6 +24,7 @@ import './QuestionInterface.css'
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import {withRouter} from "react-router";
+import {firebaseApp} from "../../util/firebase";
 
 
 type MyProps = RouteComponentProps & {
@@ -51,7 +52,23 @@ type MyProps = RouteComponentProps & {
 class QuestionInterface extends Component<MyProps, {}> {
     state = {
         showPastAnswers: false,
+        alertData:[],
     };
+
+    componentDidMount(): void {
+        let db = firebaseApp.database().ref(`/logging`);
+        db.on('value', ((snapshot) => {
+            let data = snapshot.val();
+
+            if (data !== null) {
+                this.setState({ alertData: data })
+            }
+        }))
+    }
+
+    componentWillUnmount(): void {
+        firebaseApp.database().ref(`/logging/${this.props.question}`).off();
+    }
 
     handlePastAnswerSwitch = (e: any) => {
         this.setState({showPastAnswers: e.target.checked})
@@ -209,6 +226,7 @@ class QuestionInterface extends Component<MyProps, {}> {
                     <CustomAlert handleAlertClose={this.props.handleAlertClose}
                                  question={this.props.question}
                                  questions={this.props.questions}
+                                 alertData={this.state.alertData}
                     /> : ''
                 }
                 {currQ > 0 && currQ < questions.length ?
