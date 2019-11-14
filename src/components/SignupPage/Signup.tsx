@@ -7,6 +7,10 @@ import 'react-typist/dist/Typist.css';
 import {firebaseApp} from "../../util/firebase";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
+import Icon from "@mdi/react";
+import {mdiGoogle} from "@mdi/js";
+import Divider from "@material-ui/core/Divider";
+import * as firebase from "firebase";
 
 type MyProps = RouteComponentProps & {
     handleSaveState: () => void,
@@ -38,8 +42,24 @@ class Signup extends React.Component<MyProps, {}> {
         window.setTimeout(()=>{
             this.props.handleStart();
         },1000)
+    };
 
-
+    handleGoogle = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        e.preventDefault();
+        const provider = new firebase.auth.GoogleAuthProvider();
+        firebaseApp.auth().signInWithPopup(provider).then((result) => {
+            //console.log('Google login success');
+            if (result !== null && result.user !== null && result.user.uid !== null) {
+                const userID = result.user.uid;
+                this.props.onUserIDChange(userID);
+                this.props.handleSaveState();
+                window.setTimeout(()=>{
+                    this.props.handleStart();
+                },1000)
+            }
+        }).catch((error) => {
+            console.log(error);
+        });
     };
 
     render() {
@@ -74,6 +94,14 @@ class Signup extends React.Component<MyProps, {}> {
                                 </div>
                             </form>
                         </div>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Divider variant='middle' style={{backgroundColor: '#fff'}}/>
+                    </Grid>
+                    <Grid item xs={12} className='d-flex align-items-center justify-content-center'>
+                        <Button variant="outlined" onClick={this.handleGoogle} className='resume-auth' fullWidth>
+                            <span><Icon path={mdiGoogle} size={1} style={{ fill: 'white' }} /> Google</span>
+                        </Button>
                     </Grid>
                 </Grid>
             </div>

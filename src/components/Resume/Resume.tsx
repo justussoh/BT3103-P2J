@@ -28,7 +28,7 @@ class Resume extends React.Component<MyProps, {}> {
                 const userID = result.user.uid;
                 this.props.onUserIDChange(userID);
                 this.props.handleLoadState(true);
-                this.props.history.push('/');
+                this.props.history.push('/questions');
             }
         }).catch((error) => {
             console.log(error);
@@ -44,7 +44,7 @@ class Resume extends React.Component<MyProps, {}> {
                 const userID = result.user.uid;
                 this.props.onUserIDChange(userID);
                 this.props.handleLoadState(true);
-                this.props.history.push('/');
+                this.props.history.push('/questions');
 
             }
         }).catch((error) => {
@@ -83,11 +83,11 @@ class Resume extends React.Component<MyProps, {}> {
                             </div>
                         </div>
                     </Grid>
-                    <Grid item xs={12} className='d-flex align-items-center justify-content-center'>
-                        <Button variant="outlined" onClick={this.handleFacebook} className='resume-auth' fullWidth>
-                            <span><Icon path={mdiFacebookBox} size={1} style={{ fill: 'white' }} /> Facebook</span>
-                        </Button>
-                    </Grid>
+                    {/*<Grid item xs={12} className='d-flex align-items-center justify-content-center'>*/}
+                    {/*    <Button variant="outlined" onClick={this.handleFacebook} className='resume-auth' fullWidth>*/}
+                    {/*        <span><Icon path={mdiFacebookBox} size={1} style={{ fill: 'white' }} /> Facebook</span>*/}
+                    {/*    </Button>*/}
+                    {/*</Grid>*/}
                     <Grid item xs={12} className='d-flex align-items-center justify-content-center'>
                         <Button variant="outlined" onClick={this.handleGoogle} className='resume-auth' fullWidth>
                             <span><Icon path={mdiGoogle} size={1} style={{ fill: 'white' }} /> Google</span>
